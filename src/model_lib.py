@@ -35,7 +35,7 @@ class ModelLibrary:
                     'type': 'player',
                     'scale': 1.5,
                     'offset': (0, 1.85, 0),  # x, y, z offset for model positioning 
-                    'bullet_origin': [(-1.3, 0.6, -0.1), (-0.8, 0.6, -1.2)],  # x, y, z offset from model center for bullet spawn , (-1.0, 0.6, 0.2)]
+                    'bullet_origin': [(-1.1, 0.6, -0.1), (-0.8, 0.6, -1.2)],  # x, y, z offset from model center for bullet spawn , (-1.0, 0.6, 0.2)]
                     'camera_height': 2.5,
                     'shoot_sound': 'punisher_shoot.mp3',
                     'hit_sound': 'turret-hit.mp3',

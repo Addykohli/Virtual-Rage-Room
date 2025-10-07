@@ -2496,45 +2496,36 @@ class Simulation:
                             del self.bullet_impulse_text
                         self.bullet_impulse_active = False
                     elif event.key == pygame.K_BACKSPACE:
-                        # Handle backspace with text buffer
-                        if hasattr(self, 'bullet_impulse_text') and self.bullet_impulse_text:
+                        # Ensure bullet_impulse_text exists before using
+                        if not hasattr(self, 'bullet_impulse_text'):
+                            self.bullet_impulse_text = '0'
+                        if self.bullet_impulse_text:
                             self.bullet_impulse_text = self.bullet_impulse_text[:-1]
                             if not self.bullet_impulse_text:  # If empty after backspace
                                 self.bullet_impulse_text = '0'
-                            
-                            # Update the actual value if valid
-                            try:
-                                if self.bullet_impulse_text:
-                                    self.bullet_impulse = float(self.bullet_impulse_text)
-                                else:
-                                    self.bullet_impulse = 0.0
-                            except ValueError:
-                                self.bullet_impulse = 0.0
-                                self.bullet_impulse_text = '0'
-                    elif event.unicode.isdigit() or (event.unicode == '.' and '.' not in getattr(self, 'bullet_impulse_text', '')):
-                        # Initialize text buffer if it doesn't exist
+                        # Update the actual value if valid
+                        try:
+                            if self.bullet_impulse_text:
+                                self.bullet_impulse = int(self.bullet_impulse_text)
+                            else:
+                                self.bullet_impulse = 0
+                        except ValueError:
+                            self.bullet_impulse = 0
+                            self.bullet_impulse_text = '0'
+                    elif event.unicode.isdigit():
+                        # Only allow up to 4 digits
                         if not hasattr(self, 'bullet_impulse_text'):
                             self.bullet_impulse_text = ''
-                        
-                        # Handle decimal point
-                        if event.unicode == '.':
-                            # Don't add decimal if it's the first character
-                            if not self.bullet_impulse_text:
-                                self.bullet_impulse_text = '0.'
-                            else:
-                                self.bullet_impulse_text += '.'
-                        # Handle digits
-                        else:
+                        if len(self.bullet_impulse_text) < 4:
                             # Handle leading zero
                             if self.bullet_impulse_text == '0':
                                 self.bullet_impulse_text = event.unicode
                             else:
                                 self.bullet_impulse_text += event.unicode
-                        
                         # Update the actual value if valid
                         try:
-                            new_value = float(self.bullet_impulse_text)
-                            if 0 <= new_value <= 1000:
+                            new_value = int(self.bullet_impulse_text)
+                            if 0 <= new_value <= 9999:
                                 self.bullet_impulse = new_value
                             else:
                                 # Revert if out of bounds
@@ -2637,7 +2628,7 @@ class Simulation:
             
         # Q key still moves up 
         if keys[pygame.K_q]:
-            self.player.y += move_speed*0.3
+            self.player.jump()
 
         # Handle cube placement input when mouse grab is released
         self.handle_cube_placement()
