@@ -54,10 +54,7 @@ class OBJ:
         # Load MTL file if it exists
         mtl_path = os.path.splitext(filename)[0] + '.mtl'
         if os.path.exists(mtl_path):
-            print(f"Loading materials from: {mtl_path}")
             self.load_mtl(mtl_path)
-        else:
-            print(f"No MTL file found at: {mtl_path}, using default material")
         
         for line in open(filename, "r"):
             if line.startswith('#'):
@@ -155,7 +152,8 @@ class OBJ:
             
             return texture
         except Exception as e:
-            print(f"Error loading texture {image_path}: {e}")
+            import traceback
+            traceback.print_exc()
             return None
     
     def load_mtl(self, filename):
@@ -237,7 +235,8 @@ class OBJ:
                 
         except Exception as e:
             # Fallback to a simple shape if rendering fails
-            print(f"Error rendering model: {e}")
+            import traceback
+            traceback.print_exc()
             glDisable(GL_TEXTURE_2D)
             glDisable(GL_LIGHTING)
             glColor3f(1.0, 0.0, 0.0)  # Red color
@@ -257,7 +256,8 @@ class OBJ:
                 glCallList(self.display_list)
                 return
             except Exception as e:
-                print(f"Error in display list, falling back to immediate mode: {e}")
+                import traceback
+                traceback.print_exc()
                 self.display_list = None
         
         # Fall back to immediate mode rendering
@@ -267,3 +267,25 @@ class OBJ:
         # This is a no-op in this implementation
         # The actual generation happens in __init__
         pass
+
+    def get_bullet_mesh(self):
+        """
+        Returns mesh data as (vertices, indices) suitable for PyBullet's GEOM_MESH.
+        Vertices: flat list of floats [x0, y0, z0, x1, y1, z1, ...]
+        Indices: flat list of ints [i0, i1, i2, ...] (triangles)
+        """
+        # OBJ indices are 1-based, PyBullet expects 0-based
+        vertices = [coord for v in self.vertices for coord in v]
+        indices = []
+        for face, _, _, _ in self.faces:
+            # Triangulate faces (OBJ can have quads or ngons)
+            if len(face) < 3:
+                continue
+            # Fan triangulation
+            for i in range(1, len(face) - 1):
+                indices.extend([
+                    face[0] - 1,
+                    face[i] - 1,
+                    face[i + 1] - 1
+                ])
+        return vertices, indices

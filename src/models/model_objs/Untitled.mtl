@@ -1,0 +1,188 @@
+# Blender MTL File for Punisher Model
+# Texture maps:
+# _D = Diffuse/Albedo
+# _N = Normal
+# _S = Specular
+# _ORM = Occlusion/Roughness/Metallic
+
+newmtl MI_1014001_Body
+Ns 90.000000
+Ka 1.000000 1.000000 1.000000
+Kd 1.000000 1.000000 1.000000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+d 1.000000
+illum 2
+map_Kd T_1014001_Body_D.png
+map_bump T_1014001_Body_N.png
+# PBR maps
+map_Pr T_1014001_Body_ORM.png
+map_Pm T_1014001_Body_ORM.png
+map_Ps T_1014001_Body_S.png
+
+newmtl MI_1014001_Equip_01
+Ns 90.000000
+Ka 1.000000 1.000000 1.000000
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+d 1.000000
+illum 2
+map_Kd T_1014001_Equip_02_D.png
+map_bump T_1014001_Equip_02_N.png
+# PBR maps
+map_Pr T_1014001_Equip_02_ORM.png
+map_Pm T_1014001_Equip_02_ORM.png
+map_Ps T_1014001_Equip_02_S.png
+
+newmtl MI_1014001_Equip_03
+Ns 90.000000
+Ka 1.000000 1.000000 1.000000
+Kd 1.000000 1.000000 1.000000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+d 1.000000
+illum 2
+map_Kd T_1014001_Equip_03_D.png
+map_bump T_1014001_Equip_03_N.png
+# PBR maps
+map_Pr T_1014001_Equip_03_ORM.png
+map_Pm T_1014001_Equip_03_ORM.png
+map_Ps T_1014001_Equip_03_S.png
+
+newmtl MI_1014001_Eyes_01
+Ns 90.000000
+Ka 1.000000 1.000000 1.000000
+Kd 1.000000 1.000000 1.000000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+d 1.000000
+illum 2
+map_Kd T_1014001_Eyes_01_D.png
+# Eyes typically don't need normal or PBR maps
+
+newmtl MI_1014001_Eyes_02
+Ns 90.000000
+Ka 1.000000 1.000000 1.000000
+Kd 1.000000 1.000000 1.000000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+d 1.000000
+illum 2
+map_Kd T_1014001_Eyes_01_D.png
+# Eyes typically don't need normal or PBR maps
+
+newmtl MI_1014001_Eyes_03
+Ns 90.000000
+Ka 1.000000 1.000000 1.000000
+Kd 1.000000 1.000000 1.000000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+d 1.000000
+illum 2
+map_Kd T_1014001_Eyes_01_D.png
+# Eyes typically don't need normal or PBR maps
+
+newmtl MI_1014001_GatlingGun_Weapon_01
+Ns 90.000000
+Ka 1.000000 1.000000 1.000000
+Kd 1.000000 1.000000 1.000000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+d 1.000000
+illum 2
+map_Kd T_1014001_GatlingGun_Weapon_01_D.png
+map_bump T_1014001_GatlingGun_Weapon_01_N.png
+# PBR maps
+map_Pr T_1014001_GatlingGun_Weapon_01_ORM.png
+map_Pm T_1014001_GatlingGun_Weapon_01_ORM.png
+map_Ps T_1014001_GatlingGun_Weapon_01_S.png
+
+newmtl MI_1014001_GatlingGun_Weapon_04
+Ns 90.000000
+Ka 1.000000 1.000000 1.000000
+Kd 1.000000 1.000000 1.000000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+d 1.000000
+illum 2
+map_Kd T_1014001_GatlingGun_Weapon_01_D.png
+# No normal or PBR maps available for this weapon variant
+
+newmtl MI_1014001_Hair_01
+Ns 90.000000
+Ka 1.000000 1.000000 1.000000
+Kd 1.000000 1.000000 1.000000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+d 1.000000
+illum 2
+# Main textures
+map_Kd T_1014001_Hair_01_D.png
+map_bump T_1014001_Hair_01_N.png
+# PBR maps
+map_Pr T_1014001_Hair_01_AO.png  # Using AO for roughness
+map_Pm T_1014001_Hair_01_M.png   # Using M for metallic
+map_Ps T_1014001_Hair_01_ID.png  # Using ID for specular
+
+newmtl MI_1014001_Hair_03
+Ns 90.000000
+Ka 1.000000 1.000000 1.000000
+Kd 1.000000 1.000000 1.000000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+d 1.000000
+illum 2
+# Main textures
+map_Kd T_1014001_Hair_Line_02_D.png
+map_bump T_1014001_Hair_01_N.png
+# PBR maps
+map_Pr T_1014001_Hair_Line_02_M.png  # Using line 02 M for roughness
+map_Pm T_1014001_Hair_01_M.png       # Reusing M from hair 01
+map_Ps T_1014001_Hair_01_ID.png      # Using ID for specular
+map_Kd T_1014001_Hair_Line_02_D.png
+map_bump T_1014001_Hair_01_N.png  # Reusing normal map from Hair_01
+map_Pr T_1014001_Hair_01_ORM.png  # Reusing ORM map from Hair_01
+map_Pm T_1014001_Hair_01_ORM.png  # Reusing ORM map from Hair_01
+map_Ps T_1014001_Hair_01_S.png    # Reusing specular map from Hair_01
+
+newmtl MI_1014001_Hair_04
+Ns 90.000000
+Ka 1.000000 1.000000 1.000000
+Kd 1.000000 1.000000 1.000000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+d 1.000000
+illum 2
+# Main textures
+map_Kd T_1014001_Hair_Line_03_M.png
+map_bump T_1014001_Hair_01_N.png
+# PBR maps
+map_Pr T_1014001_Hair_Line_03_M.png  # Using line 03 M for roughness
+map_Pm T_1014001_Hair_01_M.png       # Reusing M from hair 01
+map_Ps T_1014001_Hair_01_ID.png      # Using ID for specular
+
+newmtl MI_1014001_Head
+Ns 90.000000
+Ka 1.000000 1.000000 1.000000
+Kd 1.000000 1.000000 1.000000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+d 1.000000
+illum 2
+map_Kd T_1014001_Head_D.png
+map_bump T_1014001_Head_N.png
+# PBR maps
+map_Pr T_1014001_Head_ORM.png
+map_Pm T_1014001_Head_ORM.png
+map_Ps T_1014001_Head_S.png
