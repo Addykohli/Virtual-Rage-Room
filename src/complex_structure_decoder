@@ -1,0 +1,361 @@
+# complex_structure_decoder.py
+# Destructible compound structures for PyBullet (no URDF/OBJ):
+# - JPG textures + tints per link
+# - Per-link break rules: impulse threshold + cumulative damage
+# - Break actions: "detach", "shatter", "disable"
+# - Shatter spawns predefined shard pieces from JSON ("break.shards")
+
+import math
+import pybullet as p
+
+# ---------------------------
+# Texture cache
+# ---------------------------
+class TextureCache:
+    def __init__(self):
+        self.cache = {}
+    def get(self, path):
+        if not path:
+            return -1
+        if path in self.cache:
+            return self.cache[path]
+        tid = p.loadTexture(path)
+        self.cache[path] = tid
+        return tid
+
+# ---------------------------
+# Math utils
+# ---------------------------
+def _euler_to_quat(e):
+    if not e: return [0,0,0,1]
+    return p.getQuaternionFromEuler(e)
+
+def _sub(a, b): return [a[0]-b[0], a[1]-b[1], a[2]-b[2]]
+def _add(a, b): return [a[0]+b[0], a[1]+b[1], a[2]+b[2]]
+def _mul(a, s): return [a[0]*s, a[1]*s, a[2]*s]
+def _norm(v):
+    l = (v[0]*v[0]+v[1]*v[1]+v[2]*v[2])**0.5
+    return 1e-9 if l == 0 else l
+def _normalize(v):
+    n = _norm(v)
+    return [v[0]/n, v[1]/n, v[2]/n]
+
+# ---------------------------
+# Shape builders
+# ---------------------------
+def _build_collision_visual(shape, size):
+    if shape == "box":
+        hx, hy, hz = size
+        col = p.createCollisionShape(p.GEOM_BOX, halfExtents=[hx, hy, hz])
+        vis = p.createVisualShape(p.GEOM_BOX, halfExtents=[hx, hy, hz])
+    elif shape == "sphere":
+        r = size[0]
+        col = p.createCollisionShape(p.GEOM_SPHERE, radius=r)
+        vis = p.createVisualShape(p.GEOM_SPHERE, radius=r)
+    elif shape == "cylinder":
+        r, h = size
+        col = p.createCollisionShape(p.GEOM_CYLINDER, radius=r, height=h)
+        vis = p.createVisualShape(p.GEOM_CYLINDER, radius=r, length=h)
+    elif shape == "capsule":
+        r, h = size
+        col = p.createCollisionShape(p.GEOM_CAPSULE, radius=r, height=h)
+        vis = p.createVisualShape(p.GEOM_CAPSULE, radius=r, length=h)
+    else:
+        raise ValueError(f"Unsupported shape: {shape}")
+    return col, vis
+
+def _apply_visual_and_dynamics(body, link_index, part_spec, texture_cache: TextureCache):
+    # Visual
+    tint = part_spec.get("tint", [1,1,1,1])
+    tex_path = part_spec.get("texture")
+    if tex_path:
+        tex_id = texture_cache.get(tex_path)
+        p.changeVisualShape(body, link_index, textureUniqueId=tex_id, rgbaColor=tint)
+    else:
+        p.changeVisualShape(body, link_index, rgbaColor=tint)
+
+    # Dynamics
+    p.changeDynamics(
+        body, link_index,
+        lateralFriction=float(part_spec.get("friction", 0.8)),
+        restitution=float(part_spec.get("restitution", 0.05)),
+        linearDamping=float(part_spec.get("linearDamping", 0.0)),
+        angularDamping=float(part_spec.get("angularDamping", 0.0))
+    )
+
+# ---------------------------
+# Public: build structure
+# ---------------------------
+def build_structure(spec: dict, texture_cache=None):
+    """
+    Build a compound multibody from JSON spec.
+    Returns (body_id, meta) where meta contains:
+      - name_to_link: map child name -> link index
+      - break_info: {(body_id, link): {...break state...}}
+      - effects: optional SFX/debris
+      - children_specs: original child specs (for shatter)
+      - base_spec: base part spec
+      - body: body id
+    """
+    if texture_cache is None:
+        texture_cache = TextureCache()
+
+    base = spec["base"]
+    base_shape = base["shape"]
+    base_size  = base["size"]
+    base_mass  = float(base.get("mass", 1.0))
+    base_pos   = base.get("position", [0,0,1.0])
+    base_orn   = _euler_to_quat(base.get("orientation_euler", [0,0,0]))
+    base_col, base_vis = _build_collision_visual(base_shape, base_size)
+
+    children = spec.get("children", [])
+
+    # prepare arrays
+    linkMasses, linkCollisionShapeIndices, linkVisualShapeIndices = [], [], []
+    linkPositions, linkOrientations = [], []
+    linkInertialFramePositions, linkInertialFrameOrientations = [], []
+    linkParentIndices, linkJointTypes, linkJointAxis = [], [], []
+
+    joint_type_map = {"fixed": p.JOINT_FIXED, "revolute": p.JOINT_REVOLUTE, "prismatic": p.JOINT_PRISMATIC}
+
+    for ch in children:
+        col, vis = _build_collision_visual(ch["shape"], ch["size"])
+        linkCollisionShapeIndices.append(col)
+        linkVisualShapeIndices.append(vis)
+        linkMasses.append(float(ch.get("mass", 1.0)))
+        linkPositions.append(ch.get("relative_position", [0,0,0]))
+        linkOrientations.append(_euler_to_quat(ch.get("relative_orientation_euler", [0,0,0])))
+        linkInertialFramePositions.append([0,0,0])
+        linkInertialFrameOrientations.append([0,0,0,1])
+        linkParentIndices.append(0)
+        j = ch.get("joint", {"type":"fixed","axis":[0,0,0]})
+        linkJointTypes.append(joint_type_map.get(j.get("type","fixed"), p.JOINT_FIXED))
+        linkJointAxis.append(j.get("axis", [0,0,0]))
+
+    body = p.createMultiBody(
+        baseMass=base_mass,
+        baseCollisionShapeIndex=base_col,
+        baseVisualShapeIndex=base_vis,
+        basePosition=base_pos,
+        baseOrientation=base_orn,
+        linkMasses=linkMasses,
+        linkCollisionShapeIndices=linkCollisionShapeIndices,
+        linkVisualShapeIndices=linkVisualShapeIndices,
+        linkPositions=linkPositions,
+        linkOrientations=linkOrientations,
+        linkInertialFramePositions=linkInertialFramePositions,
+        linkInertialFrameOrientations=linkInertialFrameOrientations,
+        linkParentIndices=linkParentIndices,
+        linkJointTypes=linkJointTypes,
+        linkJointAxis=linkJointAxis
+    )
+
+    # visuals + dynamics
+    _apply_visual_and_dynamics(body, -1, base, texture_cache)
+    name_to_link = {}
+    for i, ch in enumerate(children):
+        name_to_link[ch.get("name", f"child_{i}")] = i
+        _apply_visual_and_dynamics(body, i, ch, texture_cache)
+        j = ch.get("joint", {})
+        # Optional: change joint limits (positional control still user-land)
+        if j and j.get("type") in ("revolute","prismatic"):
+            lower = float(j.get("lower", 0.0))
+            upper = float(j.get("upper", 0.0))
+            p.changeDynamics(body, i, jointLowerLimit=lower, jointUpperLimit=upper)
+
+    # Break info
+    break_info = {}
+    if base.get("breakable", False):
+        b = base.get("break", {})
+        break_info[(body, -1)] = _mk_break_state(b, base)
+
+    for i, ch in enumerate(children):
+        if ch.get("breakable", False):
+            b = ch.get("break", {})
+            state = _mk_break_state(b, ch)
+            break_info[(body, i)] = state
+
+    effects = spec.get("effects", {})
+    meta = {
+        "name_to_link": name_to_link,
+        "break_info": break_info,
+        "effects": effects,
+        "children_specs": children,
+        "base_spec": base,
+        "texture_cache": texture_cache,
+        "body": body
+    }
+    return body, meta
+
+def _mk_break_state(break_dict, part_spec):
+    return {
+        "impulseThreshold": float(break_dict.get("impulseThreshold", float("inf"))),
+        "cumulativeDamageLimit": float(break_dict.get("cumulativeDamageLimit", float("inf"))),
+        "damage": 0.0,
+        "onBreak": break_dict.get("onBreak", "detach"),  # "detach" | "shatter" | "disable"
+        "shards": break_dict.get("shards", []),          # for "shatter"
+        "broken": False,
+        "part_spec": part_spec
+    }
+
+# ---------------------------
+# Runtime: call each frame to evaluate breaking
+# Uses contact normal force as a fast proxy for impact/impulse
+# ---------------------------
+def update_breaking(all_metas, force_scale=1.0, debris_factory=None):
+    # Collect max normal force per (body,link) this frame
+    contacts = p.getContactPoints()
+    max_force = {}
+    for c in contacts:
+        bA, lA = c[1], c[3]
+        bB, lB = c[2], c[4]
+        fN = c[9] * force_scale
+        pt = c[6]
+        keyA, keyB = (bA, lA), (bB, lB)
+        if keyA not in max_force or fN > max_force[keyA][0]:
+            max_force[keyA] = (fN, pt)
+        if keyB not in max_force or fN > max_force[keyB][0]:
+            max_force[keyB] = (fN, pt)
+
+    # Evaluate each meta
+    for meta in all_metas:
+        br = meta["break_info"]
+        for key, info in br.items():
+            if info.get("broken"):
+                continue
+            fN_pt = max_force.get(key)
+            if not fN_pt:
+                continue
+            fN, world_pt = fN_pt
+
+            # instant break
+            if fN >= info["impulseThreshold"]:
+                _break_part(key, info, world_pt, meta, debris_factory)
+                continue
+
+            # cumulative
+            info["damage"] += fN * 0.001  # tune damage accumulation
+            if info["damage"] >= info["cumulativeDamageLimit"]:
+                _break_part(key, info, world_pt, meta, debris_factory)
+
+# ---------------------------
+# Break handler
+# ---------------------------
+def _break_part(key, info, world_pt, meta, debris_factory):
+    body, link = key
+    info["broken"] = True
+    action = info.get("onBreak", "detach")
+
+    # Optional: user debris
+    if debris_factory:
+        debris_factory(meta, body, link, world_pt)
+
+    # Hide original link and make it near-massless (cheap & stable)
+    p.changeVisualShape(body, link, rgbaColor=[0,0,0,0])
+    p.changeDynamics(body, link, mass=0.0001)
+
+    if action == "disable":
+        return
+    elif action == "detach":
+        _spawn_detached_copy(meta, body, link)
+    elif action == "shatter":
+        _spawn_shards(meta, body, link, world_pt, info["shards"])
+
+def _spawn_detached_copy(meta, body, link):
+    """Spawn a new independent rigid body matching the broken link's spec and pose."""
+    part = info_from_link(meta, link)
+    if not part:
+        return
+
+    # world pose
+    if link == -1:
+        pos, orn = p.getBasePositionAndOrientation(body)
+        lin, ang = p.getBaseVelocity(body)
+    else:
+        ls = p.getLinkState(body, link, computeForwardKinematics=True, computeLinkVelocity=True)
+        pos, orn = ls[4], ls[5]
+        lin, ang = ls[6], ls[7]
+
+    # build primitive from part spec
+    col, vis = _build_collision_visual(part["shape"], part["size"])
+    mass = float(part.get("mass", 1.0))
+    new_body = p.createMultiBody(mass, col, vis, pos, orn)
+    # visuals/dynamics
+    _apply_visual_and_dynamics(new_body, -1, part, meta["texture_cache"])
+    p.resetBaseVelocity(new_body, lin, ang)
+
+def _spawn_shards(meta, body, link, world_pt, shards):
+    """Spawn predefined shard pieces near contact point with outward velocity."""
+    if not shards:
+        return
+
+    # pose/vel of source link
+    if link == -1:
+        pos, orn = p.getBasePositionAndOrientation(body)
+        lin, ang = p.getBaseVelocity(body)
+    else:
+        ls = p.getLinkState(body, link, computeForwardKinematics=True, computeLinkVelocity=True)
+        pos, orn = ls[4], ls[5]
+        lin, ang = ls[6], ls[7]
+
+    tc = meta["texture_cache"]
+
+    # base direction away from impact
+    away = _normalize(_sub(_add(pos, [0,0,0]), world_pt))  # rough outward dir
+
+    for i, s in enumerate(shards):
+        # Per-shard required fields: shape, size, mass, optional tint, texture, localOffset, randomImpulse
+        col, vis = _build_collision_visual(s["shape"], s["size"])
+        local = s.get("localOffset", [0,0,0])
+        spawn_pos = _add(world_pt, local)
+        shard = p.createMultiBody(float(s.get("mass", 0.2)), col, vis, spawn_pos, orn)
+
+        # visuals
+        tint = s.get("tint", [1,1,1,1])
+        tex  = s.get("texture")
+        if tex:
+            tid = tc.get(tex)
+            p.changeVisualShape(shard, -1, textureUniqueId=tid, rgbaColor=tint)
+        else:
+            p.changeVisualShape(shard, -1, rgbaColor=tint)
+
+        # inherit velocity + extra outward impulse
+        extra = s.get("randomImpulse", 2.5)
+        scatter = [ ((i%3)-1) * 0.6, (((i//3)%3)-1) * 0.6, 0.8 ]
+        v = _add(lin, _mul(_add(away, scatter), extra))
+        p.resetBaseVelocity(shard, linearVelocity=v, angularVelocity=ang)
+
+def info_from_link(meta, link):
+    """Return the part spec for a given link (-1 = base)."""
+    if link == -1:
+        return meta.get("base_spec")
+    idx = link
+    children = meta.get("children_specs", [])
+    if 0 <= idx < len(children):
+        return children[idx]
+    return None
+
+# ---------------------------
+# Optional debris factory (simple cubes)
+# ---------------------------
+def default_debris_factory(meta, body, link, world_pt):
+    eff = meta.get("effects", {})
+    d = eff.get("debris", {})
+    if not d or not d.get("enabled", False):
+        return
+    count = int(d.get("count", 6))
+    size = d.get("size", [0.05,0.05,0.05])
+    mass = float(d.get("massEach", 0.1))
+    tex = d.get("texture", None)
+    tint = d.get("tint", [0.6,0.6,0.6,1.0])
+
+    c = p.createCollisionShape(p.GEOM_BOX, halfExtents=size)
+    v = p.createVisualShape(p.GEOM_BOX, halfExtents=size)
+    for i in range(count):
+        b = p.createMultiBody(mass, c, v, world_pt)
+        if tex:
+            tid = meta["texture_cache"].get(tex)
+            p.changeVisualShape(b, -1, textureUniqueId=tid, rgbaColor=tint)
+        else:
+            p.changeVisualShape(b, -1, rgbaColor=tint)
+        p.resetBaseVelocity(b, linearVelocity=[(i%3-1)*2, ((i//3)%3-1)*2, 2.0])

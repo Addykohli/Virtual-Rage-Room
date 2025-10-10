@@ -67,7 +67,7 @@ class ModelLibrary:
                     'generator': 'cluster',
                     'cluster': {
                         'size': [0.15, 0.45, 0.15],
-                        'grid_count': (4, 7, 4),
+                        'grid_count': (1, 7, 8),
                         'mass': 1.0,
                         'base_color': (0.8, 0.8, 0.8, 1.0),
                         'tint_strength': 0.1,
@@ -112,6 +112,105 @@ class ModelLibrary:
                     }
                 }
             
+            ],
+            'complex': [
+                    {'name': 'Sports Car Mk1',
+                    'type': 'structure',
+                    'generator': 'compound',
+                    'thumbnail': 'thumbs/sportscar.png',
+                    'base': {
+                        'shape': 'box',
+                        'size': [1.0, 0.45, 0.18],
+                        'mass': 600.0,
+                        'position': [0, 0, 0.6],
+                        'orientation_euler': [0, 0, 0],
+                        'texture': 'chassis.jpg',
+                        'tint': [0.9, 0.9, 0.95, 1.0],
+                        'friction': 0.9,
+                        'restitution': 0.05,
+                        'linearDamping': 0.02,
+                        'angularDamping': 0.02,
+                        'breakable': false
+                    },
+                            "children": [
+                                { "name": "wheel_fr", "shape": "cylinder", "size": [0.28, 0.18], "mass": 15.0,
+                                    "relative_position": [0.75, 0.55, -0.08],
+                                    "relative_orientation_euler": [0, 0, 0],
+                                    "joint": { "type": "revolute", "axis": [0, 1, 0], "lower": -1000, "upper": 1000 },
+                                    "texture": "wheel.jpg", "tint": [0.2, 0.2, 0.2, 1.0],
+                                    "friction": 1.2, "restitution": 0.1,
+                                    "breakable": true, "break": { "impulseThreshold": 140.0, "cumulativeDamageLimit": 280.0, "onBreak": "detach" }
+                                },
+                                { "name": "wheel_fl", "shape": "cylinder", "size": [0.28, 0.18], "mass": 15.0,
+                                    "relative_position": [0.75, -0.55, -0.08],
+                                    "relative_orientation_euler": [0, 0, 0],
+                                    "joint": { "type": "revolute", "axis": [0, 1, 0], "lower": -1000, "upper": 1000 },
+                                    "texture": "wheel.jpg", "tint": [0.2, 0.2, 0.2, 1.0],
+                                    "friction": 1.2, "restitution": 0.1,
+                                    "breakable": true, "break": { "impulseThreshold": 140.0, "cumulativeDamageLimit": 280.0, "onBreak": "detach" }
+                                },
+                                { "name": "wheel_rr", "shape": "cylinder", "size": [0.28, 0.18], "mass": 15.0,
+                                     "relative_position": [-0.75, 0.55, -0.08],
+                                    "relative_orientation_euler": [0, 0, 0],
+                                    "joint": { "type": "revolute", "axis": [0, 1, 0], "lower": -1000, "upper": 1000 },
+                                    "texture": "wheel.jpg", "tint": [0.2, 0.2, 0.2, 1.0],
+                                    "friction": 1.2, "restitution": 0.1,
+                                    "breakable": true, "break": { "impulseThreshold": 140.0, "cumulativeDamageLimit": 280.0, "onBreak": "detach" }
+                                },
+                                { "name": "wheel_rl", "shape": "cylinder", "size": [0.28, 0.18], "mass": 15.0,
+                                    "relative_position": [-0.75, -0.55, -0.08],
+                                    "relative_orientation_euler": [0, 0, 0],
+                                    "joint": { "type": "revolute", "axis": [0, 1, 0], "lower": -1000, "upper": 1000 },
+                                    "texture": "wheel.jpg", "tint": [0.2, 0.2, 0.2, 1.0],
+                                    "friction": 1.2, "restitution": 0.1,
+                                    "breakable": true, "break": { "impulseThreshold": 140.0, "cumulativeDamageLimit": 280.0, "onBreak": "detach" }
+                                },
+                                {   "name": "window_top", "shape": "box", "size": [0.6, 0.40, 0.12], "mass": 2.0,
+                                    "relative_position": [0.0, 0.0, 0.35],
+                                    "relative_orientation_euler": [0, 0, 0],
+                                    "joint": { "type": "fixed", "axis": [0, 0, 0] },
+                                    "texture": "window.jpg",
+                                    "tint": [0.6, 0.75, 0.95, 0.85],
+                                    "friction": 0.3, "restitution": 0.01,
+                                    "breakable": true,
+                                    "break": {
+                                        "impulseThreshold": 45.0,
+                                        "cumulativeDamageLimit": 60.0,
+                                        "onBreak": "shatter",
+                                        "shards": [
+                                            { "shape": "box", "size": [0.08, 0.02, 0.04], "mass": 0.05, "texture": "glass_shard.jpg", "tint": [0.7,0.9,1.0,0.6], "localOffset": [ 0.05, 0.02, 0.02], "randomImpulse": 3.2 },
+                                            { "shape": "box", "size": [0.06, 0.02, 0.03], "mass": 0.05, "texture": "glass_shard.jpg", "tint": [0.7,0.9,1.0,0.6], "localOffset": [-0.03,-0.04, 0.01], "randomImpulse": 3.0 },
+                                            { "shape": "box", "size": [0.07, 0.02, 0.03], "mass": 0.05, "texture": "glass_shard.jpg", "tint": [0.7,0.9,1.0,0.6], "localOffset": [ 0.00, 0.05,-0.01], "randomImpulse": 3.1 },
+                                            { "shape": "box", "size": [0.05, 0.02, 0.02], "mass": 0.05, "texture": "glass_shard.jpg", "tint": [0.7,0.9,1.0,0.6], "localOffset": [-0.06, 0.01, 0.00], "randomImpulse": 3.5 },
+                                            { "shape": "box", "size": [0.06, 0.02, 0.02], "mass": 0.05, "texture": "glass_shard.jpg", "tint": [0.7,0.9,1.0,0.6], "localOffset": [ 0.04,-0.02,-0.02], "randomImpulse": 3.3 }
+                                        ]
+                                    }
+                                },
+                                { "name": "hood", "shape": "box", "size": [0.6, 0.45, 0.08], "mass": 5.0,
+                                    "relative_position": [0.55, 0, 0.22],
+                                    "relative_orientation_euler": [0, 0, 0],
+                                    "joint": { "type": "fixed", "axis": [0, 0, 0] },
+                                    "texture": "hood.jpg",
+                                    "tint": [0.95, 0.1, 0.1, 1.0],
+                                    "friction": 0.5, "restitution": 0.02,
+                                    "breakable": true, "break": { "impulseThreshold": 110.0, "cumulativeDamageLimit": 200.0, "onBreak": "detach" }
+                                },
+                                { "name": "spoiler", "shape": "box", "size": [0.35, 0.15, 0.05], "mass": 1.5,
+                                    "relative_position": [-0.9, 0, 0.28],
+                                    "relative_orientation_euler": [0, 0, 0],
+                                    "joint": { "type": "fixed", "axis": [0, 0, 0] },
+                                    "texture": "spoiler.jpg",
+                                    "tint": [0.2, 0.2, 0.2, 1.0],
+                                    "friction": 0.6, "restitution": 0.03,
+                                    "breakable": true, "break": { "impulseThreshold": 80.0, "cumulativeDamageLimit": 120.0, "onBreak": "detach" }
+                                }
+                            ],
+                            "effects": {
+                                "hitSounds": ["metal_hit.mp3"],
+                                "breakSounds": ["metal_break.mp3"],
+                                "debris": { "enabled": true, "count": 8, "size": [0.06,0.06,0.06], "massEach": 0.2, "texture": "debris.jpg", "tint": [0.6,0.6,0.6,1.0] }
+                            }
+                }
             ]
         }
     

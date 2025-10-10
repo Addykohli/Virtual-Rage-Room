@@ -263,6 +263,7 @@ class Simulation:
         # Structure placement state
         self.placing_cube = False
         self.cube_preview_pos = [0.0, 0.0, 0.0]
+        self.cube_rotation = 0  # Rotation angle in degrees
         self.cube_size = 1.0
         self.active_cube_size = [1.0, 1.0, 1.0]
         self.active_total_size = [1.0, 1.0, 1.0]
@@ -336,7 +337,7 @@ class Simulation:
         """Load the ground texture from file, supporting both regular images and EXR"""
         try:
             # Try loading the EXR texture first
-            exr_path = os.path.join(os.path.dirname(__file__), 'textures', 'gravelly_sand_rough_2k.exr')
+            exr_path = os.path.join(os.path.dirname(__file__), 'textures', 'brown_mud_leaves_01_rough_4k.exr')
             if os.path.exists(exr_path):
                 import OpenEXR
                 import Imath
@@ -377,7 +378,7 @@ class Simulation:
                 img_data = img_data.reshape((height, width))
                 
                 # Load the color texture
-                color_path = os.path.join(os.path.dirname(__file__), 'textures', 'gravelly_sand_diff_2k.jpg')
+                color_path = os.path.join(os.path.dirname(__file__), 'textures', 'brown_mud_leaves_01_diff_4k.jpg')
                 if os.path.exists(color_path):
                     # Load the color texture as a surface
                     color_surface = pygame.image.load(color_path).convert()
@@ -420,7 +421,7 @@ class Simulation:
                 return
                 
             # Fall back to regular image if EXR not found
-            texture_path = os.path.join(os.path.dirname(__file__), 'textures', 'gravelly_sand_diff_2k.jpg')
+            texture_path = os.path.join(os.path.dirname(__file__), 'textures', 'brown_mud_leaves_01_diff_4k.jpg')
             texture_surface = pygame.image.load(texture_path).convert_alpha()
             
             # Get the raw pixel data
@@ -507,8 +508,10 @@ class Simulation:
             if fill_type == 'player':
                 continue
                 
-            # Draw shadow first (under the object)
-            self.draw_rectangular_shadow(pos[0], pos[2], size[0], size[2], alpha=0.25)
+            # Draw circular shadow first (under the object)
+            # Use the maximum dimension for the radius but scale it down for better appearance
+            shadow_radius = max(size[0], size[2]) * 0.3  # 30% of the largest dimension
+            self.draw_circular_shadow(pos[0], pos[2], shadow_radius, alpha=0.4)
             
             # Save current matrix
             glPushMatrix()
@@ -1383,6 +1386,7 @@ class Simulation:
         panel_width = 250
         panel_x = self.display[0] - panel_width - button_bg_width  # Position panel to the left of button background
         
+        # Draw panel background
         glColor3f(0.1, 0.1, 0.15)  # Panel color
         glBegin(GL_QUADS)
         glVertex2f(panel_x, 0)
@@ -1390,11 +1394,24 @@ class Simulation:
         glVertex2f(panel_x + panel_width, self.display[1])
         glVertex2f(panel_x, self.display[1])
         glEnd()
+        
+        # Draw panel header with label
+        header_height = 40
+        glColor3f(0.15, 0.15, 0.2)  # Slightly lighter than panel background
+        glBegin(GL_QUADS)
+        glVertex2f(panel_x, 0)
+        glVertex2f(panel_x + panel_width, 0)
+        glVertex2f(panel_x + panel_width, header_height)
+        glVertex2f(panel_x, header_height)
+        glEnd()
+        
+        # Draw panel label - matching variable settings style
+        self.draw_text("Add Structures", panel_x + 15, 20, 20, (0.9, 0.9, 0.9))
 
         # Draw structure buttons when mouse is free
         rendered_buttons = []
-        if not self.mouse_grabbed:
-            rendered_buttons = self.draw_structure_buttons(panel_x)
+        #if not self.mouse_grabbed:
+        rendered_buttons = self.draw_structure_buttons(panel_x)
         self.structure_buttons = rendered_buttons
         
         # Re-enable depth testing
@@ -1570,21 +1587,34 @@ class Simulation:
         panel_width = 250
         margin = 15
         button_size = 60
-        spacing = 30
+        spacing = 15  # Spacing between buttons
+        text_spacing = 8  # Spacing between button and text
         button_x = panel_x + margin
-        button_y = 80
+        button_y = 100  # Increased to account for the panel header
+        buttons_per_row = 2  # Number of buttons per row
+        button_with_text_height = button_size + 30  # Extra space for text below button
 
         mouse_x, mouse_y = pygame.mouse.get_pos()
         font = pygame.font.Font(None, 18)
         buttons = []
 
-        for preset in self.structure_presets:
-            rect = pygame.Rect(button_x, button_y, button_size, button_size)
+        for i, preset in enumerate(self.structure_presets):
+            # Calculate position based on button index
+            col = i % buttons_per_row
+            row = i // buttons_per_row
+            
+            # Calculate button position
+            x = button_x + (button_size + spacing) * col
+            y = button_y + (button_with_text_height + spacing) * row
+            
+            # Button rectangle (just the clickable/image area)
+            rect = pygame.Rect(x, y, button_size, button_size)
             is_hovered = rect.collidepoint(mouse_x, mouse_y)
 
             is_active = self.active_structure and preset['name'] == self.active_structure['name']
             button_color = self.colors['cube_button_hover'] if (is_hovered or is_active) else self.colors['cube_button']
 
+            # Draw button background
             glColor3f(*button_color)
             glBegin(GL_QUADS)
             glVertex2f(rect.left, rect.top)
@@ -1593,8 +1623,8 @@ class Simulation:
             glVertex2f(rect.left, rect.bottom)
             glEnd()
 
+            # Draw button image/icon
             image_surface = self.get_structure_thumbnail(preset)
-            scaled_surface = None
             if image_surface:
                 cache = preset.setdefault('_thumbnail_cache', {})
                 if rect.size not in cache:
@@ -1608,30 +1638,77 @@ class Simulation:
                 glDrawPixels(rect.width, rect.height, GL_RGBA, GL_UNSIGNED_BYTE, image_data)
                 glDisable(GL_BLEND)
 
+            # Prepare button label text
             if is_active and self.placing_cube:
                 label_text = "Click to place"
-            elif is_active:
-                label_text = f"{preset['name']} (active)"
             else:
-                label_text = preset['name']
+                # Split long names to fit better
+                name = preset['name']
+                if len(name) > 8:  # Adjust this number based on your button width
+                    # Try to split at spaces
+                    words = name.split(' ')
+                    if len(words) > 1:
+                        # Try to split into two lines
+                        mid = len(words) // 2
+                        label_text = '\n'.join([' '.join(words[:mid]), ' '.join(words[mid:])])
+                    else:
+                        # For single long words, just truncate
+                        label_text = name[:8] + '...'
+                else:
+                    label_text = name
 
-            text_surface = font.render(label_text, True, (255, 255, 255))
-            text_data = pygame.image.tostring(text_surface, 'RGBA', True)
+            # Render and draw the text
+            if '\n' in label_text:
+                # Handle multi-line text
+                lines = label_text.split('\n')
+                for line_num, line in enumerate(lines):
+                    text_surface = font.render(line, True, (255, 255, 255))
+                    text_data = pygame.image.tostring(text_surface, 'RGBA', True)
+                    text_width = text_surface.get_width()
+                    
+                    glEnable(GL_BLEND)
+                    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA)
+                    text_x = rect.left + (button_size - text_width) // 2  # Center text
+                    text_y = rect.bottom + 8 + (text_surface.get_height() * line_num)
+                    glRasterPos2i(text_x, text_y + text_surface.get_height())
+                    glDrawPixels(text_surface.get_width(), text_surface.get_height(), 
+                               GL_RGBA, GL_UNSIGNED_BYTE, text_data)
+                    glDisable(GL_BLEND)
+            else:
+                # Single line of text
+                text_surface = font.render(label_text, True, (255, 255, 255))
+                text_data = pygame.image.tostring(text_surface, 'RGBA', True)
+                text_width = text_surface.get_width()
+                
+                glEnable(GL_BLEND)
+                glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA)
+                text_x = rect.left + (button_size - text_width) // 2  # Center text
+                text_y = rect.bottom + 8
+                glRasterPos2i(text_x, text_y + text_surface.get_height())
+                glDrawPixels(text_surface.get_width(), text_surface.get_height(), 
+                           GL_RGBA, GL_UNSIGNED_BYTE, text_data)
+                glDisable(GL_BLEND)
 
-            glEnable(GL_BLEND)
-            glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA)
-            text_x = rect.left
-            text_y = rect.bottom + 8 + text_surface.get_height()
-            glRasterPos2i(text_x, text_y)
-            glDrawPixels(text_surface.get_width(), text_surface.get_height(), GL_RGBA, GL_UNSIGNED_BYTE, text_data)
-            glDisable(GL_BLEND)
-
-            text_height = text_surface.get_height()
-            total_height = button_size + text_height + 16
-            expanded_rect = pygame.Rect(rect.left, rect.top, rect.width, total_height)
-            buttons.append({'preset': preset, 'rect': expanded_rect})
-
-            button_y += total_height + spacing
+            # Store button rect for click detection (slightly larger to include text area)
+            button_rect = pygame.Rect(
+                rect.x, 
+                rect.y, 
+                rect.width, 
+                button_with_text_height
+            )
+            buttons.append((button_rect, preset))
+            
+            # Draw a border around the active button
+            if is_active:
+                glLineWidth(2.0)
+                glColor3f(1.0, 1.0, 1.0)  # White border
+                glBegin(GL_LINE_LOOP)
+                glVertex2f(rect.left - 2, rect.top - 2)
+                glVertex2f(rect.right + 2, rect.top - 2)
+                glVertex2f(rect.right + 2, rect.bottom + 2)
+                glVertex2f(rect.left - 2, rect.bottom + 2)
+                glEnd()
+                glLineWidth(1.0)
 
         return buttons
 
@@ -1654,9 +1731,22 @@ class Simulation:
 
         glPushMatrix()
         glTranslatef(*self.cube_preview_pos)
+        
+        # Apply rotation around Y axis
+        glRotatef(self.cube_rotation, 0, 1, 0)
 
-        half_sizes = [dim / 2.0 for dim in self.active_total_size]
+        # Calculate dimensions based on rotation
+        if self.cube_rotation % 180 == 90:
+            # For 90 and 270 degree rotations, swap x and z dimensions
+            half_sizes = [self.active_total_size[2] / 2.0, 
+                         self.active_total_size[1] / 2.0,
+                         self.active_total_size[0] / 2.0]
+        else:
+            half_sizes = [dim / 2.0 for dim in self.active_total_size]
+            
         hx, hy, hz = half_sizes
+        
+        # Draw semi-transparent fill
         glColor4f(*self.colors['cube_preview'])
         glBegin(GL_QUADS)
         # Front face
@@ -1692,6 +1782,34 @@ class Simulation:
         glEnd()
 
         glPopMatrix()
+        glDisable(GL_BLEND)
+        glEnable(GL_LIGHTING)
+
+    def draw_circular_shadow(self, x, z, radius, alpha=0.2):
+        """Draw a circular shadow on the ground for an object at (x, z) with given radius."""
+        glDisable(GL_LIGHTING)
+        glEnable(GL_BLEND)
+        glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA)
+        
+        # Use a dark gray color with transparency
+        glColor4f(0.1, 0.1, 0.1, alpha)
+        
+        # Draw a circle for the shadow
+        glPushMatrix()
+        glTranslatef(x, 0.06, z)  # Slightly above ground to prevent z-fighting
+        
+        # Draw a circle using a polygon
+        glBegin(GL_POLYGON)
+        num_segments = 16
+        for i in range(num_segments):
+            theta = 2.0 * math.pi * float(i) / float(num_segments)
+            dx = radius * math.cos(theta)
+            dz = radius * math.sin(theta)
+            glVertex3f(dx, 0, dz)
+        glEnd()
+        
+        glPopMatrix()
+        
         glDisable(GL_BLEND)
         glEnable(GL_LIGHTING)
 
@@ -1958,7 +2076,15 @@ class Simulation:
             self.prev_right_mouse = False
             self.awaiting_cube_release = False
             return
-
+            
+        # Handle rotation with R key
+        '''keys = pygame.key.get_pressed()
+        if keys[pygame.K_r] and not hasattr(self, 'r_key_pressed'):
+            self.r_key_pressed = True
+            self.cube_rotation = (self.cube_rotation + 90) % 360  # Rotate 90 degrees
+        elif not keys[pygame.K_r]:
+            self.r_key_pressed = False
+        '''
         mouse_buttons = pygame.mouse.get_pressed()
         left_pressed = mouse_buttons[0]
         right_pressed = mouse_buttons[2]
@@ -1966,9 +2092,9 @@ class Simulation:
 
         if self.show_side_panel and not self.mouse_grabbed:
             hovered_button = None
-            for button in self.structure_buttons:
-                if button['rect'].collidepoint(mouse_pos):
-                    hovered_button = button
+            for button_rect, preset in self.structure_buttons:
+                if button_rect.collidepoint(mouse_pos):
+                    hovered_button = {'rect': button_rect, 'preset': preset}
                     break
 
             if hovered_button and left_pressed and not self.prev_left_mouse:
@@ -1990,7 +2116,7 @@ class Simulation:
                     self.awaiting_cube_release = False
             else:
                 if left_pressed and not self.prev_left_mouse and hit_point is not None:
-                    self.spawn_structure(self.cube_preview_pos)
+                    self.spawn_structure(self.cube_preview_pos, self.cube_rotation)
                     self.placing_cube = False
                 elif right_pressed and not self.prev_right_mouse:
                     self.placing_cube = False
@@ -2034,9 +2160,16 @@ class Simulation:
             return total_height / 2.0
         return self.active_total_size[1] / 2.0
 
-    def spawn_structure(self, position):
+    def spawn_structure(self, position, rotation=0):
         if not self.active_structure:
             return
+            
+        # Reset rotation after placement
+        self.cube_rotation = 0
+        # Convert rotation to radians for physics
+        rotation_rad = math.radians(rotation)
+        # Create rotation quaternion for y-axis rotation
+        rotation_quat = [0, math.sin(rotation_rad/2), 0, math.cos(rotation_rad/2)]
 
         # Check for nearby structures to prevent interlocking
         nearby_objects = self.physics.check_nearby_objects(position, radius=2.0)
@@ -2047,7 +2180,10 @@ class Simulation:
             
         generator = self.active_structure.get('generator')
         if generator == 'cluster':
-            self.spawn_cluster_structure(position, self.active_structure['cluster'])
+            # Update the structure's rotation in its metadata
+            structure_config = self.active_structure['cluster'].copy()
+            structure_config['rotation'] = rotation_quat
+            self.spawn_cluster_structure(position, structure_config)
 
     def draw_textured_cube(self, size, texture_id):
         """Draw a cuboid with texture applied to all faces"""
@@ -2133,7 +2269,39 @@ class Simulation:
         
         # Calculate total structure size and half extents
         total_size = [cube_size[i] * grid_counts[i] for i in range(3)]
-        half_total = [total_size[i] / 2.0 for i in range(3)]
+        half_size = [s / 2.0 for s in total_size]
+        
+        # Get rotation quaternion if it exists
+        rotation_quat = config.get('rotation', [0, 0, 0, 1])
+        
+        # Initialize rotation angle and matrix
+        rotation_angle = 0
+        rotation_matrix = None
+        
+        # Process rotation if quaternion is provided
+        if isinstance(rotation_quat, (list, tuple)) and len(rotation_quat) == 4:
+            # Quaternion is [x, y, z, w] format
+            x, y, z, w = rotation_quat
+            rotation_angle = 2 * math.acos(w)  # Angle in radians
+            if y < 0:
+                rotation_angle = -rotation_angle  # Handle direction of rotation
+                
+            # Calculate rotation matrix from quaternion
+            xx = x * x
+            xy = x * y
+            xz = x * z
+            xw = x * w
+            yy = y * y
+            yz = y * z
+            yw = y * w
+            zz = z * z
+            zw = z * w
+            
+            rotation_matrix = [
+                1 - 2 * (yy + zz), 2 * (xy - zw), 2 * (xz + yw),
+                2 * (xy + zw), 1 - 2 * (xx + zz), 2 * (yz - xw),
+                2 * (xz - yw), 2 * (yz + xw), 1 - 2 * (xx + yy)
+            ]
         
         # Load textures if needed
         if fill_type == 'small_bricks' and not hasattr(self, 'small_bricks_textures'):
@@ -2142,22 +2310,41 @@ class Simulation:
             self._load_textures('textures/rust_metal', 'rust_metal_textures')
         elif fill_type == 'concrete' and not hasattr(self, 'concrete_textures'):
             self._load_textures('textures/concrete', 'concrete_textures')
+        
+        # Calculate center of the entire cluster
+        center_x = position[0]
+        center_z = position[2]
+        
         # Generate cubes in a 3D grid
         for ix in range(grid_counts[0]):
             for iy in range(grid_counts[1]):
                 for iz in range(grid_counts[2]):
-                    # Calculate position offset for this cube
-                    offset = [
-                        (ix * cube_size[0]) - half_total[0] + (cube_size[0] / 2.0),
-                        (iy * cube_size[1]) - half_total[1] + (cube_size[1] / 2.0),
-                        (iz * cube_size[2]) - half_total[2] + (cube_size[2] / 2.0)
-                    ]
+                    # Calculate position in the grid (before rotation)
+                    x = (ix * cube_size[0]) - half_size[0] + (cube_size[0] / 2.0)
+                    y = (iy * cube_size[1]) - half_size[1] + (cube_size[1] / 2.0)
+                    z = (iz * cube_size[2]) - half_size[2] + (cube_size[2] / 2.0)
+                    
+                    # Store the original position for rotation
+                    original_pos = [x, y, z]
+                    
+                    # If we have a rotation matrix, apply it to the position
+                    if rotation_matrix is not None:
+                        # Apply rotation matrix to the position
+                        x = (rotation_matrix[0] * original_pos[0] + 
+                             rotation_matrix[1] * original_pos[1] + 
+                             rotation_matrix[2] * original_pos[2])
+                        y = (rotation_matrix[3] * original_pos[0] + 
+                             rotation_matrix[4] * original_pos[1] + 
+                             rotation_matrix[5] * original_pos[2])
+                        z = (rotation_matrix[6] * original_pos[0] + 
+                             rotation_matrix[7] * original_pos[1] + 
+                             rotation_matrix[8] * original_pos[2])
                     
                     # Calculate final position in world space
                     cube_position = [
-                        position[0] + offset[0],
-                        position[1] + offset[1],
-                        position[2] + offset[2]
+                        center_x + x,
+                        position[1] + y,
+                        center_z + z
                     ]
                     
                     # Get fill type from config
@@ -2186,11 +2373,16 @@ class Simulation:
                             mesh_obj = OBJ(config['mesh_path'])
                         except Exception as e:
                             mesh_obj = None
+                    # For physics, we'll use the same rotation for all cubes in the cluster
+                    # This ensures they maintain their relative orientations
+                    rotation = rotation_quat if hasattr(self.physics, 'supports_quaternions') and self.physics.supports_quaternions else [0, rotation_angle, 0]
+                    
                     cube_id = self.physics.add_structure(
                         position=cube_position,
                         size=cube_size,
                         mass=0.0 if config.get('stiff', False) else mass,  # Set mass to 0 for stiff structures
                         color=base_color,
+                        rotation=rotation,
                         fill=fill_type,
                         metadata=metadata,
                         mesh_obj=mesh_obj
@@ -2539,7 +2731,10 @@ class Simulation:
                     elif event.key == pygame.K_TAB:
                         self.toggle_mouse_grab()
                     elif event.key == pygame.K_r:
-                        self.reset_structures()
+                        if self.placing_cube:  # Rotate if in placement mode
+                            self.cube_rotation = (self.cube_rotation + 45) % 360  # Rotate 45 degrees around Y-axis
+                        else:  # Otherwise reset structures
+                            self.reset_structures()
                     elif event.key == pygame.K_m:  # Add M key to toggle side panel
                         self.show_side_panel = not self.show_side_panel
             elif event.type == pygame.MOUSEBUTTONDOWN:

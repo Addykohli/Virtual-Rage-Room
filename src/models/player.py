@@ -5,7 +5,7 @@ class Player:
         self.x = x
         self.y = y
         self.z = z
-        self.speed = 0.1
+        #self.speed = 0.1
         self.rotation_x = 0  # Vertical rotation (pitch)
         self.rotation_y = 0  # Horizontal rotation (yaw)
         self.rotation_z = 0  # Vertical rotation (roll)
