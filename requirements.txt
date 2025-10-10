@@ -1,0 +1,8 @@
+pygame>=2.6.1
+PyOpenGL>=3.1.0
+PyOpenGL-accelerate>=3.1.0
+Pillow>=10.0.0
+numpy>=1.24.0
+openexr>=3.4.0
+PyBullet>=3.2.0
+pyglm>=2.8.2
