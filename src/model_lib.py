@@ -25,7 +25,7 @@ class ModelLibrary:
                     'camera_height': -4.5,
                     'shoot_sound': 'turret-shoot.mp3',
                     'hit_sound': 'turret-hit.mp3',
-                    'Yaw_offset': 0
+                    'Yaw_offset': 15
                 },
                 {
                     'name': 'Punisher',
@@ -40,6 +40,20 @@ class ModelLibrary:
                     'shoot_sound': 'punisher_shoot.mp3',
                     'hit_sound': 'turret-hit.mp3',
                     'Yaw_offset': -90
+                },
+                {
+                    'name': 'Cannon',
+                    'path': os.path.join(self.models_dir, 'Cannon.obj'),
+                    'mesh_path': os.path.join(self.models_dir, 'Cannon.obj'),
+                    'thumbnail': os.path.join(self.thumbnails_dir, 'Cannon.png'),
+                    'type': 'player',
+                    'scale': 1.3,
+                    'offset': (0, 1.35, 0),  # x, y, z offset for model positioning
+                    'bullet_origin': [(0.0, 0.4, 0.0)],  # x, y, z offset from model center for bullet spawn
+                    'camera_height': -4.0,
+                    'shoot_sound': 'cannon_shoot.mp3',
+                    'hit_sound': 'turret-hit.mp3',
+                    'Yaw_offset': 10
                 }
             ],
             'environment': [
@@ -57,7 +71,14 @@ class ModelLibrary:
                         'tint_variation': (0.8, 0.8, 0.8),  
                         'fill': 'small_bricks',
                         'hit_sound': ['brick_hit.mp3'],
-                        'stiff': False
+                        'stiff': False,
+                        'shard_config': {
+                            'count': 14,           # Number of shards to create
+                            'size_scale': 0.5,    # Shard size relative to original brick
+                            'mass': 0.3,          # Mass of each shard
+                            'velocity_scale': 0.8, # How fast shards fly
+                            'impulse_threshold': 3000.0  # Minimum impulse required to break the brick
+                        }
                     }
                 },
                 {
@@ -83,7 +104,7 @@ class ModelLibrary:
                     'thumbnail': os.path.join(self.thumbnails_dir, 'cube_125pc.png'),
                     'generator': 'cluster',
                     'cluster': {
-                        'size': [2.15, 3, 0.7],
+                        'size': [8, 8, 0.3],
                         'grid_count': (1, 1, 1),
                         'mass': 10.0,
                         'base_color': (1.0, 1.0, 1.0, 1.0),
@@ -111,107 +132,8 @@ class ModelLibrary:
                         'stiff': True
                     }
                 }
-            
             ],
-            'complex': [
-                    {'name': 'Sports Car Mk1',
-                    'type': 'structure',
-                    'generator': 'compound',
-                    'thumbnail': 'thumbs/sportscar.png',
-                    'base': {
-                        'shape': 'box',
-                        'size': [1.0, 0.45, 0.18],
-                        'mass': 600.0,
-                        'position': [0, 0, 0.6],
-                        'orientation_euler': [0, 0, 0],
-                        'texture': 'chassis.jpg',
-                        'tint': [0.9, 0.9, 0.95, 1.0],
-                        'friction': 0.9,
-                        'restitution': 0.05,
-                        'linearDamping': 0.02,
-                        'angularDamping': 0.02,
-                        'breakable': false
-                    },
-                            "children": [
-                                { "name": "wheel_fr", "shape": "cylinder", "size": [0.28, 0.18], "mass": 15.0,
-                                    "relative_position": [0.75, 0.55, -0.08],
-                                    "relative_orientation_euler": [0, 0, 0],
-                                    "joint": { "type": "revolute", "axis": [0, 1, 0], "lower": -1000, "upper": 1000 },
-                                    "texture": "wheel.jpg", "tint": [0.2, 0.2, 0.2, 1.0],
-                                    "friction": 1.2, "restitution": 0.1,
-                                    "breakable": true, "break": { "impulseThreshold": 140.0, "cumulativeDamageLimit": 280.0, "onBreak": "detach" }
-                                },
-                                { "name": "wheel_fl", "shape": "cylinder", "size": [0.28, 0.18], "mass": 15.0,
-                                    "relative_position": [0.75, -0.55, -0.08],
-                                    "relative_orientation_euler": [0, 0, 0],
-                                    "joint": { "type": "revolute", "axis": [0, 1, 0], "lower": -1000, "upper": 1000 },
-                                    "texture": "wheel.jpg", "tint": [0.2, 0.2, 0.2, 1.0],
-                                    "friction": 1.2, "restitution": 0.1,
-                                    "breakable": true, "break": { "impulseThreshold": 140.0, "cumulativeDamageLimit": 280.0, "onBreak": "detach" }
-                                },
-                                { "name": "wheel_rr", "shape": "cylinder", "size": [0.28, 0.18], "mass": 15.0,
-                                     "relative_position": [-0.75, 0.55, -0.08],
-                                    "relative_orientation_euler": [0, 0, 0],
-                                    "joint": { "type": "revolute", "axis": [0, 1, 0], "lower": -1000, "upper": 1000 },
-                                    "texture": "wheel.jpg", "tint": [0.2, 0.2, 0.2, 1.0],
-                                    "friction": 1.2, "restitution": 0.1,
-                                    "breakable": true, "break": { "impulseThreshold": 140.0, "cumulativeDamageLimit": 280.0, "onBreak": "detach" }
-                                },
-                                { "name": "wheel_rl", "shape": "cylinder", "size": [0.28, 0.18], "mass": 15.0,
-                                    "relative_position": [-0.75, -0.55, -0.08],
-                                    "relative_orientation_euler": [0, 0, 0],
-                                    "joint": { "type": "revolute", "axis": [0, 1, 0], "lower": -1000, "upper": 1000 },
-                                    "texture": "wheel.jpg", "tint": [0.2, 0.2, 0.2, 1.0],
-                                    "friction": 1.2, "restitution": 0.1,
-                                    "breakable": true, "break": { "impulseThreshold": 140.0, "cumulativeDamageLimit": 280.0, "onBreak": "detach" }
-                                },
-                                {   "name": "window_top", "shape": "box", "size": [0.6, 0.40, 0.12], "mass": 2.0,
-                                    "relative_position": [0.0, 0.0, 0.35],
-                                    "relative_orientation_euler": [0, 0, 0],
-                                    "joint": { "type": "fixed", "axis": [0, 0, 0] },
-                                    "texture": "window.jpg",
-                                    "tint": [0.6, 0.75, 0.95, 0.85],
-                                    "friction": 0.3, "restitution": 0.01,
-                                    "breakable": true,
-                                    "break": {
-                                        "impulseThreshold": 45.0,
-                                        "cumulativeDamageLimit": 60.0,
-                                        "onBreak": "shatter",
-                                        "shards": [
-                                            { "shape": "box", "size": [0.08, 0.02, 0.04], "mass": 0.05, "texture": "glass_shard.jpg", "tint": [0.7,0.9,1.0,0.6], "localOffset": [ 0.05, 0.02, 0.02], "randomImpulse": 3.2 },
-                                            { "shape": "box", "size": [0.06, 0.02, 0.03], "mass": 0.05, "texture": "glass_shard.jpg", "tint": [0.7,0.9,1.0,0.6], "localOffset": [-0.03,-0.04, 0.01], "randomImpulse": 3.0 },
-                                            { "shape": "box", "size": [0.07, 0.02, 0.03], "mass": 0.05, "texture": "glass_shard.jpg", "tint": [0.7,0.9,1.0,0.6], "localOffset": [ 0.00, 0.05,-0.01], "randomImpulse": 3.1 },
-                                            { "shape": "box", "size": [0.05, 0.02, 0.02], "mass": 0.05, "texture": "glass_shard.jpg", "tint": [0.7,0.9,1.0,0.6], "localOffset": [-0.06, 0.01, 0.00], "randomImpulse": 3.5 },
-                                            { "shape": "box", "size": [0.06, 0.02, 0.02], "mass": 0.05, "texture": "glass_shard.jpg", "tint": [0.7,0.9,1.0,0.6], "localOffset": [ 0.04,-0.02,-0.02], "randomImpulse": 3.3 }
-                                        ]
-                                    }
-                                },
-                                { "name": "hood", "shape": "box", "size": [0.6, 0.45, 0.08], "mass": 5.0,
-                                    "relative_position": [0.55, 0, 0.22],
-                                    "relative_orientation_euler": [0, 0, 0],
-                                    "joint": { "type": "fixed", "axis": [0, 0, 0] },
-                                    "texture": "hood.jpg",
-                                    "tint": [0.95, 0.1, 0.1, 1.0],
-                                    "friction": 0.5, "restitution": 0.02,
-                                    "breakable": true, "break": { "impulseThreshold": 110.0, "cumulativeDamageLimit": 200.0, "onBreak": "detach" }
-                                },
-                                { "name": "spoiler", "shape": "box", "size": [0.35, 0.15, 0.05], "mass": 1.5,
-                                    "relative_position": [-0.9, 0, 0.28],
-                                    "relative_orientation_euler": [0, 0, 0],
-                                    "joint": { "type": "fixed", "axis": [0, 0, 0] },
-                                    "texture": "spoiler.jpg",
-                                    "tint": [0.2, 0.2, 0.2, 1.0],
-                                    "friction": 0.6, "restitution": 0.03,
-                                    "breakable": true, "break": { "impulseThreshold": 80.0, "cumulativeDamageLimit": 120.0, "onBreak": "detach" }
-                                }
-                            ],
-                            "effects": {
-                                "hitSounds": ["metal_hit.mp3"],
-                                "breakSounds": ["metal_break.mp3"],
-                                "debris": { "enabled": true, "count": 8, "size": [0.06,0.06,0.06], "massEach": 0.2, "texture": "debris.jpg", "tint": [0.6,0.6,0.6,1.0] }
-                            }
-                }
-            ]
+            
         }
     
     def get_player_models(self):
@@ -243,6 +165,7 @@ class ModelLibrary:
         model.metadata = {
             'name': model_info['name'],
             'type': model_info['type'],
+            'thumbnail': model_info['thumbnail'],
             'scale': model_info['scale'],
             'offset': model_info['offset'],
             'bullet_origin': model_info.get('bullet_origin', (0, 0, 1.0)),  # Default forward if not specified

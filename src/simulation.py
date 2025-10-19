@@ -11,6 +11,8 @@ import math
 import time
 import random
 import numpy as np
+from pathlib import Path
+import pybullet as p  # Add pybullet import
 
 # Add the parent directory to the Python path
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
@@ -36,6 +38,10 @@ class Simulation:
             self.audio_enabled = True
         except pygame.error:
             self.audio_enabled = False
+            
+        # Initialize structure input fields
+        self.active_input_field = None
+        self.input_text = ''
         
         self.display = (WINDOW_WIDTH, WINDOW_HEIGHT)
         self.screen = pygame.display.set_mode(self.display, DOUBLEBUF | OPENGL | RESIZABLE)
@@ -48,6 +54,16 @@ class Simulation:
         pygame.event.set_allowed([pygame.QUIT, pygame.KEYDOWN, pygame.MOUSEMOTION, pygame.MOUSEBUTTONDOWN, pygame.VIDEORESIZE, pygame.MOUSEBUTTONUP])
         self.relative_mouse_mode = True
         self.last_mouse_pos = (WINDOW_WIDTH // 2, WINDOW_HEIGHT // 2)  # Initialize last mouse position
+        self.last_click_time = 0  # For click debouncing
+        
+        # Player model selection
+        self.show_player_panel = False
+        self.player_buttons = []
+        
+        # Side panel scrolling
+        self.side_panel_scroll_y = 0
+        self.side_panel_max_scroll = 0
+        self.scroll_bar_rect = None
         
         # Shooting/targeting
         self.target_point = [0, 0, 0]  # Where the crosshair is pointing
@@ -83,7 +99,7 @@ class Simulation:
         from models.skybox import Skybox
         
         self.model_lib = ModelLibrary()
-        self.currPlayerModel = self.model_lib.load_model('Punisher')
+        self.currPlayerModel = self.model_lib.load_model('Cannon')
         
         # Initialize skybox (larger than the scene)
         try:
@@ -103,6 +119,32 @@ class Simulation:
         
         # Structure presets
         self.structure_presets = self.model_lib.get_environment_models()
+        
+        # Initialize input_values for all presets
+        for preset in self.structure_presets:
+            if 'input_values' not in preset:
+                preset['input_values'] = {}
+                
+            # Initialize default values for cluster structures
+            if preset.get('generator') == 'cluster' and 'cluster' in preset:
+                cluster = preset['cluster']
+                # Initialize size values
+                size = cluster.get('size', [0.1, 0.1, 0.1])
+                preset['input_values'].update({
+                    'size_x': str(size[0]),
+                    'size_y': str(size[1]),
+                    'size_z': str(size[2])
+                })
+                
+                # Initialize grid values
+                grid = cluster.get('grid_count', (1, 1, 1))
+                if isinstance(grid, (list, tuple)) and len(grid) >= 3:
+                    preset['input_values'].update({
+                        'grid_x': str(grid[0]),
+                        'grid_y': str(grid[1]),
+                        'grid_z': str(grid[2])
+                    })
+        
         self.current_structure_index = 0
         self.active_structure = None
         
@@ -110,7 +152,14 @@ class Simulation:
         self.setup_projection()
         
         # Initialize physics world with ground at y=0
-        self.physics = PhysicsWorld(gravity=(0, -9.81*2, 0), grid_height=0.0)
+        self.physics = PhysicsWorld(gravity=(0, -9.81*3, 0), grid_height=0.0)
+        
+        # Initialize pybullet physics client
+        self.physics_client = p.connect(p.DIRECT)  # Use p.GUI for visualization
+        p.setGravity(0, -9.81*3, 0)
+        
+        # Load cannonball texture
+        self.cannonball_texture = self.load_texture(os.path.join('textures', 'cannonball.png'))
         
         # Enable depth testing and other OpenGL settings
         glEnable(GL_DEPTH_TEST)
@@ -122,41 +171,152 @@ class Simulation:
         self.player.ground_level = 0.0  # Set ground level to match physics world
         self.player.y = 0  # Position will be adjusted in draw_player
         
-        # Override player's check_collision method to use physics world
+        # Override player's check_collision method to use physics world with OBB collision detection
         def check_collision(x, y, z):
             # Check if the player would collide with any structure at the given position
             # Exclude the player's own structure from collision checks
-            y -= 1
             player_structure_id = getattr(self, 'player_structure_id', None)
             if player_structure_id is None:
+                print("No player_structure_id found!")
                 return False
                 
-            # Get player collision size
+            # Get player collision size and position
             player_size = getattr(self, 'player_collision_size', [1.0, 1.8, 1.0])
-            player_half_size = [s / 2.0 for s in player_size]
+            player_half_extents = [s / 2.0 for s in player_size]
+            # Offset player position 1.1 units down on Y-axis for better grounding
+            player_pos = [x, y - 0.99, z]
+            player_bottom = y - 0.99
+            player_top = y - 0.99 + player_size[1]
             
-            # Player collision box spans from y to y + height
-            player_min_y = y
-            player_max_y = y + player_size[1]
+
+            # Player collision box is axis-aligned (no rotation)
+            player_rotation = [0, 0, 0, 1]  # Identity quaternion
+            
+
+            collision_found = False
             
             for structure_id, structure in self.physics.structures.items():
                 if structure_id == player_structure_id:
                     continue  # Skip self-collision
-                pos = self.physics.get_structure_position(structure_id)
-                if pos is None:
+                    
+                # Get structure position and orientation
+                struct_pos = self.physics.get_structure_position(structure_id)
+                if struct_pos is None:
+                    print(f"  - Structure {structure_id}: No position")
                     continue
                     
-                # Get structure size and calculate bounds
-                size = structure.get('size', [1, 1, 1])
-                half_size = [s / 2.0 for s in size]
-                struct_min_y = pos[1] - half_size[1]
-                struct_max_y = pos[1] + half_size[1]
+                struct_orn = self.physics.get_structure_orientation(structure_id)
+                if struct_orn is None:
+                    struct_orn = [0, 0, 0, 1]  # Default to no rotation
+                    
+                # Get structure size and type
+                struct_size = structure.get('size', [1, 1, 1])
+                struct_type = structure.get('fill', 'unknown')
+                struct_half_extents = [s / 2.0 for s in struct_size]
                 
-                # Check for AABB collision
-                if (abs(x - pos[0]) < (player_half_size[0] + half_size[0]) and
-                    abs(z - pos[2]) < (player_half_size[2] + half_size[2]) and
-                    player_max_y > struct_min_y and player_min_y < struct_max_y):
-                    return True
+                # Calculate structure bounds
+                struct_bottom = struct_pos[1] - struct_half_extents[1]
+                struct_top = struct_pos[1] + struct_half_extents[1]
+                
+                # First, check if player is within the structure's height range
+                if player_top < struct_bottom or player_bottom > struct_top:
+                    continue
+                
+                # Convert quaternion to rotation matrix for SAT
+                def quat_to_rot_matrix(q):
+                    w, x, y, z = q
+                    return [
+                        [1 - 2*y*y - 2*z*z, 2*x*y - 2*z*w, 2*x*z + 2*y*w],
+                        [2*x*y + 2*z*w, 1 - 2*x*x - 2*z*z, 2*y*z - 2*x*w],
+                        [2*x*z - 2*y*w, 2*y*z + 2*x*w, 1 - 2*x*x - 2*y*y]
+                    ]
+                
+                # Get rotation matrices
+                rot_a = quat_to_rot_matrix(player_rotation)
+                rot_b = quat_to_rot_matrix(struct_orn)
+                
+                # Calculate relative position (player to structure)
+                rel_pos = [player_pos[i] - struct_pos[i] for i in range(3)]
+                
+                # Convert to structure's local space
+                rel_pos_local = [
+                    sum(rot_b[0][i] * rel_pos[i] for i in range(3)),
+                    sum(rot_b[1][i] * rel_pos[i] for i in range(3)),
+                    sum(rot_b[2][i] * rel_pos[i] for i in range(3))
+                ]
+                
+                # Calculate rotation matrix: C = A^T * B
+                rot_matrix = [[0]*3 for _ in range(3)]
+                for i in range(3):
+                    for j in range(3):
+                        rot_matrix[i][j] = sum(rot_a[k][i] * rot_b[k][j] for k in range(3))
+                
+                # Check for separating axis along each axis of box A (player)
+                separating_axis_found = False
+                for i in range(3):
+                    ra = player_half_extents[i]
+                    rb = sum(struct_half_extents[j] * abs(rot_matrix[i][j]) for j in range(3))
+                    t = abs(sum(rel_pos[j] * rot_b[j][i] for j in range(3)))
+                    if t > ra + rb + 0.1:  # Increased epsilon for better stability
+                        separating_axis_found = True
+                        break
+                
+                if separating_axis_found:
+                    continue
+                
+                # Check for separating axis along each axis of box B (structure)
+                for i in range(3):
+                    ra = sum(player_half_extents[j] * abs(rot_matrix[j][i]) for j in range(3))
+                    rb = struct_half_extents[i]
+                    t = abs(sum(rel_pos[j] * rot_b[j][i] for j in range(3)))
+                    if t > ra + rb + 0.1:  # Increased epsilon for better stability
+                        separating_axis_found = True
+                        break
+                
+                if separating_axis_found:
+                    continue
+                
+                # Check cross products of axes (9 cases, but only 6 are unique)
+                for i in range(3):
+                    for j in range(3):
+                        if i == j:
+                            continue
+                            
+                        # Cross product of axis i of A and axis j of B
+                        axis = [
+                            rot_b[1][i] * rot_b[2][j] - rot_b[2][i] * rot_b[1][j],
+                            rot_b[2][i] * rot_b[0][j] - rot_b[0][i] * rot_b[2][j],
+                            rot_b[0][i] * rot_b[1][j] - rot_b[1][i] * rot_b[0][j]
+                        ]
+                        
+                        # Skip if axis is zero (parallel axes)
+                        length = math.sqrt(sum(x*x for x in axis))
+                        if length < 1e-6:
+                            continue
+                            
+                        # Normalize axis
+                        axis = [x / length for x in axis]
+                        
+                        # Project both boxes onto the axis
+                        ra = sum(player_half_extents[k] * abs(sum(rot_a[m][k] * axis[m] for m in range(3))) for k in range(3))
+                        rb = sum(struct_half_extents[k] * abs(sum(rot_b[m][k] * axis[m] for m in range(3))) for k in range(3))
+                        t = abs(sum(rel_pos[k] * axis[k] for k in range(3)))
+                        
+                        if t > ra + rb + 0.1:  # Increased epsilon for better stability
+                            separating_axis_found = True
+                            break
+                    
+                    if separating_axis_found:
+                        break
+                
+                if not separating_axis_found:
+                    # No separating axis found, boxes are colliding
+                    collision_found = True
+                    break  # No need to check other structures if we found a collision
+            
+            return collision_found
+            
+            print("No collisions detected with any structure")
             return False
         self.player.check_collision = check_collision
         
@@ -201,11 +361,19 @@ class Simulation:
         self.show_side_panel = False  # Initially hidden
         
         # Firing rate control
-        self.fire_rate = 10.0  # Bullets per second
+        self.fire_rate = 10.0  # Bullets per second (for non-cannon weapons)
         self.fire_delay = 1.0 / self.fire_rate  # Time between shots in seconds
         self.last_shot_time = 0.0  # When the last shot was fired
         self.is_firing = False  # Whether the fire button is being held down
         self.bullet_impulse_active = False  # Whether bullet impulse mode is active
+        
+        # Cannon-specific settings
+        self.cannon_fire_rate = 1.0  # Shots per second for cannon
+        self.cannon_fire_delay = 1.0 / self.cannon_fire_rate
+        self.cannon_ball_speed = 80.0  # Speed of cannonballs
+        self.cannon_ball_radius = 0.15  # Size of cannonballs
+        self.cannon_ball_mass = 19.0  # Mass of cannonballs
+        self.last_cannon_shot = 0  # Last time a cannonball was fired
         
         # Colors
         self.colors = {
@@ -626,12 +794,104 @@ class Simulation:
         
         # Update bullet lifetimes and remove expired ones
         for bullet in self.bullets[:]:
+            # Update cannonball positions from physics
+            if bullet['type'] == 'cannonball' and 'body_id' in bullet:
+                try:
+                    pos, _ = p.getBasePositionAndOrientation(bullet['body_id'])
+                    bullet['position'] = pos
+                    
+                    # Remove if below ground or timed out
+                    if pos[1] < self.physics.grid_height or current_time - bullet['spawn_time'] > 10.0:
+                        p.removeBody(bullet['body_id'])
+                        self.bullets.remove(bullet)
+                        continue
+                except:
+                    self.bullets.remove(bullet)
+                    continue
+            
+            # Update lifetime for hitscan bullets
             bullet['lifetime'] -= self.delta_time
             if bullet['lifetime'] <= 0:
+                if bullet['type'] == 'cannonball' and 'body_id' in bullet:
+                    try:
+                        p.removeBody(bullet['body_id'])
+                    except:
+                        pass
                 self.bullets.remove(bullet)
+                
+    def fire_cannon_ball(self, start_pos, direction):
+        """Fire a physical cannonball from the given position in the given direction"""
+        current_time = pygame.time.get_ticks() / 1000.0
+        if current_time - self.last_cannon_shot < self.cannon_fire_delay:
+            return  # Rate limiting
+            
+        self.last_cannon_shot = current_time
+        
+        try:
+            # Create a sphere collision shape for the cannonball
+            col_shape = p.createCollisionShape(p.GEOM_SPHERE, radius=self.cannon_ball_radius)
+            
+            # Create the rigid body for the cannonball
+            body_id = p.createMultiBody(
+                baseMass=self.cannon_ball_mass,
+                baseCollisionShapeIndex=col_shape,
+                basePosition=start_pos,
+                baseOrientation=[0, 0, 0, 1]
+            )
+            
+            # Adjust physics properties to reduce gravity effect
+            # Use a lighter mass and adjust damping for a floatier feel
+            p.changeDynamics(
+                body_id, 
+                -1,  # -1 for the base
+                mass=self.cannon_ball_mass, 
+                linearDamping=0.03,  # More damping to slow down faster
+                angularDamping=0.5,
+                lateralFriction=0.5,
+                spinningFriction=0.3,
+                rollingFriction=0.1,
+                restitution=0.3,  # Bounciness
+                localInertiaDiagonal=[0.1, 0.1, 0.1]  # Lower inertia for more responsive movement
+            )
+            
+            # Set the initial velocity (scaled by speed)
+            velocity = [d * self.cannon_ball_speed for d in direction]
+            p.resetBaseVelocity(body_id, linearVelocity=velocity)
+            
+            # Add to bullets list for rendering
+            self.bullets.append({
+                'type': 'cannonball',
+                'body_id': body_id,
+                'position': start_pos.copy(),
+                'lifetime': 10.0,  # Max lifetime in seconds
+                'spawn_time': current_time
+            })
+            
+            # Play shoot sound if available
+            if hasattr(self, 'shoot_sound') and self.shoot_sound:
+                if not self.shoot_channel or not self.shoot_channel.get_busy():
+                    if isinstance(self.shoot_sound, list):
+                        # Play a random sound from the list
+                        sound_to_play = random.choice(self.shoot_sound)
+                        self.shoot_channel = sound_to_play.play()
+                    else:
+                        # Play the single sound
+                        self.shoot_channel = self.shoot_sound.play()
+                    
+            # Step the simulation to ensure the body is created
+            p.stepSimulation()
+                    
+        except Exception as e:
+            print(f"Error creating cannonball: {e}")
+            import traceback
+            traceback.print_exc()
     
     def shoot(self):
         """Handle shooting mechanics with hitscan and high-impact force"""
+        # Check if we're using the Cannon model
+        model_name = self.currPlayerModel.metadata.get('name', '')
+        is_cannon = 'Cannon' in model_name
+        
         # Get bullet origin offsets from model metadata
         bullet_origins = [[0, -1.0, 0.0]]  # Default offset if not specified
         if hasattr(self.currPlayerModel, 'metadata') and 'bullet_origin' in self.currPlayerModel.metadata:
@@ -680,7 +940,12 @@ class Simulation:
                     start_pos[2] + direction[2] * 1000
                 ]
             
-            # Perform raycast to detect hits
+            # For cannon, fire a physical cannonball
+            if is_cannon:
+                self.fire_cannon_ball(start_pos, direction)
+                return  # Only fire one cannonball per shot
+                
+            # For hitscan weapons, perform raycast to detect hits
             hit_object_id, hit_position = self.physics.ray_test(start_pos, end_pos)
             
             if hit_object_id is not None:
@@ -718,9 +983,181 @@ class Simulation:
                     'lifetime': 0.05  # Even shorter lifetime for misses
                 })
     
+    def load_cannonball_texture(self):
+        """Load the cannonball texture if available, otherwise use a procedural texture"""
+        try:
+            # Initialize texture ID if it doesn't exist
+            if not hasattr(self, 'cannonball_texture'):
+                self.cannonball_texture = glGenTextures(1)
+                
+            texture_path = os.path.join('textures', 'cannonball.png')
+
+            
+            # Generate a procedural texture if file doesn't exist
+            if not os.path.exists(texture_path):
+                    # Create a simple procedural texture
+                    size = 256
+                    texture = np.zeros((size, size, 4), dtype=np.uint8)
+                    center = size // 2
+                    radius = size // 2 - 2
+                    
+                    # Create a radial gradient for the cannonball
+                    for y in range(size):
+                        for x in range(size):
+                            dx = x - center
+                            dy = y - center
+                            dist = math.sqrt(dx*dx + dy*dy)
+                            if dist <= radius:
+                                # Metallic gray with some noise for texture
+                                intensity = 0.3 + 0.7 * (1.0 - dist/radius)
+                                noise = 0.1 * (random.random() - 0.5)
+                                value = int(55 + 100 * (intensity + noise))
+                                value = max(0, min(255, value))
+                                texture[y, x] = (value, value, value, 255)  # Grayscale
+                            else:
+                                texture[y, x] = (0, 0, 0, 0)  # Transparent
+                    
+                    # Convert to Pygame surface and then to OpenGL texture
+                    surf = pygame.surfarray.make_surface(texture)
+                    texture_data = pygame.image.tostring(surf, 'RGBA', 1)
+                    
+                    # Generate and bind the texture
+                    self.cannonball_texture = glGenTextures(1)
+                    glBindTexture(GL_TEXTURE_2D, self.cannonball_texture)
+                    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR)
+                    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR)
+                    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT)
+                    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT)
+                    
+                    # Upload the texture data
+                    width, height = size, size
+                    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, 
+                               GL_RGBA, GL_UNSIGNED_BYTE, texture_data)
+                    glGenerateMipmap(GL_TEXTURE_2D)
+                    
+                    return True
+                
+            # If we get here, the file exists, so load it
+            try:
+                # Load the texture using Pygame
+                texture_surface = pygame.image.load(texture_path).convert_alpha()
+                texture_data = pygame.image.tostring(texture_surface, 'RGBA', 1)
+                
+                # Generate and bind the texture
+                self.cannonball_texture = glGenTextures(1)
+                glBindTexture(GL_TEXTURE_2D, self.cannonball_texture)
+                glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR)
+                glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR)
+                glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT)
+                glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT)
+                
+                # Upload the texture data
+                width, height = texture_surface.get_size()
+                glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, 
+                           GL_RGBA, GL_UNSIGNED_BYTE, texture_data)
+                glGenerateMipmap(GL_TEXTURE_2D)
+                
+                return True
+            except Exception as e:
+                print(f"Error loading cannonball texture: {e}")
+                return False
+        except Exception as e:
+            print(f"Error in load_cannonball_texture: {e}")
+            return False
+
+    def draw_cannonball(self, bullet):
+        """Draw a cannonball with texture"""
+        if 'position' not in bullet:
+            return
+            
+        # Try to load the texture if not already loaded
+        if not hasattr(self, 'cannonball_texture_loaded'):
+            self.cannonball_texture_loaded = self.load_cannonball_texture()
+        
+        glPushMatrix()
+        glDisable(GL_LIGHTING)
+        
+        # Position the cannonball
+        glTranslatef(*bullet['position'])
+        
+        # Add a subtle rotation based on time for a more dynamic look
+        glRotatef(time.time() * 30 % 360, 1, 1, 1)
+        
+        # Draw the cannonball with texture if available
+        if hasattr(self, 'cannonball_texture') and self.cannonball_texture_loaded:
+            # Save the current matrix and enable texturing
+            glPushAttrib(GL_ENABLE_BIT | GL_CURRENT_BIT)
+            glEnable(GL_TEXTURE_2D)
+            
+            # Bind the texture and set parameters
+            glBindTexture(GL_TEXTURE_2D, self.cannonball_texture)
+            glTexEnvi(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE)
+            
+            # Disable blending for 100% opacity
+            glDisable(GL_BLEND)
+            
+            # Set material properties (100% opaque white)
+            glColor4f(1.0, 1.0, 1.0, 1.0)
+            
+            # Draw the sphere with texture
+            quad = gluNewQuadric()
+            gluQuadricTexture(quad, GL_TRUE)
+            gluQuadricNormals(quad, GLU_SMOOTH)
+            gluSphere(quad, self.cannon_ball_radius, 32, 32)
+            gluDeleteQuadric(quad)
+            
+            # Restore the previous state
+            glPopAttrib()
+            glEnable(GL_LIGHTING)
+        else:
+            # Fallback to a simple metallic sphere without texture
+            glEnable(GL_COLOR_MATERIAL)
+            glColorMaterial(GL_FRONT_AND_BACK, GL_AMBIENT_AND_DIFFUSE)
+            
+            # Metallic dark gray color
+            glColor3f(0.2, 0.2, 0.2)
+            
+
+            
+            glow_quad = gluNewQuadric()
+            gluSphere(glow_quad, self.cannon_ball_radius * 1.15, 16, 16)
+            gluDeleteQuadric(glow_quad)
+            
+            # Draw the main sphere
+            glColor3f(0.2, 0.2, 0.2)
+            
+            # Draw the sphere with smooth shading
+            quad = gluNewQuadric()
+            gluQuadricNormals(quad, GLU_SMOOTH)
+            gluSphere(quad, self.cannon_ball_radius, 24, 24)
+            gluDeleteQuadric(quad)
+            
+            # Add some specular highlights
+            glEnable(GL_BLEND)
+            glBlendFunc(GL_SRC_ALPHA, GL_ONE)
+            glColor4f(0.2, 0.2, 0.2, 0.95)
+            
+            quad = gluNewQuadric()
+            gluSphere(quad, self.cannon_ball_radius * 1.05, 16, 16)
+            gluDeleteQuadric(quad)
+            
+            glDisable(GL_BLEND)
+        
+        
+        quad = gluNewQuadric()
+        gluSphere(quad, self.cannon_ball_radius * 1.2, 12, 12)
+        gluDeleteQuadric(quad)
+        
+        glDisable(GL_BLEND)
+        glEnable(GL_LIGHTING)
+        glPopMatrix()
+    
     def draw_bullet_trail(self, bullet):
         """Draw a complete bullet trail with smooth glowing effect"""
-        if bullet['type'] != 'hitscan':
+        if bullet['type'] == 'cannonball':
+            self.draw_cannonball(bullet)
+            return
+        elif bullet['type'] != 'hitscan':
             return
             
         glDisable(GL_LIGHTING)
@@ -1251,6 +1688,20 @@ class Simulation:
         self.panel2_button_rect.width = button_size
         self.panel2_button_rect.height = button_size
         
+        # Initialize player button rect if it doesn't exist
+        if not hasattr(self, 'player_button_rect'):
+            self.player_button_rect = pygame.Rect(
+                self.panel2_button_rect.x,
+                self.panel2_button_rect.bottom + margin,
+                button_size,
+                button_size
+            )
+        else:
+            self.player_button_rect.x = self.panel2_button_rect.x
+            self.player_button_rect.y = self.panel2_button_rect.bottom + margin
+            self.player_button_rect.width = button_size
+            self.player_button_rect.height = button_size
+        
         # Switch to orthographic projection for 2D UI elements
         glMatrixMode(GL_PROJECTION)
         glPushMatrix()
@@ -1267,6 +1718,7 @@ class Simulation:
         mouse_x, mouse_y = pygame.mouse.get_pos()
         is_menu_hovered = self.menu_button_rect.collidepoint(mouse_x, mouse_y)
         is_panel2_hovered = self.panel2_button_rect.collidepoint(mouse_x, mouse_y)
+        self.is_player_button_hovered = hasattr(self, 'player_button_rect') and self.player_button_rect.collidepoint(mouse_x, mouse_y)
         
         # Draw vertical background for buttons (narrow strip on the right)
         glColor3f(0.1, 0.1, 0.15)  # Panel color
@@ -1293,7 +1745,54 @@ class Simulation:
         glVertex2f(self.panel2_button_rect.right, self.panel2_button_rect.top)
         glVertex2f(self.panel2_button_rect.right, self.panel2_button_rect.bottom)
         glVertex2f(self.panel2_button_rect.left, self.panel2_button_rect.bottom)
+        
+        # Draw player model button background (stick figure) - below panel2 button
+        player_button_color = (0.2, 0.25, 0.3) if hasattr(self, 'is_player_button_hovered') and self.is_player_button_hovered else (0.15, 0.2, 0.25)
+        glColor3f(*player_button_color)
+        glVertex2f(self.player_button_rect.left, self.player_button_rect.top)
+        glVertex2f(self.player_button_rect.right, self.player_button_rect.top)
+        glVertex2f(self.player_button_rect.right, self.player_button_rect.bottom)
+        glVertex2f(self.player_button_rect.left, self.player_button_rect.bottom)
         glEnd()
+        
+        # Draw stick figure icon (simplified)
+        icon_size = min(self.player_button_rect.width, self.player_button_rect.height) * 0.6
+        icon_x = self.player_button_rect.centerx
+        icon_y = self.player_button_rect.centery
+        
+        # Set icon color (white for visibility)
+        glColor3f(1.0, 1.0, 1.0)
+        glLineWidth(2.0)
+        
+        # Draw head (circle)
+        glBegin(GL_LINE_LOOP)
+        for i in range(32):
+            angle = 2.0 * 3.1415926 * i / 32
+            dx = math.cos(angle) * (icon_size * 0.15)
+            dy = math.sin(angle) * (icon_size * 0.15)
+            glVertex2f(icon_x + dx, icon_y - icon_size * 0.4 + dy)
+        glEnd()
+        
+        # Draw body (line from head to mid-body)
+        glBegin(GL_LINES)
+        glVertex2f(icon_x, icon_y - icon_size * 0.25)  # Bottom of head
+        glVertex2f(icon_x, icon_y + icon_size * 0.1)   # Mid-body
+        glEnd()
+        
+        # Draw arms
+        glBegin(GL_LINES)
+        # Left arm
+        glVertex2f(icon_x - icon_size * 0.2, icon_y - icon_size * 0.1)
+        glVertex2f(icon_x + icon_size * 0.2, icon_y - icon_size * 0.1)
+        # Legs
+        glVertex2f(icon_x, icon_y + icon_size * 0.1)  # Mid-body
+        glVertex2f(icon_x - icon_size * 0.15, icon_y + icon_size * 0.35)  # Left leg
+        glVertex2f(icon_x, icon_y + icon_size * 0.1)  # Mid-body
+        glVertex2f(icon_x + icon_size * 0.15, icon_y + icon_size * 0.35)  # Right leg
+        glEnd()
+        
+        # Reset line width
+        glLineWidth(1.0)
         
         # Draw menu icon (plus)
         glColor3f(1.0, 1.0, 1.0)
@@ -1385,18 +1884,31 @@ class Simulation:
         button_bg_width = 60  # Should match the width in draw_menu_button
         panel_width = 250
         panel_x = self.display[0] - panel_width - button_bg_width  # Position panel to the left of button background
+        panel_height = self.display[1]
         
         # Draw panel background
         glColor3f(0.1, 0.1, 0.15)  # Panel color
         glBegin(GL_QUADS)
         glVertex2f(panel_x, 0)
         glVertex2f(panel_x + panel_width, 0)
-        glVertex2f(panel_x + panel_width, self.display[1])
-        glVertex2f(panel_x, self.display[1])
+        glVertex2f(panel_x + panel_width, panel_height)
+        glVertex2f(panel_x, panel_height)
         glEnd()
         
-        # Draw panel header with label
         header_height = 40
+        
+        # Enable scissor test to clip content to the panel
+        glEnable(GL_SCISSOR_TEST)
+        glScissor(panel_x, 0, panel_width, panel_height)
+        
+        # Draw structure buttons
+        rendered_buttons = self.draw_structure_buttons(panel_x, self.side_panel_scroll_y)
+        self.structure_buttons = rendered_buttons
+        
+        # Disable scissor test
+        glDisable(GL_SCISSOR_TEST)
+        
+        # Draw panel header with label (drawn after content to ensure it's on top)
         glColor3f(0.15, 0.15, 0.2)  # Slightly lighter than panel background
         glBegin(GL_QUADS)
         glVertex2f(panel_x, 0)
@@ -1407,12 +1919,47 @@ class Simulation:
         
         # Draw panel label - matching variable settings style
         self.draw_text("Add Structures", panel_x + 15, 20, 20, (0.9, 0.9, 0.9))
-
-        # Draw structure buttons when mouse is free
-        rendered_buttons = []
-        #if not self.mouse_grabbed:
-        rendered_buttons = self.draw_structure_buttons(panel_x)
-        self.structure_buttons = rendered_buttons
+        
+        # Calculate scroll bar dimensions
+        total_content_height = len(self.structure_presets) * 180  # Approximate height of each button with spacing
+        visible_height = panel_height - header_height
+        
+        # Only show scrollbar if content is taller than the panel
+        if total_content_height > visible_height:
+            # Calculate scroll bar dimensions
+            scrollbar_width = 10
+            scrollbar_x = panel_x + panel_width - scrollbar_width - 2
+            
+            # Calculate scroll bar height based on visible area
+            scrollbar_height = max(30, int((visible_height / total_content_height) * visible_height))
+            
+            # Calculate scroll bar position
+            scroll_ratio = self.side_panel_scroll_y / (total_content_height - visible_height)
+            scrollbar_y = header_height + scroll_ratio * (visible_height - scrollbar_height)
+            
+            # Draw scrollbar track
+            glColor3f(0.2, 0.2, 0.25)
+            glBegin(GL_QUADS)
+            glVertex2f(scrollbar_x, header_height)
+            glVertex2f(scrollbar_x + scrollbar_width, header_height)
+            glVertex2f(scrollbar_x + scrollbar_width, panel_height)
+            glVertex2f(scrollbar_x, panel_height)
+            glEnd()
+            
+            # Draw scrollbar thumb
+            glColor3f(0.4, 0.4, 0.5)
+            glBegin(GL_QUADS)
+            glVertex2f(scrollbar_x, scrollbar_y)
+            glVertex2f(scrollbar_x + scrollbar_width, scrollbar_y)
+            glVertex2f(scrollbar_x + scrollbar_width, scrollbar_y + scrollbar_height)
+            glVertex2f(scrollbar_x, scrollbar_y + scrollbar_height)
+            glEnd()
+            
+            # Store scroll bar rect for click detection
+            self.scroll_bar_rect = pygame.Rect(scrollbar_x, header_height, scrollbar_width, visible_height)
+        else:
+            self.side_panel_scroll_y = 0
+            self.scroll_bar_rect = None
         
         # Re-enable depth testing
         glEnable(GL_DEPTH_TEST)
@@ -1423,10 +1970,14 @@ class Simulation:
         glMatrixMode(GL_MODELVIEW)
         glPopMatrix()
 
-    def draw_text(self, text, x, y, size, color):
+    def draw_text(self, text, x, y, size, color, center=False):
         """Draw text on the screen using Pygame's font renderer"""
         font = pygame.font.Font(None, size)
         text_surface = font.render(text, True, (int(color[0]*255), int(color[1]*255), int(color[2]*255)))
+        
+        if center:
+            x -= text_surface.get_width() // 2
+            
         text_data = pygame.image.tostring(text_surface, "RGBA", True)
         
         # Save current OpenGL state
@@ -1574,6 +2125,89 @@ class Simulation:
         # Store input rect for click detection
         self.bullet_impulse_rect = input_rect
         
+        # Add move speed input field below bullet impulse
+        move_speed_y = input_rect.bottom + 30
+        
+        # Move Speed section
+        self.draw_text("Player Move Speed", panel_x + 15, move_speed_y - 25, 16, (0.9, 0.9, 0.9))
+        
+        # Input field background
+        move_speed_rect = pygame.Rect(panel_x + 15, move_speed_y, panel_width - 30, 30)
+        
+        # Check if input is active
+        mouse_x, mouse_y = pygame.mouse.get_pos()
+        is_move_speed_hovered = move_speed_rect.collidepoint(mouse_x, mouse_y)
+        
+        # Initialize move speed attributes if they don't exist
+        if not hasattr(self, 'move_speed_active'):
+            self.move_speed_active = False
+        if not hasattr(self, 'player_move_speed'):
+            self.player_move_speed = self.player.move_speed  # Get initial value from player
+            
+        # Set input background color
+        if self.move_speed_active:
+            glColor3f(0.15, 0.15, 0.25)  # Active state
+        elif is_move_speed_hovered:
+            glColor3f(0.18, 0.18, 0.28)  # Hover state
+        else:
+            glColor3f(0.12, 0.12, 0.22)  # Default state
+            
+        glBegin(GL_QUADS)
+        glVertex2f(move_speed_rect.left, move_speed_rect.top)
+        glVertex2f(move_speed_rect.right, move_speed_rect.top)
+        glVertex2f(move_speed_rect.right, move_speed_rect.bottom)
+        glVertex2f(move_speed_rect.left, move_speed_rect.bottom)
+        glEnd()
+        
+        # Draw input border
+        border_color = (0.3, 0.5, 0.8) if self.move_speed_active else (0.2, 0.2, 0.3)
+        glColor3f(*border_color)
+        glLineWidth(1.0)
+        glBegin(GL_LINE_LOOP)
+        glVertex2f(move_speed_rect.left, move_speed_rect.top)
+        glVertex2f(move_speed_rect.right, move_speed_rect.top)
+        glVertex2f(move_speed_rect.right, move_speed_rect.bottom)
+        glVertex2f(move_speed_rect.left, move_speed_rect.bottom)
+        glEnd()
+        
+        # Draw input text
+        text_x = move_speed_rect.left + 8
+        text_y = move_speed_rect.centery - 8
+        
+        # Get the display text from move_speed_text if it exists, otherwise use player_move_speed
+        if hasattr(self, 'move_speed_text'):
+            display_text = self.move_speed_text
+            # If empty but active, show empty (user is deleting)
+            if not display_text and self.move_speed_active:
+                display_text = ''
+            # If empty and not active, show default
+            elif not display_text:
+                display_text = str(int(self.player_move_speed))
+        else:
+            # Fallback to current player move speed
+            display_text = str(int(self.player_move_speed))
+        
+        # Draw the text
+        self.draw_text(display_text, text_x, text_y, 16, (1.0, 1.0, 1.0))
+        
+        # Draw cursor if active
+        if self.move_speed_active and int(time.time() * 2) % 2 == 0:
+            # Calculate cursor position based on actual text width
+            font = pygame.font.Font(None, 16)
+            text_surface = font.render(display_text, True, (255, 255, 255))
+            cursor_x = text_x + text_surface.get_width() + 1
+            
+            # Draw a vertical cursor line at the end of the text
+            glColor3f(1.0, 1.0, 1.0)
+            glLineWidth(2.0)
+            glBegin(GL_LINES)
+            glVertex2f(cursor_x, text_y + 2)
+            glVertex2f(cursor_x, text_y + 14)
+            glEnd()
+        
+        # Store input rect for click detection
+        self.move_speed_rect = move_speed_rect
+        
         # Re-enable depth testing
         glEnable(GL_DEPTH_TEST)
         
@@ -1583,18 +2217,87 @@ class Simulation:
         glMatrixMode(GL_MODELVIEW)
         glPopMatrix()
     
-    def draw_structure_buttons(self, panel_x):
-        panel_width = 250
+    def draw_input_field(self, x, y, width, height, label, value, field_id, is_active):
+        # Draw label (centered vertically with the input field)
+        label_y = y + (height // 2) - 6  # Half the height of the input field minus half the text height
+        self.draw_text(label, x - 10, label_y, 12, (0.9, 0.9, 0.9))
+        
+        # Draw input background
+        glColor3f(0.2, 0.2, 0.25) if not is_active else glColor3f(0.15, 0.15, 0.25)
+        glBegin(GL_QUADS)
+        glVertex2f(x, y)
+        glVertex2f(x + width, y)
+        glVertex2f(x + width, y + height)
+        glVertex2f(x, y + height)
+        glEnd()
+        
+        # Draw border
+        border_color = (0.3, 0.5, 0.8) if is_active else (0.2, 0.2, 0.3)
+        glColor3f(*border_color)
+        glLineWidth(1.0)
+        glBegin(GL_LINE_LOOP)
+        glVertex2f(x, y)
+        glVertex2f(x + width, y)
+        glVertex2f(x + width, y + height)
+        glVertex2f(x, y + height)
+        glEnd()
+        
+        # Get the display text
+        if is_active and self.active_input_field == field_id:
+            display_text = getattr(self, f"{field_id}_text", str(value))
+            if not display_text:  # If empty, show 0
+                display_text = '0'
+        else:
+            # Format the value with decimal places only if needed
+            if float(value) == int(float(value)):
+                display_text = str(int(float(value)))
+            else:
+                display_text = f"{float(value):.1f}"
+        
+        # Draw the text
+        self.draw_text(display_text, x + 5, y + 3, 12, (1.0, 1.0, 1.0))
+        
+        # Draw cursor if active
+        if is_active and self.active_input_field == field_id and int(time.time() * 2) % 2 == 0:
+            font = pygame.font.Font(None, 12)
+            text_surface = font.render(display_text, True, (255, 255, 255))
+            cursor_x = x + 5 + text_surface.get_width() + 1
+            glColor3f(1.0, 1.0, 1.0)
+            glLineWidth(1.5)
+            glBegin(GL_LINES)
+            glVertex2f(cursor_x, y + 3)
+            glVertex2f(cursor_x, y + 15)
+            glEnd()
+        
+        # Store the rect for click detection
+        input_rect = pygame.Rect(x, y, width, height)
+        setattr(self, f"{field_id}_rect", input_rect)
+        
+        return input_rect
+
+    def draw_structure_buttons(self, panel_x, scroll_y=0):
+        panel_width = 450  # Increased width to fit inputs on the right
         margin = 15
         button_size = 60
         spacing = 15  # Spacing between buttons
         text_spacing = 8  # Spacing between button and text
         button_x = panel_x + margin
-        button_y = 100  # Increased to account for the panel header
-        buttons_per_row = 2  # Number of buttons per row
-        button_with_text_height = button_size + 30  # Extra space for text below button
+        input_x = button_x + button_size + 20  # Position inputs to the right of buttons
+        button_y = 60 - scroll_y  # Start below header, account for scroll
+        buttons_per_row = 1  # One button per row
+        button_with_text_height = max(button_size, 100)  # Ensure enough height for inputs
+        
+        # Store the current scissor test state
+        scissor_enabled = glIsEnabled(GL_SCISSOR_TEST)
+        if not scissor_enabled:
+            glEnable(GL_SCISSOR_TEST)
+            
+        # Set scissor to panel area to clip content
+        glScissor(panel_x, 0, panel_width, self.display[1])
 
         mouse_x, mouse_y = pygame.mouse.get_pos()
+        # Adjust mouse y for scrolling when checking button collisions
+        mouse_y_scrolled = mouse_y + scroll_y
         font = pygame.font.Font(None, 18)
         buttons = []
 
@@ -1604,12 +2307,15 @@ class Simulation:
             row = i // buttons_per_row
             
             # Calculate button position
-            x = button_x + (button_size + spacing) * col
+            x = button_x
             y = button_y + (button_with_text_height + spacing) * row
             
             # Button rectangle (just the clickable/image area)
             rect = pygame.Rect(x, y, button_size, button_size)
-            is_hovered = rect.collidepoint(mouse_x, mouse_y)
+            
+            # Input area rectangle (to the right of the button)
+            input_rect = pygame.Rect(input_x, y, panel_width - input_x - margin, button_size)
+            is_hovered = rect.collidepoint(mouse_x, mouse_y_scrolled)
 
             is_active = self.active_structure and preset['name'] == self.active_structure['name']
             button_color = self.colors['cube_button_hover'] if (is_hovered or is_active) else self.colors['cube_button']
@@ -1670,9 +2376,11 @@ class Simulation:
                     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA)
                     text_x = rect.left + (button_size - text_width) // 2  # Center text
                     text_y = rect.bottom + 8 + (text_surface.get_height() * line_num)
-                    glRasterPos2i(text_x, text_y + text_surface.get_height())
-                    glDrawPixels(text_surface.get_width(), text_surface.get_height(), 
-                               GL_RGBA, GL_UNSIGNED_BYTE, text_data)
+                    # Only draw if the text is within the visible area
+                    if y + button_size + 8 + (text_surface.get_height() * (line_num + 1)) > 0 and y < self.display[1]:
+                        glRasterPos2i(text_x, text_y + text_surface.get_height())
+                        glDrawPixels(text_surface.get_width(), text_surface.get_height(), 
+                                   GL_RGBA, GL_UNSIGNED_BYTE, text_data)
                     glDisable(GL_BLEND)
             else:
                 # Single line of text
@@ -1684,18 +2392,97 @@ class Simulation:
                 glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA)
                 text_x = rect.left + (button_size - text_width) // 2  # Center text
                 text_y = rect.bottom + 8
-                glRasterPos2i(text_x, text_y + text_surface.get_height())
-                glDrawPixels(text_surface.get_width(), text_surface.get_height(), 
-                           GL_RGBA, GL_UNSIGNED_BYTE, text_data)
+                # Only draw if the text is within the visible area
+                if y + button_size + 8 + text_surface.get_height() > 0 and y < self.display[1]:
+                    glRasterPos2i(text_x, text_y + text_surface.get_height())
+                    glDrawPixels(text_surface.get_width(), text_surface.get_height(), 
+                               GL_RGBA, GL_UNSIGNED_BYTE, text_data)
                 glDisable(GL_BLEND)
 
-            # Store button rect for click detection (slightly larger to include text area)
-            button_rect = pygame.Rect(
-                rect.x, 
-                rect.y, 
-                rect.width, 
-                button_with_text_height
-            )
+            # Input fields for cluster structures
+            if preset.get('generator') == 'cluster':
+                cluster_config = preset.get('cluster', {})
+                
+                # Initialize input fields if they don't exist
+                if 'input_values' not in preset:
+                    preset['input_values'] = {
+                        'size_x': str(cluster_config.get('size', [0.1, 0.1, 0.1])[0]),
+                        'size_y': str(cluster_config.get('size', [0.1, 0.1, 0.1])[1]),
+                        'size_z': str(cluster_config.get('size', [0.1, 0.1, 0.1])[2]),
+                        'grid_x': str(cluster_config.get('grid_count', (1, 1, 1))[0]),
+                        'grid_y': str(cluster_config.get('grid_count', (1, 1, 1))[1]),
+                        'grid_z': str(cluster_config.get('grid_count', (1, 1, 1))[2])
+                    }
+                
+                # Calculate positions for input fields to the right of the button
+                input_start_x = input_x
+                input_y = rect.y + 5
+                input_width = 60
+                input_height = 22
+                input_spacing = 5
+                
+                # Draw size inputs in a column
+                self.draw_text("Size", input_start_x, input_y - 15, 14, (0.9, 0.9, 0.9))
+                
+                # Size X input
+                size_x_rect = self.draw_input_field(
+                    input_start_x, input_y, input_width, input_height,
+                    "X", preset['input_values']['size_x'],
+                    f"{preset['name']}_size_x", 
+                    self.active_input_field == f"{preset['name']}_size_x"
+                )
+                
+                # Size Y input
+                size_y_rect = self.draw_input_field(
+                    input_start_x, input_y + input_height + input_spacing, input_width, input_height,
+                    "Y", preset['input_values']['size_y'],
+                    f"{preset['name']}_size_y", 
+                    self.active_input_field == f"{preset['name']}_size_y"
+                )
+                
+                # Size Z input
+                size_z_rect = self.draw_input_field(
+                    input_start_x, input_y + (input_height + input_spacing) * 2, input_width, input_height,
+                    "Z", preset['input_values']['size_z'],
+                    f"{preset['name']}_size_z", 
+                    self.active_input_field == f"{preset['name']}_size_z"
+                )
+                
+                # Draw grid count inputs in a second column
+                grid_start_x = input_start_x + input_width + 20
+                self.draw_text("Grid", grid_start_x, input_y - 15, 14, (0.9, 0.9, 0.9))
+                
+                # Grid X input
+                grid_x_rect = self.draw_input_field(
+                    grid_start_x, input_y, input_width, input_height,
+                    "X", preset['input_values']['grid_x'],
+                    f"{preset['name']}_grid_x", 
+                    self.active_input_field == f"{preset['name']}_grid_x"
+                )
+                
+                # Grid Y input
+                grid_y_rect = self.draw_input_field(
+                    grid_start_x, input_y + input_height + input_spacing, input_width, input_height,
+                    "Y", preset['input_values']['grid_y'],
+                    f"{preset['name']}_grid_y", 
+                    self.active_input_field == f"{preset['name']}_grid_y"
+                )
+                
+                # Grid Z input
+                grid_z_rect = self.draw_input_field(
+                    grid_start_x, input_y + (input_height + input_spacing) * 2, input_width, input_height,
+                    "Z", preset['input_values']['grid_z'],
+                    f"{preset['name']}_grid_z", 
+                    self.active_input_field == f"{preset['name']}_grid_z"
+                )
+                
+                # Update the button height to include inputs
+                button_height = grid_z_rect.bottom - rect.y + 10
+                button_rect = pygame.Rect(rect.x, rect.y, rect.width, button_height)
+            else:
+                # For non-cluster structures, just use the normal button size
+                button_rect = pygame.Rect(rect.x, rect.y, rect.width, button_size + 30)
+            
             buttons.append((button_rect, preset))
             
             # Draw a border around the active button
@@ -1735,16 +2522,10 @@ class Simulation:
         # Apply rotation around Y axis
         glRotatef(self.cube_rotation, 0, 1, 0)
 
-        # Calculate dimensions based on rotation
-        if self.cube_rotation % 180 == 90:
-            # For 90 and 270 degree rotations, swap x and z dimensions
-            half_sizes = [self.active_total_size[2] / 2.0, 
-                         self.active_total_size[1] / 2.0,
-                         self.active_total_size[0] / 2.0]
-        else:
-            half_sizes = [dim / 2.0 for dim in self.active_total_size]
-            
-        hx, hy, hz = half_sizes
+        # Always use the original dimensions, rotation is handled by the modelview matrix
+        hx = self.active_total_size[0] / 2.0
+        hy = self.active_total_size[1] / 2.0
+        hz = self.active_total_size[2] / 2.0
         
         # Draw semi-transparent fill
         glColor4f(*self.colors['cube_preview'])
@@ -1785,7 +2566,210 @@ class Simulation:
         glDisable(GL_BLEND)
         glEnable(GL_LIGHTING)
 
-    def draw_circular_shadow(self, x, z, radius, alpha=0.2):
+    def draw_player_panel(self):
+        """Draw the player model selection panel with thumbnails."""
+        if not hasattr(self, 'show_player_panel') or not self.show_player_panel:
+            return
+            
+        # Switch to orthographic projection for 2D UI elements
+        glMatrixMode(GL_PROJECTION)
+        glPushMatrix()
+        glLoadIdentity()
+        glOrtho(0, self.display[0], self.display[1], 0, -1, 1)
+        glMatrixMode(GL_MODELVIEW)
+        glPushMatrix()
+        glLoadIdentity()
+        
+        # Disable depth testing for 2D elements
+        glDisable(GL_DEPTH_TEST)
+        
+        # Draw side panel background
+        button_bg_width = 60
+        panel_width = 300  # Wider panel for thumbnails
+        panel_x = self.display[0] - panel_width - button_bg_width
+        
+        # Panel background
+        glColor3f(0.1, 0.1, 0.15)
+        glBegin(GL_QUADS)
+        glVertex2f(panel_x, 0)
+        glVertex2f(panel_x + panel_width, 0)
+        glVertex2f(panel_x + panel_width, self.display[1])
+        glVertex2f(panel_x, self.display[1])
+        glEnd()
+        
+        # Panel header
+        header_height = 40
+        glColor3f(0.15, 0.15, 0.2)
+        glBegin(GL_QUADS)
+        glVertex2f(panel_x, 0)
+        glVertex2f(panel_x + panel_width, 0)
+        glVertex2f(panel_x + panel_width, header_height)
+        glVertex2f(panel_x, header_height)
+        glEnd()
+        
+        # Panel title
+        self.draw_text("Player Models", panel_x + 15, 20, 20, (0.9, 0.9, 0.9))
+        
+        # Get player models from the model library
+        player_models = self.model_lib.get_player_models()
+        
+        # Calculate button layout - one button per row with larger buttons
+        button_width = panel_width - 30  # Full width of panel minus margins
+        button_height = 120  # Taller buttons for better visibility
+        button_margin = 15  # Increased margin for better spacing
+        thumbnail_size = 80  # Larger thumbnail size
+        start_x = panel_x + 15
+        start_y = header_height + 15
+        
+        # Clear and update player buttons
+        self.player_buttons = []
+        
+        # Draw player model buttons - one per row
+        for i, model_info in enumerate(player_models):
+            y = start_y + (button_height + button_margin) * i
+            
+            # Store button rect for click detection
+            button_rect = pygame.Rect(start_x, y, button_width, button_height)
+            model_name = model_info['name']
+            self.player_buttons.append((model_name, button_rect))
+            
+            # Button background (highlight if hovered or selected)
+            mouse_x, mouse_y = pygame.mouse.get_pos()
+            is_hovered = button_rect.collidepoint(mouse_x, mouse_y)
+            is_selected = (self.currPlayerModel.metadata['name'] == model_name)
+            
+            if is_selected:
+                glColor3f(0.2, 0.4, 0.6)  # Blue for selected
+            elif is_hovered:
+                glColor3f(0.3, 0.3, 0.4)  # Light gray for hover
+            else:
+                glColor3f(0.2, 0.2, 0.25)  # Dark gray for normal
+            
+            # Draw button background with rounded corners effect
+            glBegin(GL_QUADS)
+            glVertex2f(start_x, y)
+            glVertex2f(start_x + button_width, y)
+            glVertex2f(start_x + button_width, y + button_height)
+            glVertex2f(start_x, y + button_height)
+            glEnd()
+            
+            # Draw thumbnail if available
+            if 'thumbnail' in model_info and model_info['thumbnail']:
+                try:
+                    # Load thumbnail if not already loaded
+                    if 'thumbnail_surface' not in model_info:
+                        thumb_path = model_info['thumbnail']
+                        if os.path.exists(thumb_path):
+                            # Load and scale the thumbnail
+                            thumb_surface = pygame.image.load(thumb_path).convert_alpha()
+                            # Flip the image vertically to fix upside-down issue
+                            thumb_surface = pygame.transform.flip(thumb_surface, False, True)
+                            # Scale to fit while maintaining aspect ratio
+                            thumb_rect = thumb_surface.get_rect()
+                            scale = min(thumbnail_size / thumb_rect.width, thumbnail_size / thumb_rect.height)
+                            # Increase thumbnail size by 50%
+                            scale *= 1.5
+                            new_size = (int(thumb_rect.width * scale), int(thumb_rect.height * scale))
+                            thumb_surface = pygame.transform.scale(thumb_surface, new_size)
+                            model_info['thumbnail_surface'] = thumb_surface
+                        else:
+                            print(f"Thumbnail not found: {thumb_path}")
+                            model_info['thumbnail_surface'] = None
+                    
+                    # Draw the thumbnail if available
+                    if 'thumbnail_surface' in model_info and model_info['thumbnail_surface']:
+                        thumb_surface = model_info['thumbnail_surface']
+                        thumb_rect = thumb_surface.get_rect()
+                        thumb_x = start_x + 10  # 10px from left
+                        thumb_y = y + (button_height - thumb_rect.height) // 2  # Vertically centered
+                        
+                        # Draw the thumbnail using Pygame's blit
+                        glPushAttrib(GL_ENABLE_BIT | GL_CURRENT_BIT)
+                        glDisable(GL_LIGHTING)
+                        glEnable(GL_TEXTURE_2D)
+                        glEnable(GL_BLEND)
+                        glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA)
+                        glColor3f(1.0, 1.0, 1.0)  # Ensure full brightness
+                        
+                        # Create a texture from the surface
+                        texture_data = pygame.image.tostring(thumb_surface, 'RGBA', 1)
+                        texture_id = glGenTextures(1)
+                        glBindTexture(GL_TEXTURE_2D, texture_id)
+                        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR)
+                        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR)
+                        glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, thumb_rect.width, thumb_rect.height, 
+                                    0, GL_RGBA, GL_UNSIGNED_BYTE, texture_data)
+                        
+                        # Draw textured quad
+                        glBegin(GL_QUADS)
+                        glTexCoord2f(0, 0); glVertex2f(thumb_x, thumb_y)
+                        glTexCoord2f(1, 0); glVertex2f(thumb_x + thumb_rect.width, thumb_y)
+                        glTexCoord2f(1, 1); glVertex2f(thumb_x + thumb_rect.width, thumb_y + thumb_rect.height)
+                        glTexCoord2f(0, 1); glVertex2f(thumb_x, thumb_y + thumb_rect.height)
+                        glEnd()
+                        
+                        # Clean up
+                        glDeleteTextures([texture_id])
+                        glPopAttrib()  # Restore previous GL state
+                
+                except Exception as e:
+                    print(f"Error loading thumbnail for {model_name}: {e}")
+            
+            # Draw model name on the right side of the thumbnail
+            name = model_name.replace('_', ' ').title()
+            text_x = start_x + thumbnail_size + 50  # 20px right of thumbnail
+            text_y = y + (button_height - 20) // 2  # Vertically centered
+            self.draw_text(name, text_x, text_y, 16, (1, 1, 1))
+        
+        # Restore OpenGL state
+        glEnable(GL_DEPTH_TEST)
+        glMatrixMode(GL_PROJECTION)
+        glPopMatrix()
+        glMatrixMode(GL_MODELVIEW)
+        glPopMatrix()
+    
+    def switch_player_model(self, model_name):
+        """Switch to the specified player model."""
+        try:
+            # Load the new model
+            new_model = self.model_lib.load_model(model_name)
+            if new_model:
+                self.currPlayerModel = new_model
+                
+                # Update camera height based on new model
+                if 'camera_height' in self.currPlayerModel.metadata:
+                    self.camera_height = self.currPlayerModel.metadata['camera_height']
+                
+                # Update player collision in physics world
+                if hasattr(self, 'player_structure_id'):
+                    # Remove old player collision
+                    self.physics.remove_structure(self.player_structure_id)
+                    
+                    # Add new player collision
+                    player_mesh_path = self.currPlayerModel.metadata.get('mesh_path')
+                    player_mesh_obj = None
+                    if player_mesh_path:
+                        from models.obj_loader import OBJ
+                        player_mesh_obj = OBJ(player_mesh_path)
+                    
+                    self.player_structure_id = self.physics.add_structure(
+                        position=[self.player.x, self.player.y, self.player.z],
+                        size=self.player_collision_size,
+                        mass=0.0,
+                        color=(0.0, 0.0, 0.0, 0.0),
+                        rotation=[0, 0, 0],
+                        fill='player',
+                        metadata={'stiff': True, 'kinematic': True},
+                        mesh_obj=player_mesh_obj
+                    )
+                
+                # Reload audio for the new model
+                self.load_audio_from_model()
+                
+        except Exception as e:
+            print(f"Error switching to model {model_name}: {e}")
+    
+    def draw_circular_shadow(self, x, z, radius, alpha=0.4):
         """Draw a circular shadow on the ground for an object at (x, z) with given radius."""
         glDisable(GL_LIGHTING)
         glEnable(GL_BLEND)
@@ -1796,7 +2780,7 @@ class Simulation:
         
         # Draw a circle for the shadow
         glPushMatrix()
-        glTranslatef(x, 0.06, z)  # Slightly above ground to prevent z-fighting
+        glTranslatef(x, 0.015, z)  # Slightly above ground to prevent z-fighting
         
         # Draw a circle using a polygon
         glBegin(GL_POLYGON)
@@ -1840,21 +2824,27 @@ class Simulation:
 
         metadata = self.currPlayerModel.metadata
         
-        # Load shoot sound (can be a single sound or a list)
+        # Load default shoot sounds (can be a single sound or a list)
         shoot_paths = metadata.get('shoot_sound')
         if shoot_paths:
             if isinstance(shoot_paths, str):
                 shoot_paths = [shoot_paths]
-            self.shoot_sound = []
+            sounds = []
             for path in shoot_paths:
                 sound_file = self.resolve_audio_path(path)
                 if sound_file:
                     sound = pygame.mixer.Sound(sound_file)
                     sound.set_volume(0.8)
-                    self.shoot_sound.append(sound)
-            if not self.shoot_sound:
+                    sounds.append(sound)
+            
+            if sounds:
+                if len(sounds) == 1:
+                    self.shoot_sound = sounds[0]  # Single sound
+                else:
+                    self.shoot_sound = sounds  # List of sounds
+                self.shoot_channel = pygame.mixer.Channel(1)
+            else:
                 self.shoot_sound = None
-            self.shoot_channel = pygame.mixer.Channel(1)
         else:
             self.shoot_sound = None
 
@@ -2077,14 +3067,6 @@ class Simulation:
             self.awaiting_cube_release = False
             return
             
-        # Handle rotation with R key
-        '''keys = pygame.key.get_pressed()
-        if keys[pygame.K_r] and not hasattr(self, 'r_key_pressed'):
-            self.r_key_pressed = True
-            self.cube_rotation = (self.cube_rotation + 90) % 360  # Rotate 90 degrees
-        elif not keys[pygame.K_r]:
-            self.r_key_pressed = False
-        '''
         mouse_buttons = pygame.mouse.get_pressed()
         left_pressed = mouse_buttons[0]
         right_pressed = mouse_buttons[2]
@@ -2131,23 +3113,62 @@ class Simulation:
         if not self.structure_presets:
             self.active_structure = None
             return
+            
+        # Store the current input values if we have an active structure
+        if hasattr(self, 'active_structure') and self.active_structure and 'input_values' in self.active_structure:
+            current_inputs = {}
+            for key in ['size_x', 'size_y', 'size_z', 'grid_x', 'grid_y', 'grid_z']:
+                if key in self.active_structure['input_values']:
+                    current_inputs[key] = self.active_structure['input_values'][key]
+            
+            # If we have a name and it's different from current, update the new structure with these values
+            if name and name != self.active_structure.get('name'):
+                for preset in self.structure_presets:
+                    if preset['name'] == name and 'input_values' not in preset:
+                        preset['input_values'] = current_inputs
+                        break
+        
+        # Set the new active structure
         if name:
             for idx, preset in enumerate(self.structure_presets):
                 if preset['name'] == name:
                     self.current_structure_index = idx
                     self.active_structure = preset
+                    # Ensure input_values exists
+                    if 'input_values' not in self.active_structure:
+                        self.active_structure['input_values'] = {}
                     break
             else:
                 self.active_structure = self.structure_presets[self.current_structure_index]
         else:
             self.active_structure = self.structure_presets[self.current_structure_index]
+            # Ensure input_values exists
+            if 'input_values' not in self.active_structure:
+                self.active_structure['input_values'] = {}
 
         if self.active_structure and self.active_structure.get('generator') == 'cluster':
             cluster = self.active_structure['cluster']
-            self.active_cube_size = self._normalize_vector3(cluster.get('size', [1.0, 1.0, 1.0]), [1.0, 1.0, 1.0])
-            grid_counts = self._normalize_grid_counts(cluster.get('grid_count', (1, 1, 1)))
+            input_values = self.active_structure.get('input_values', {})
+            
+            # Get size from input values or fall back to defaults
+            size_x = float(input_values.get('size_x', cluster.get('size', [0.1, 0.1, 0.1])[0]))
+            size_y = float(input_values.get('size_y', cluster.get('size', [0.1, 0.1, 0.1])[1]))
+            size_z = float(input_values.get('size_z', cluster.get('size', [0.1, 0.1, 0.1])[2]))
+            self.active_cube_size = [size_x, size_y, size_z]
+            
+            # Get grid counts from input values or fall back to defaults
+            default_grid = cluster.get('grid_count', (1, 1, 1))
+            grid_x = int(float(input_values.get('grid_x', default_grid[0])))
+            grid_y = int(float(input_values.get('grid_y', default_grid[1])))
+            grid_z = int(float(input_values.get('grid_z', default_grid[2])))
+            grid_counts = (grid_x, grid_y, grid_z)
+            
             self.active_total_size = [self.active_cube_size[i] * grid_counts[i] for i in range(3)]
             self.cube_size = max(self.active_total_size)
+            
+            # Update the cluster config with the current values
+            cluster['size'] = [size_x, size_y, size_z]
+            cluster['grid_count'] = grid_counts
         
     def get_structure_half_height(self):
         if not self.active_structure:
@@ -2183,6 +3204,11 @@ class Simulation:
             # Update the structure's rotation in its metadata
             structure_config = self.active_structure['cluster'].copy()
             structure_config['rotation'] = rotation_quat
+            
+            # Add input values to the config if they exist
+            if hasattr(self, 'input_values'):
+                structure_config['input_values'] = self.input_values.copy()
+                
             self.spawn_cluster_structure(position, structure_config)
 
     def draw_textured_cube(self, size, texture_id):
@@ -2253,7 +3279,31 @@ class Simulation:
         # Disable texturing
         glDisable(GL_TEXTURE_2D)
     
-    def spawn_cluster_structure(self, position, config):        
+    def spawn_cluster_structure(self, position, config):
+        # Override size and grid_count with input values if available
+        if 'input_values' in config:
+            try:
+                config = config.copy()
+                config['cluster'] = config.get('cluster', {}).copy()
+                
+                # Get size from input fields
+                size_x = float(config['input_values'].get('size_x', 0.1))
+                size_y = float(config['input_values'].get('size_y', 0.1))
+                size_z = float(config['input_values'].get('size_z', 0.1))
+                config['cluster']['size'] = [size_x, size_y, size_z]
+                
+                # Get grid count from input fields
+                grid_x = int(float(config['input_values'].get('grid_x', 1)))
+                grid_y = int(float(config['input_values'].get('grid_y', 1)))
+                grid_z = int(float(config['input_values'].get('grid_z', 1)))
+                config['cluster']['grid_count'] = (grid_x, grid_y, grid_z)
+                
+            except (ValueError, TypeError) as e:
+                print(f"Error parsing input values: {e}")
+                # Fall back to default values if parsing fails
+                config['cluster']['size'] = config['cluster'].get('size', [0.1, 0.1, 0.1])
+                config['cluster']['grid_count'] = config['cluster'].get('grid_count', (1, 1, 1))
+        
         # Get cube size as a 3D vector, defaulting to [0.1, 0.1, 0.1] if not specified
         cube_size = self._normalize_vector3(config.get('size', 0.1), 0.1)
         
@@ -2364,6 +3414,8 @@ class Simulation:
                         metadata['hit_sound'] = config['hit_sound']
                     if 'stiff' in config:
                         metadata['stiff'] = config['stiff']
+                    if 'shard_config' in config:
+                        metadata['shard_config'] = config['shard_config']
                     
                     # Add to physics world with fill type, texture ID, and metadata
                     mesh_obj = None
@@ -2619,18 +3671,20 @@ class Simulation:
         # Disable depth testing for 2D elements
         glDisable(GL_DEPTH_TEST)
         
-        # Draw crosshair
-        size = 3
-        center_x, center_y = self.display[0] // 2, self.display[1] // 2
+        # Draw crosshair with equal length lines in all directions
+        size = 5  # Length of each crosshair arm
+        center_x = int(self.display[0] // 2) + 0.5  # Add 0.5 to align to pixel center
+        center_y = int(self.display[1] // 2) + 0.5  # Add 0.5 to align to pixel center
+        
         glColor3f(1.0, 1.0, 1.0)  # White color
         glLineWidth(1.0)
         glBegin(GL_LINES)
-        # Horizontal line
+        # Horizontal line (left to right)
         glVertex2f(center_x - size, center_y)
-        glVertex2f(center_x + size, center_y)
-        # Vertical line
+        glVertex2f(center_x + size + 1, center_y)  # +1 to ensure equal length
+        # Vertical line (top to bottom)
         glVertex2f(center_x, center_y - size)
-        glVertex2f(center_x, center_y + size)
+        glVertex2f(center_x, center_y + size + 1)  # +1 to ensure equal length
         glEnd()
         
         # Restore OpenGL state for 3D rendering
@@ -2657,6 +3711,10 @@ class Simulation:
             self.last_mouse_pos = pygame.mouse.get_pos()
     
     def handle_input(self):
+        # Reset scroll if panel is closed
+        if not self.show_side_panel:
+            self.side_panel_scroll_y = 0
+            
         # Handle events
         current_time = pygame.time.get_ticks() / 1000.0  # Current time in seconds
         
@@ -2680,7 +3738,139 @@ class Simulation:
             if event.type == pygame.QUIT:
                 self.running = False
             elif event.type == pygame.KEYDOWN:
-                if self.bullet_impulse_active:
+                # Handle input for active structure parameter fields
+                if hasattr(self, 'active_input_field') and self.active_input_field:
+                    field_id = self.active_input_field
+                    text_attr = f"{field_id}_text"
+                    
+                    if event.key == pygame.K_RETURN or event.key == pygame.K_ESCAPE:
+                        # Save the input when Enter is pressed
+                        if event.key == pygame.K_RETURN and hasattr(self, text_attr):
+                            # Find which preset this input belongs to
+                            for preset in self.structure_presets:
+                                if field_id.startswith(preset['name']):
+                                    parts = field_id.split('_')
+                                    preset_name = parts[0]
+                                    param_type = parts[1]  # 'size' or 'grid'
+                                    dim = parts[2]  # 'x', 'y', or 'z'
+                                    
+                                    # Get the text value and validate it
+                                    text_value = getattr(self, text_attr, '0')
+                                    try:
+                                        # Convert to float for size, int for grid
+                                        if param_type == 'size':
+                                            new_value = max(0.1, min(10.0, float(text_value or '0.1')))
+                                            preset['input_values'][f"{param_type}_{dim}"] = new_value
+                                        else:  # grid
+                                            new_value = max(1, min(100, int(float(text_value or '1'))))
+                                            preset['input_values'][f"{param_type}_{dim}"] = new_value
+                                    except (ValueError, TypeError):
+                                        pass  # Keep old value if conversion fails
+                                    break
+                        
+                        # Clean up and deactivate
+                        if hasattr(self, text_attr):
+                            delattr(self, text_attr)
+                        self.active_input_field = None
+                    
+                    elif event.key == pygame.K_BACKSPACE:
+                        # Handle backspace
+                        if not hasattr(self, text_attr):
+                            # Initialize with current value if it doesn't exist
+                            for preset in self.structure_presets:
+                                if field_id.startswith(preset['name']):
+                                    parts = field_id.split('_')
+                                    param_type = parts[1]
+                                    dim = parts[2]
+                                    current_val = preset['input_values'].get(f"{param_type}_{dim}", "1")
+                                    setattr(self, text_attr, str(int(float(current_val)) if float(current_val).is_integer() else current_val))
+                                    break
+                        
+                        if hasattr(self, text_attr):
+                            current_text = getattr(self, text_attr)
+                            if len(current_text) > 0:
+                                new_text = current_text[:-1]
+                                setattr(self, text_attr, new_text if new_text else '0')
+                    
+                    elif event.unicode.isdigit() or (event.unicode == '.' and '.' not in getattr(self, text_attr, '')):
+                        # Handle digit or decimal point input
+                        if not hasattr(self, text_attr):
+                            # Initialize with current value if it doesn't exist
+                            for preset in self.structure_presets:
+                                if field_id.startswith(preset['name']):
+                                    parts = field_id.split('_')
+                                    param_type = parts[1]
+                                    dim = parts[2]
+                                    current_val = preset['input_values'].get(f"{param_type}_{dim}", "1")
+                                    setattr(self, text_attr, str(int(float(current_val)) if float(current_val).is_integer() else current_val))
+                                    break
+                        
+                        current_text = getattr(self, text_attr, '')
+                        # Limit to 6 characters total (including decimal point)
+                        if len(current_text) < 6:
+                            # Handle leading zero
+                            if current_text == '0' and event.unicode != '.':
+                                setattr(self, text_attr, event.unicode)
+                            else:
+                                setattr(self, text_attr, current_text + event.unicode)
+                
+                # Handle move speed input
+                elif hasattr(self, 'move_speed_active') and self.move_speed_active:
+                    if event.key == pygame.K_RETURN or event.key == pygame.K_ESCAPE:
+                        self.move_speed_active = False
+                        # Clean up text buffer on exit
+                        if hasattr(self, 'move_speed_text'):
+                            try:
+                                # If empty or invalid, use the previous valid value
+                                if not self.move_speed_text or not self.move_speed_text.isdigit():
+                                    self.move_speed_text = str(int(self.player_move_speed))
+                                
+                                new_speed = int(self.move_speed_text)
+                                # Clamp the value between 10 and 50
+                                new_speed = max(10, min(50, new_speed))
+                                self.player_move_speed = new_speed
+                                self.player.move_speed = float(new_speed)
+                                self.move_speed_text = str(new_speed)  # Update with clamped value
+                            except (ValueError, AttributeError):
+                                # Fall back to current speed on any error
+                                self.move_speed_text = str(int(self.player_move_speed))
+                            del self.move_speed_text
+                        self.move_speed_active = False
+                    elif event.key == pygame.K_BACKSPACE:
+                        # Initialize text buffer if needed
+                        if not hasattr(self, 'move_speed_text'):
+                            self.move_speed_text = str(int(self.player_move_speed))
+                        # Allow deleting all digits - just remove the last character
+                        self.move_speed_text = self.move_speed_text[:-1]
+                    elif event.unicode.isdigit():
+                        # Initialize text buffer if needed
+                        if not hasattr(self, 'move_speed_text'):
+                            self.move_speed_text = ''
+                        
+                        # Allow up to 2 digits
+                        if len(self.move_speed_text) < 2:
+                            # If this is the first digit and it's 0, replace it with the new digit
+                            if not self.move_speed_text and event.unicode == '0':
+                                self.move_speed_text = '10'  # Set minimum valid value
+                            else:
+                                # Add the new digit
+                                self.move_speed_text += event.unicode
+                            
+                            # Validate the new value
+                            try:
+                                new_speed = int(self.move_speed_text)
+                                # If exceeds max, cap at 50
+                                if new_speed > 50:
+                                    self.move_speed_text = '50'
+                                # If less than min, set to min (but allow typing first digit)
+                                elif new_speed < 1 and len(self.move_speed_text) == 1:
+                                    self.move_speed_text = '10'
+                            except (ValueError, AttributeError):
+                                # Fall back to current speed on any error
+                                self.move_speed_text = str(int(self.player_move_speed))
+                
+                # Handle bullet impulse input (existing code)
+                elif hasattr(self, 'bullet_impulse_active') and self.bullet_impulse_active:
                     if event.key == pygame.K_RETURN or event.key == pygame.K_ESCAPE:
                         self.bullet_impulse_active = False
                         # Clean up text buffer on exit
@@ -2733,30 +3923,139 @@ class Simulation:
                     elif event.key == pygame.K_r:
                         if self.placing_cube:  # Rotate if in placement mode
                             self.cube_rotation = (self.cube_rotation + 45) % 360  # Rotate 45 degrees around Y-axis
-                        else:  # Otherwise reset structures
-                            self.reset_structures()
                     elif event.key == pygame.K_m:  # Add M key to toggle side panel
                         self.show_side_panel = not self.show_side_panel
+                    elif event.key == pygame.K_p:  # P key toggles player panel
+                        self.show_player_panel = not self.show_player_panel
+                        if self.show_player_panel:
+                            self.show_side_panel = False
+                            self.show_side_panel2 = False
+                            pygame.mouse.set_visible(True)
+                            pygame.event.set_grab(False)
+                        else:
+                            pygame.mouse.set_visible(False)
+                            pygame.event.set_grab(True)
+            elif event.type == pygame.MOUSEWHEEL:
+                # Check for Ctrl+scroll for zooming
+                keys = pygame.key.get_pressed()
+                if keys[pygame.K_LCTRL] or keys[pygame.K_RCTRL]:
+                    # Handle zoom
+                    zoom_speed = 0.2
+                    if event.y > 0:  # Scrolling up - zoom in
+                        self.camera_distance = max(self.min_zoom, self.camera_distance - zoom_speed)
+                    else:  # Scrolling down - zoom out
+                        self.camera_distance = min(self.max_zoom, self.camera_distance + zoom_speed)
+                # Handle panel scrolling if panel is visible
+                elif self.show_side_panel:
+                    # Calculate the total content height and visible height
+                    total_content_height = len(self.structure_presets) * 180  # Same as in draw_side_panel
+                    visible_height = self.display[1] - 40  # Panel height minus header
+                    
+                    # Only process scrolling if content is taller than the visible area
+                    if total_content_height > visible_height:
+                        # Scroll up (negative y) or down (positive y)
+                        scroll_amount = event.y * 30  # Adjust scroll speed as needed
+                        
+                        # Update scroll position with bounds checking
+                        self.side_panel_scroll_y = max(0, min(
+                            self.side_panel_scroll_y - scroll_amount, 
+                            total_content_height - visible_height
+                        ))
+            
             elif event.type == pygame.MOUSEBUTTONDOWN:
                 if event.button == 3:  # Right mouse button
                     self.toggle_mouse_grab()
                 if event.button == 1:  # Left mouse button
+                    mouse_pos = event.pos
+                    input_clicked = False
+                    
+                    # Check if clicking on move speed input
+                    if hasattr(self, 'move_speed_rect') and self.move_speed_rect.collidepoint(mouse_pos):
+                        self.move_speed_active = True
+                        input_clicked = True
+                        # Initialize text buffer if needed
+                        if not hasattr(self, 'move_speed_text'):
+                            self.move_speed_text = str(int(self.player_move_speed))
+                    elif hasattr(self, 'move_speed_active') and self.move_speed_active:
+                        # Clicked outside the move speed input while it was active - save the value
+                        self.move_speed_active = False
+                        if hasattr(self, 'move_speed_text'):
+                            try:
+                                # If empty or invalid, use the previous valid value
+                                if not self.move_speed_text or not self.move_speed_text.isdigit():
+                                    self.move_speed_text = str(int(self.player_move_speed))
+                                
+                                new_speed = int(self.move_speed_text)
+                                # Clamp the value between 10 and 50
+                                new_speed = max(10, min(50, new_speed))
+                                self.player_move_speed = new_speed
+                                self.player.move_speed = float(new_speed)
+                                self.move_speed_text = str(new_speed)  # Update with clamped value
+                            except (ValueError, AttributeError):
+                                # Fall back to current speed on any error
+                                self.move_speed_text = str(int(self.player_move_speed))
+                            del self.move_speed_text
+                    
                     # Check if clicking on bullet impulse input
-                    if hasattr(self, 'bullet_impulse_rect') and self.bullet_impulse_rect.collidepoint(event.pos):
+                    if hasattr(self, 'bullet_impulse_rect') and self.bullet_impulse_rect.collidepoint(mouse_pos):
                         self.bullet_impulse_active = True
-                    else:
+                        input_clicked = True
+                        # Initialize text buffer if needed
+                        if not hasattr(self, 'bullet_impulse_text'):
+                            self.bullet_impulse_text = str(int(self.bullet_impulse))
+                    
+                    # Check if clicking on any structure input field
+                    if not input_clicked and hasattr(self, 'structure_buttons'):
+                        for button_rect, preset in self.structure_buttons:
+                            if preset.get('generator') == 'cluster' and 'input_values' in preset:
+                                for dim in ['size_x', 'size_y', 'size_z', 'grid_x', 'grid_y', 'grid_z']:
+                                    field_id = f"{preset['name']}_{dim}"
+                                    if hasattr(self, f"{field_id}_rect"):
+                                        field_rect = getattr(self, f"{field_id}_rect")
+                                        if field_rect.collidepoint(mouse_pos):
+                                            self.active_input_field = field_id
+                                            # Initialize text buffer with current value
+                                            current_val = preset['input_values'][dim]
+                                            setattr(self, f"{field_id}_text", str(int(float(current_val)) if float(current_val).is_integer() else current_val))
+                                            input_clicked = True
+                                            break
+                                if input_clicked:
+                                    break
+                    
+                    if not input_clicked:
+                        self.active_input_field = None
                         self.bullet_impulse_active = False
+                        self.move_speed_active = False
                         
                         # Check if menu button was clicked
-                        if self.menu_button_rect.collidepoint(event.pos):
+                        if self.menu_button_rect.collidepoint(mouse_pos):
                             self.show_side_panel = not self.show_side_panel
-                            if self.show_side_panel and self.show_side_panel2:
+                            if self.show_side_panel:
                                 self.show_side_panel2 = False
+                                self.show_player_panel = False
                         # Check if second panel button was clicked
                         elif self.panel2_button_rect.collidepoint(event.pos):
                             self.show_side_panel2 = not self.show_side_panel2
-                            if self.show_side_panel2 and self.show_side_panel:
+                            if self.show_side_panel2:
                                 self.show_side_panel = False
+                                self.show_player_panel = False
+                        # Check if player button was clicked
+                        elif hasattr(self, 'player_button_rect') and self.player_button_rect.collidepoint(event.pos):
+                            self.show_player_panel = not self.show_player_panel
+                            if self.show_player_panel:
+                                self.show_side_panel = False
+                                self.show_side_panel2 = False
+                                pygame.mouse.set_visible(True)
+                                pygame.event.set_grab(False)
+                            else:
+                                pygame.mouse.set_visible(False)
+                                pygame.event.set_grab(True)
+                        # Check for clicks on player model buttons in the panel
+                        elif hasattr(self, 'show_player_panel') and self.show_player_panel and hasattr(self, 'player_buttons'):
+                            for model_name, button_rect in self.player_buttons:
+                                if button_rect.collidepoint(event.pos):
+                                    self.switch_player_model(model_name)
+                                    break
                         # Check if lock button was clicked
                         elif self.lock_button_rect.collidepoint(event.pos):
                             self.toggle_mouse_grab()
@@ -2772,13 +4071,6 @@ class Simulation:
                     if self.is_firing:
                         self.stop_shoot_sound()
                     self.is_firing = False
-            elif event.type == pygame.MOUSEWHEEL:
-                # Handle mouse wheel zoom
-                keys = pygame.key.get_pressed()
-                if keys[pygame.K_LCTRL] or keys[pygame.K_RCTRL]:
-                    # Zoom in/out based on scroll direction
-                    zoom_amount = event.y * self.zoom_speed * 0.2  # Reduced sensitivity for scroll
-                    self.camera_distance = max(self.min_zoom, min(self.max_zoom, self.camera_distance - zoom_amount))
             elif event.type == pygame.VIDEORESIZE:
                 # Handle window resize
                 self.display = (event.w, event.h)
@@ -2962,6 +4254,8 @@ class Simulation:
             self.draw_side_panel()
         elif self.show_side_panel2:
             self.draw_side_panel2()
+        elif self.show_player_panel:
+            self.draw_player_panel()
         self.draw_crosshair()
         self.draw_menu_button()
         self.draw_reset_button()

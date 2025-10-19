@@ -1,10 +1,30 @@
+# Material for Sci-Fi AA Turret
 newmtl blinn1SG
-illum 4
-Kd 0.00 0.00 0.00
-Ka 0.00 0.00 0.00
-Tf 1.00 1.00 1.00
+illum 2  # Basic illumination model with highlights
+
+# Ambient color (RGB)
+Ka 0.2 0.2 0.2
+
+# Diffuse color (RGB) - set to white to allow full texture color
+Kd 1.0 1.0 1.0
+
+# Specular color (RGB)
+Ks 0.5 0.5 0.5
+
+# Specular exponent (shininess)
+Ns 100.0
+
+# Transparency (1.0 = opaque, 0.0 = fully transparent)
+d 1.0
+
+# Index of refraction
+Ni 1.0
+
+# Diffuse texture map
 map_Kd Turret_Color.jpg
-bump Turret_Normal.jpg -bm 1
-Ni 1.00
-Ks 0.00 0.00 0.00
-map_Ks Turret_Reflection.jpg
+
+# Bump map
+# bump Turret_Normal.jpg
+
+# Specular map
+# map_Ks Turret_Reflection.jpg

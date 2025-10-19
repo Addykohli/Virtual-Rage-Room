@@ -1,0 +1,10 @@
+# Simple MTL File for Cannon
+# Using only base color texture
+
+newmtl lambert1
+Ka 1.0 1.0 1.0
+Kd 1.0 1.0 1.0
+Ks 0.2 0.2 0.2
+Ns 50.0
+illum 2
+map_Kd Canon_low_lambert1_BaseColor (1).png

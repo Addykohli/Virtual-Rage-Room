@@ -1,18 +1,26 @@
 import pybullet as p
 import numpy as np
+import random
+import math
+import time
 
 class PhysicsWorld:
-    def __init__(self, gravity=(0, -9.81, 0), grid_height=0.0):
+    def __init__(self, gravity=(0, -9.81*2, 0), grid_height=0.0):
         # Use DIRECT mode for headless simulation (faster)
         self.physicsClient = p.connect(p.DIRECT)  # or p.GUI for visualization
         p.setGravity(*gravity)
-        p.setTimeStep(1/60.0)  # 60 FPS physics simulation
+        p.setTimeStep(1/120.0)  # 60 FPS physics simulation
         
         # Store references to physics bodies
         self.structures = {}
         self.next_structure_id = 0
         self.grid_height = grid_height
         self.stiff_structures = set()  # Track stiff structures
+        self.shards = {}  # Track shard objects
+        self.shard_lifetime = 5.0  # How long shards last before being removed (in seconds)
+        self.shard_impulse_threshold = 50.0  # Minimum impulse to shatter a structure
+        self.impulse_accumulator = {}  # Track accumulated impulse for each structure
+        self.last_hit_time = {}  # Track when structures were last hit
         
         # Enable contact points for collision detection
         p.setPhysicsEngineParameter(enableConeFriction=1)
@@ -224,6 +232,81 @@ class PhysicsWorld:
                 'color': info.get('color', [0.8, 0.2, 0.2, 1])
             }
         return None
+    def create_shards(self, structure_id, position, impulse, shard_config):
+        """Create shards when a structure is shattered
+        
+        Args:
+            structure_id: ID of the structure being shattered
+            position: [x, y, z] position of the impact
+            impulse: [x, y, z] impulse vector that caused the shattering
+            shard_config: Configuration for shard generation
+        """
+        if structure_id not in self.structures:
+            return
+            
+        structure = self.structures[structure_id]
+        if structure.get('stiff', False):
+            return  # Don't shatter stiff structures
+            
+        # Get structure properties
+        pos, orn = p.getBasePositionAndOrientation(structure['body'])
+        size = structure.get('size', [1, 1, 1])
+        color = structure.get('color', [0.8, 0.2, 0.2, 1])
+        
+        # Remove the original structure
+        self.remove_structure(structure_id)
+        
+        # Get shard configuration with defaults
+        shard_count = shard_config.get('count', random.randint(4, 8))
+        shard_size_scale = shard_config.get('size_scale', 0.5)
+        shard_mass = shard_config.get('mass', 0.5)
+        shard_velocity_scale = shard_config.get('velocity_scale', 1.0)
+        
+        # Calculate base shard size
+        shard_size = min(size) * shard_size_scale
+        
+        for _ in range(shard_count):
+            # Random position within the original structure's bounds
+            shard_pos = [
+                pos[0] + (random.random() - 0.5) * size[0] * 0.8,
+                pos[1] + (random.random() - 0.5) * size[1] * 0.8,
+                pos[2] + (random.random() - 0.5) * size[2] * 0.8
+            ]
+            
+            # Random rotation
+            rotation = [
+                random.random() * math.pi * 2,
+                random.random() * math.pi * 2,
+                random.random() * math.pi * 2
+            ]
+            
+            # Add shard
+            shard_id = self.add_structure(
+                position=shard_pos,
+                size=[shard_size] * 3,
+                mass=shard_mass,
+                color=color,
+                rotation=rotation,
+                fill=structure.get('fill', 'solid'),
+                metadata={
+                    'is_shard': True, 
+                    'spawn_time': time.time(),
+                    'shard_config': shard_config  # Pass along the shard config
+                }
+            )
+            
+            if shard_id is not None:
+                # Apply velocity to the shard based on impact and random factors
+                velocity = [
+                    ((random.random() - 0.5) * 10 + impulse[0] * 0.1) * shard_velocity_scale,
+                    (random.random() * 5 + abs(impulse[1]) * 0.2) * shard_velocity_scale,  # Upward force
+                    ((random.random() - 0.5) * 10 + impulse[2] * 0.1) * shard_velocity_scale
+                ]
+                p.resetBaseVelocity(self.structures[shard_id]['body'], linearVelocity=velocity)
+                
+                # Store shard info for cleanup
+                self.shards[shard_id] = time.time()
+    
     def apply_impulse(self, structure_id, impulse, position=None):
         """Apply an impulse to a structure (for shooting)
         
@@ -233,45 +316,87 @@ class PhysicsWorld:
             position: [x, y, z] position to apply the impulse (in world coordinates)
                      If None, uses the center of mass
         """
-        if structure_id in self.structures:
-            body = self.structures[structure_id]['body']
-            if position is None:
-                position, _ = p.getBasePositionAndOrientation(body)
-                
-            # Apply linear impulse (force)
-            p.applyExternalForce(
-                body, 
-                -1,  # -1 for the base
-                impulse, 
-                position, 
-                p.WORLD_FRAME
-            )
+        if structure_id not in self.structures:
+            return
             
-            # Apply some angular velocity based on where the bullet hit
-            # This creates a more realistic rotation effect
-            com_pos, _ = p.getBasePositionAndOrientation(body)
-            r = [position[i] - com_pos[i] for i in range(3)]  # Vector from COM to hit point
+        structure = self.structures[structure_id]
+        current_time = time.time()
+        
+        # Calculate impulse magnitude
+        impulse_magnitude = (impulse[0]**2 + impulse[1]**2 + impulse[2]**2)**0.5
+        
+        # Get shard configuration from metadata if it exists
+        shard_config = structure.get('metadata', {}).get('shard_config', None)
+        
+        # Initialize or update impulse accumulator
+        if (structure_id not in self.impulse_accumulator or 
+            structure_id not in self.last_hit_time or 
+            current_time - self.last_hit_time[structure_id] > 0.5):  # Reset if more than 0.5s since last hit
+            self.impulse_accumulator[structure_id] = 0.0
+        
+        # Update last hit time
+        self.last_hit_time[structure_id] = current_time
+        
+        # Only process shattering for non-shard, non-stiff structures with shard config
+        if (shard_config is not None and 
+            not structure.get('is_shard', False) and 
+            not structure.get('stiff', False)):
             
-            # Calculate torque as cross product of r and impulse
-            torque = [
-                r[1] * impulse[2] - r[2] * impulse[1],
-                r[2] * impulse[0] - r[0] * impulse[2],
-                r[0] * impulse[1] - r[1] * impulse[0]
-            ]
+            # Add to accumulated impulse
+            self.impulse_accumulator[structure_id] += impulse_magnitude
             
-            # Scale down the torque to prevent excessive spinning
-            torque = [t * 0.5 for t in torque]
+            # Check if accumulated impulse exceeds threshold
+            if self.impulse_accumulator[structure_id] >= shard_config.get('impulse_threshold', self.shard_impulse_threshold):
+                self.create_shards(structure_id, 
+                                 position if position else p.getBasePositionAndOrientation(structure['body'])[0], 
+                                 impulse, 
+                                 shard_config)
+                # Remove from accumulators
+                if structure_id in self.impulse_accumulator:
+                    del self.impulse_accumulator[structure_id]
+                if structure_id in self.last_hit_time:
+                    del self.last_hit_time[structure_id]
+                return
             
-            # Apply the torque as an angular impulse
-            p.applyExternalTorque(
-                body,
-                -1,  # -1 for the base
-                torque,
-                p.WORLD_FRAME
-            )
+        body = structure['body']
+        if position is None:
+            position, _ = p.getBasePositionAndOrientation(body)
+            
+        # Apply linear impulse (force)
+        p.applyExternalForce(
+            body, 
+            -1,  # -1 for the base
+            impulse, 
+            position, 
+            p.WORLD_FRAME
+        )
+        
+        # Apply some angular velocity based on where the bullet hit
+        # This creates a more realistic rotation effect
+        com_pos, _ = p.getBasePositionAndOrientation(body)
+        r = [position[i] - com_pos[i] for i in range(3)]  # Vector from COM to hit point
+        
+        # Calculate torque as cross product of r and impulse
+        torque = [
+            r[1] * impulse[2] - r[2] * impulse[1],
+            r[2] * impulse[0] - r[0] * impulse[2],
+            r[0] * impulse[1] - r[1] * impulse[0]
+        ]
+        
+        # Scale down the torque to prevent excessive spinning
+        torque = [t * 0.5 for t in torque]
+        
+        # Apply the torque as an angular impulse
+        p.applyExternalTorque(
+            body,
+            -1,  # -1 for the base
+            torque,
+            p.WORLD_FRAME
+        )
     
     def cleanup(self):
         """Clean up physics resources"""
+        self.shards.clear()
         p.disconnect()
 
     def ray_test(self, from_pos, to_pos):
@@ -299,9 +424,19 @@ class PhysicsWorld:
         # First step the simulation
         p.stepSimulation()
         
+        # Clean up old shards
+        current_time = time.time()
+        shard_ids = list(self.shards.keys())
+        for shard_id in shard_ids:
+            if current_time - self.shards[shard_id] > self.shard_lifetime:
+                if shard_id in self.structures:
+                    self.remove_structure(shard_id)
+                if shard_id in self.shards:
+                    del self.shards[shard_id]
+        
         # Ensure all stiff structures stay in their initial positions/orientations
         # Skip kinematic objects (like the player) as they are controlled by code
-        for structure_id in self.stiff_structures:
+        for structure_id in list(self.stiff_structures):  # Create a copy to avoid modification during iteration
             if structure_id in self.structures:
                 structure = self.structures[structure_id]
                 
@@ -328,10 +463,22 @@ class PhysicsWorld:
     def remove_structure(self, structure_id):
         """Remove a structure from the physics world"""
         if structure_id in self.structures:
-            p.removeBody(self.structures[structure_id]['body'])
+            try:
+                p.removeBody(self.structures[structure_id]['body'])
+            except:
+                pass  # Body might already be removed
+            
+            # Clean up tracking data
+            if structure_id in self.impulse_accumulator:
+                del self.impulse_accumulator[structure_id]
+            if structure_id in self.last_hit_time:
+                del self.last_hit_time[structure_id]
             if structure_id in self.stiff_structures:
                 self.stiff_structures.remove(structure_id)
-            del self.structures[structure_id]
+                
+            # Remove from structures dictionary last
+            if structure_id in self.structures:
+                del self.structures[structure_id]
     
     def add_bullet(self, position, direction, speed, radius=0.1, mass=0.1):
         # Create a sphere collision shape for the bullet
