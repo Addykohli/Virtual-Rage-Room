@@ -13,6 +13,8 @@ import random
 import numpy as np
 from pathlib import Path
 import pybullet as p  # Add pybullet import
+import threading
+import time
 
 # Add the parent directory to the Python path
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
@@ -99,6 +101,11 @@ class Simulation:
         from models.skybox import Skybox
         
         self.model_lib = ModelLibrary()
+        # Initialize loading state
+        self.is_loading_model = False
+        self.loading_text = ""
+        self.loading_start_time = 0
+        # Load initial model
         self.currPlayerModel = self.model_lib.load_model('Cannon')
         
         # Initialize skybox (larger than the scene)
@@ -2728,20 +2735,139 @@ class Simulation:
         glMatrixMode(GL_MODELVIEW)
         glPopMatrix()
     
-    def switch_player_model(self, model_name):
-        """Switch to the specified player model."""
+    def _load_model_thread(self, model_name):
+        """Thread function to load the model in the background."""
         try:
-            # Load the new model
-            new_model = self.model_lib.load_model(model_name)
-            if new_model:
-                self.currPlayerModel = new_model
+            return self.model_lib.load_model(model_name)
+        except Exception as e:
+            print(f"Error loading model {model_name}: {e}")
+            return None
+    
+    def _on_model_loaded(self, model, model_name):
+        """Handle model loaded callback in the main thread."""
+        try:
+            if model is None:
+                self.is_loading_model = False
+                return
                 
-                # Update camera height based on new model
-                if 'camera_height' in self.currPlayerModel.metadata:
-                    self.camera_height = self.currPlayerModel.metadata['camera_height']
+            # Unload current model if exists
+            if self.currPlayerModel is not None:
+                self.currPlayerModel.unload()
+            
+            # Set up the new model
+            self.currPlayerModel = model
+            
+            # Update camera height based on new model
+            if 'camera_height' in self.currPlayerModel.metadata:
+                self.camera_height = self.currPlayerModel.metadata['camera_height']
+            
+            # Update player collision in physics world
+            if hasattr(self, 'player_structure_id'):
+                # Remove old player collision
+                self.physics.remove_structure(self.player_structure_id)
                 
-                # Update player collision in physics world
-                if hasattr(self, 'player_structure_id'):
+                # Add new player collision
+                player_mesh_path = self.currPlayerModel.metadata.get('mesh_path')
+                player_mesh_obj = None
+                if player_mesh_path:
+                    from models.obj_loader import OBJ
+                    player_mesh_obj = OBJ(player_mesh_path)
+                
+                self.player_structure_id = self.physics.add_structure(
+                    position=[self.player.x, self.player.y, self.player.z],
+                    size=self.player_collision_size,
+                    mass=0.0,
+                    color=(0.0, 0.0, 0.0, 0.0),
+                    rotation=[0, 0, 0],
+                    fill='player',
+                    metadata={'stiff': True, 'kinematic': True},
+                    mesh_obj=player_mesh_obj
+                )
+            
+            # Reload audio for the new model
+            self.load_audio_from_model()
+            
+        except Exception as e:
+            print(f"Error initializing model {model_name}: {e}")
+        finally:
+            self.is_loading_model = False
+            
+    def _load_model_thread(self, model_name):
+        """Thread function to load the model in the background."""
+        try:
+            return self.model_lib.load_model(model_name)
+        except Exception as e:
+            print(f"Error loading model {model_name}: {e}")
+            return None
+
+   def _on_model_loaded(self, model, model_name):
+        """Handle model loaded callback in the main thread."""
+        try:
+            if model is None:
+                self.is_loading_model = False
+                return
+
+            # Unload current model if exists
+            if hasattr(self, 'currPlayerModel') and self.currPlayerModel is not None:
+                self.currPlayerModel.unload()
+
+            # Set up the new model
+            self.currPlayerModel = model
+
+            # Update camera height based on new model
+            if hasattr(self.currPlayerModel, 'metadata') and 'camera_height' in self.currPlayerModel.metadata:
+                self.camera_height = self.currPlayerModel.metadata['camera_height']
+
+            # Update player collision in physics world
+            if hasattr(self, 'player_structure_id'):
+                # Remove old player collision
+                self.physics.remove_structure(self.player_structure_id)
+
+                # Add new player collision
+                player_mesh_path = self.currPlayerModel.metadata.get('mesh_path') if hasattr(self.currPlayerModel, 'metadata') else None
+                player_mesh_obj = None
+                if player_mesh_path:
+                    from models.obj_loader import OBJ
+                    player_mesh_obj = OBJ(player_mesh_path)
+
+                self.player_structure_id = self.physics.add_structure(
+                    position=[self.player.x, self.player.y, self.player.z],
+                    size=self.player_collision_size,
+                    mass=0.0,
+                    color=(0.0, 0.0, 0.0, 0.0),
+                    rotation=[0, 0, 0],
+                    fill='player',
+                    metadata={'stiff': True, 'kinematic': True},
+                    mesh_obj=player_mesh_obj
+                )
+
+            # Reload audio for the new model
+            self.load_audio_from_model()
+
+        except Exception as e:
+            print(f"Error initializing model {model_name}: {e}")
+        finally:
+            self.is_loading_model = False
+
+   def switch_player_model(self, model_name):
+        """Switch to the specified player model with loading indicator."""
+        if self.is_loading_model:
+            return  # Don't allow multiple model switches at once
+            
+        self.is_loading_model = True
+        self.loading_text = f"Loading {model_name}..."
+        self.loading_start_time = time.time()
+        
+        # Start loading in a separate thread
+        def _load_thread():
+            model = self._load_model_thread(model_name)
+            # Post an event to the main thread to handle the loaded model
+            pygame.event.post(pygame.event.Event(
+                pygame.USEREVENT, 
+                {"type": "model_loaded", "model": model, "model_name": model_name}
+            ))
+            
+        threading.Thread(target=_load_thread, daemon=True).start()
                     # Remove old player collision
                     self.physics.remove_structure(self.player_structure_id)
                     
@@ -2769,6 +2895,67 @@ class Simulation:
         except Exception as e:
             print(f"Error switching to model {model_name}: {e}")
     
+    def render_loading_screen(self):
+        """Render the loading screen with a loading message."""
+        # Save current projection and modelview matrices
+        glMatrixMode(GL_PROJECTION)
+        glPushMatrix()
+        glLoadIdentity()
+        glOrtho(0, self.display[0], self.display[1], 0, -1, 1)
+        
+        glMatrixMode(GL_MODELVIEW)
+        glPushMatrix()
+        glLoadIdentity()
+        
+        # Disable lighting for 2D rendering
+        glDisable(GL_LIGHTING)
+        glDisable(GL_DEPTH_TEST)
+        glEnable(GL_BLEND)
+        glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA)
+        
+        # Draw semi-transparent overlay
+        glColor4f(0.1, 0.1, 0.1, 0.7)
+        glBegin(GL_QUADS)
+        glVertex2f(0, 0)
+        glVertex2f(self.display[0], 0)
+        glVertex2f(self.display[0], self.display[1])
+        glVertex2f(0, self.display[1])
+        glEnd()
+        
+        # Draw loading text with blinking dots
+        loading_text = self.loading_text
+        if time.time() - self.loading_start_time > 0.5:  # Start showing dots after 0.5 seconds
+            dot_count = int((time.time() * 2) % 4)  # Cycle through 0-3 dots
+            loading_text += '.' * dot_count
+        
+        # Center the text
+        text_width = len(loading_text) * 10  # Approximate width
+        text_x = (self.display[0] - text_width) // 2
+        text_y = self.display[1] // 2
+        
+        # Draw text
+        glColor4f(1.0, 1.0, 1.0, 1.0)
+        glRasterPos2f(text_x, text_y)
+        for char in loading_text:
+            pygame.font.init()
+            font = pygame.font.SysFont('Arial', 24)
+            text_surface = font.render(char, True, (255, 255, 255))
+            text_data = pygame.image.tostring(text_surface, 'RGBA', True)
+            glDrawPixels(text_surface.get_width(), text_surface.get_height(), 
+                        GL_RGBA, GL_UNSIGNED_BYTE, text_data)
+            glRasterPos2f(glGetDoublev(GL_CURRENT_RASTER_POSITION)[0] + text_surface.get_width(), text_y)
+        
+        # Restore OpenGL state
+        glDisable(GL_BLEND)
+        glEnable(GL_DEPTH_TEST)
+        glEnable(GL_LIGHTING)
+        
+        # Restore matrices
+        glPopMatrix()
+        glMatrixMode(GL_PROJECTION)
+        glPopMatrix()
+        glMatrixMode(GL_MODELVIEW)
+
     def draw_circular_shadow(self, x, z, radius, alpha=0.4):
         """Draw a circular shadow on the ground for an object at (x, z) with given radius."""
         glDisable(GL_LIGHTING)
@@ -4137,15 +4324,9 @@ class Simulation:
         self.update_camera()
 
     def render_scene(self):
-        try:
-            # Clear the screen and depth buffer with a dark color
-            glClearColor(0.0, 0.0, 0.1, 1.0)
-            glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT)
-            
-            # ===== SKYBOX RENDERING =====
-            # Save projection matrix
-            glMatrixMode(GL_PROJECTION)
-            glPushMatrix()
+        """Render the 3D scene."""
+        # Clear the screen and depth buffer
+        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT)
             glLoadIdentity()
             
             # Set up projection with a fixed FOV
