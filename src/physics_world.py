@@ -9,7 +9,7 @@ class PhysicsWorld:
         # Use DIRECT mode for headless simulation (faster)
         self.physicsClient = p.connect(p.DIRECT)  # or p.GUI for visualization
         p.setGravity(*gravity)
-        p.setTimeStep(1/120.0)  # 60 FPS physics simulation
+        p.setTimeStep(1/60.0)  # 60 FPS physics simulation
         
         # Store references to physics bodies
         self.structures = {}
@@ -17,7 +17,7 @@ class PhysicsWorld:
         self.grid_height = grid_height
         self.stiff_structures = set()  # Track stiff structures
         self.shards = {}  # Track shard objects
-        self.shard_lifetime = 5.0  # How long shards last before being removed (in seconds)
+        self.shard_lifetime = 20.0  # How long shards last before being removed (in seconds)
         self.shard_impulse_threshold = 50.0  # Minimum impulse to shatter a structure
         self.impulse_accumulator = {}  # Track accumulated impulse for each structure
         self.last_hit_time = {}  # Track when structures were last hit
@@ -66,23 +66,20 @@ class PhysicsWorld:
             int: The ID of the created structure, or None if a structure already exists at the position
         """
         # Check for existing structures at this position
-        nearby = self.check_nearby_objects(position, radius=0.1)  # Small radius to check exact position
+        nearby = self.check_nearby_objects(position, radius=0.05)  # Small radius to check exact position
         if nearby:
             return None  # Structure already exists at this position
         
-        if mesh_obj is not None:
-            # Use mesh-based collision
-            vertices, indices = mesh_obj.get_bullet_mesh()
-            shape = p.createCollisionShape(
-                p.GEOM_MESH,
-                vertices=vertices,
-                indices=indices,
-                meshScale=[s for s in size]
-            )
-        else:
-            # Only create collision shape, not visual shape since we'll render it ourselves
-            shape = p.createCollisionShape(p.GEOM_BOX, halfExtents=np.array(size)/2)
+        # Always use box collision for better performance and stability
+        shape = p.createCollisionShape(p.GEOM_BOX, halfExtents=np.array(size)/2)
         
+        # Store the mesh path for rendering if provided
+        metadata = metadata or {}
+        
+        # Add model_path to metadata if available in mesh_obj
+        if mesh_obj is not None and hasattr(mesh_obj, 'filepath'):
+            metadata['model_path'] = mesh_obj.filepath
+     
         # Convert rotation to quaternion if provided
         if rotation is not None:
             orientation = p.getQuaternionFromEuler(rotation)
@@ -113,7 +110,8 @@ class PhysicsWorld:
             'texture_id': None,  # Will be set by the simulation
             'metadata': metadata or {},  # Store any additional metadata
             'stiff': is_stiff,  # Mark if this is a stiff (unmovable) structure
-            'mesh_obj': mesh_obj  # Store mesh_obj for rendering if needed
+            'mesh_obj': mesh_obj,  # Store mesh_obj for rendering if needed
+            'texture_id': None  # Store the texture ID for consistent rendering
         }
         
         # Handle stiff structures
@@ -241,12 +239,16 @@ class PhysicsWorld:
             impulse: [x, y, z] impulse vector that caused the shattering
             shard_config: Configuration for shard generation
         """
+        # Play shatter sound if configured
+        if 'shatter_sound' in shard_config and hasattr(self, 'simulation') and hasattr(self.simulation, 'play_sound'):
+            sound_choice = random.choice(shard_config['shatter_sound'])
+            self.simulation.play_sound(sound_choice, volume=0.5, channel_num=3)  # Use channel 3 for shatter sounds
         if structure_id not in self.structures:
             return
             
         structure = self.structures[structure_id]
-        if structure.get('stiff', False):
-            return  # Don't shatter stiff structures
+        #if structure.get('stiff', False):
+            #return  # Don't shatter stiff structures
             
         # Get structure properties
         pos, orn = p.getBasePositionAndOrientation(structure['body'])
@@ -256,14 +258,19 @@ class PhysicsWorld:
         # Remove the original structure
         self.remove_structure(structure_id)
         
-        # Get shard configuration with defaults
-        shard_count = shard_config.get('count', random.randint(4, 8))
+        # Get shard configuration with defaults, ensure shard_count is an integer
+        shard_count = int(shard_config.get('count', random.randint(4, 8)))
         shard_size_scale = shard_config.get('size_scale', 0.5)
         shard_mass = shard_config.get('mass', 0.5)
         shard_velocity_scale = shard_config.get('velocity_scale', 1.0)
-        
-        # Calculate base shard size
-        shard_size = min(size) * shard_size_scale
+                
+        # Calculate base shard size with random scaling between 0.3 and 0.9 for each dimension
+        if isinstance(shard_size_scale, (list, tuple)):
+            # If shard_size_scale is a vector, multiply each dimension with a random factor
+            shard_size = [size[i] * shard_size_scale[i] * random.uniform(0.3, 0.9) for i in range(3)]
+        else:
+            # If shard_size_scale is a scalar, apply it to all dimensions with random factors
+            shard_size = [s * shard_size_scale * random.uniform(0.3, 0.9) for s in size]
         
         for _ in range(shard_count):
             # Random position within the original structure's bounds
@@ -280,18 +287,23 @@ class PhysicsWorld:
                 random.random() * math.pi * 2
             ]
             
-            # Add shard
+            # Get the fill type for the shard (same as parent structure)
+            fill_type = structure.get('fill', 'solid')
+            
+            # Add shard with metadata including texture info
             shard_id = self.add_structure(
                 position=shard_pos,
-                size=[shard_size] * 3,
+                size=shard_size,
                 mass=shard_mass,
                 color=color,
                 rotation=rotation,
-                fill=structure.get('fill', 'solid'),
+                fill=fill_type,  # Use the same fill type as parent structure
                 metadata={
                     'is_shard': True, 
                     'spawn_time': time.time(),
-                    'shard_config': shard_config  # Pass along the shard config
+                    'shard_config': shard_config,  # Pass along the shard config
+                    'fill_type': fill_type,  # Store fill type for texture selection
+                    'is_shard_object': True  # Flag to identify shard objects
                 }
             )
             
@@ -337,10 +349,9 @@ class PhysicsWorld:
         # Update last hit time
         self.last_hit_time[structure_id] = current_time
         
-        # Only process shattering for non-shard, non-stiff structures with shard config
+        # Only process shattering for non-shard, structures with shard config
         if (shard_config is not None and 
-            not structure.get('is_shard', False) and 
-            not structure.get('stiff', False)):
+            not structure.get('is_shard', False)):
             
             # Add to accumulated impulse
             self.impulse_accumulator[structure_id] += impulse_magnitude

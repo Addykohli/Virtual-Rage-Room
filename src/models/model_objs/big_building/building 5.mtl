@@ -1,0 +1,22 @@
+# Blender 4.5.3 LTS MTL File: 'building 5.blend'
+# www.blender.org
+
+newmtl TexturesCom_BuildingsHighRise0628_2_seamless_S
+Ns 250.000000
+Ka 1.000000 1.000000 1.000000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.450000
+illum 2
+map_Kd TexturesCom_BuildingsHighRise0628_2_seamless_S.jpg
+map_d TexturesCom_BuildingsHighRise0628_2_seamless_S.jpg
+
+newmtl TexturesCom_BuildingsHighRise0628_2_seamless_S.001
+Ns 1000.000000
+Ka 1.000000 1.000000 1.000000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.450000
+illum 2
+map_Kd TexturesCom_BuildingsHighRise0628_2_seamless_S.jpg
+map_d TexturesCom_BuildingsHighRise0628_2_seamless_S.jpg

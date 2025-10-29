@@ -13,7 +13,8 @@ class Material:
         self.diffuse = [0.8, 0.8, 0.8, 1.0]  # Kd
         self.specular = [0.5, 0.5, 0.5, 1.0]  # Ks
         self.emission = [0.0, 0.0, 0.0, 1.0]  # Ke
-        self.shininess = 100.0  # Ns (0-1000)
+        # Clamp shininess to valid OpenGL range (0.0 to 128.0)
+        self.shininess = min(max(0.0, 100.0), 128.0)  # Ns (0-128)
         self.opacity = 1.0  # d or 1-Tr
         self.has_texture = False
         
@@ -22,52 +23,54 @@ class Material:
             setattr(self, key, value)
     
     def bind(self):
-        # Save current state
-        glPushAttrib(GL_ENABLE_BIT | GL_CURRENT_BIT | GL_TEXTURE_BIT | GL_LIGHTING_BIT)
-        
-        # Enable/disable texturing
-        if self.texture and self.has_texture:
-            glEnable(GL_TEXTURE_2D)
-            glBindTexture(GL_TEXTURE_2D, self.texture)
-            
-            # Set texture parameters
-            glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT)
-            glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT)
-            glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR)
-            glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR)
-            
-            # Use MODULATE to combine texture with material colors
-            glTexEnvi(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE)
-            
-            # When texturing is enabled, use white material color to show full texture color
-            glMaterialfv(GL_FRONT_AND_BACK, GL_AMBIENT, [1.0, 1.0, 1.0, self.opacity])
-            glMaterialfv(GL_FRONT_AND_BACK, GL_DIFFUSE, [1.0, 1.0, 1.0, self.opacity])
-        else:
-            glDisable(GL_TEXTURE_2D)
-            # When no texture, use the material's colors
+        """Bind this material's properties to the current OpenGL state."""
+        try:
+            # Set material properties
             glMaterialfv(GL_FRONT_AND_BACK, GL_AMBIENT, self.ambient)
             glMaterialfv(GL_FRONT_AND_BACK, GL_DIFFUSE, self.diffuse)
-        
-        # Always set specular and shininess
-        glMaterialfv(GL_FRONT_AND_BACK, GL_SPECULAR, self.specular)
-        glMaterialf(GL_FRONT_AND_BACK, GL_SHININESS, self.shininess)
-        glMaterialfv(GL_FRONT_AND_BACK, GL_EMISSION, self.emission)
-        
-        # Set color for immediate mode rendering
-        glColor4f(self.diffuse[0], self.diffuse[1], self.diffuse[2], self.opacity)
-        
-        # Enable/disable blending based on opacity
-        if self.opacity < 1.0:
-            glEnable(GL_BLEND)
-            glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA)
-            glDepthMask(GL_FALSE)  # Disable depth writing for transparent objects
-        else:
+            
+            # Set specular and shininess with validation
+            specular = list(self.specular) if len(self.specular) >= 4 else [0.5, 0.5, 0.5, 1.0]
+            shininess = max(0.0, min(float(self.shininess), 128.0))
+            glMaterialfv(GL_FRONT_AND_BACK, GL_SPECULAR, specular)
+            glMaterialf(GL_FRONT_AND_BACK, GL_SHININESS, shininess)
+            glMaterialfv(GL_FRONT_AND_BACK, GL_EMISSION, self.emission)
+            
+            # Handle texturing
+            if self.texture and self.has_texture:
+                glEnable(GL_TEXTURE_2D)
+                glBindTexture(GL_TEXTURE_2D, self.texture)
+                glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT)
+                glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT)
+                glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR)
+                glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR)
+                glTexEnvi(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE)
+            else:
+                glDisable(GL_TEXTURE_2D)
+            
+            # Handle transparency
+            if self.opacity < 1.0:
+                glEnable(GL_BLEND)
+                glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA)
+                glDepthMask(GL_FALSE)
+            else:
+                glDisable(GL_BLEND)
+                glDepthMask(GL_TRUE)
+                
+            # Set color for immediate mode rendering
+            glColor4f(self.diffuse[0], self.diffuse[1], self.diffuse[2], self.opacity)
+            
+        except Exception as e:
+            print(f"[ERROR] Error in Material.bind(): {e}")
+            # Fallback to default material on error
+            glMaterialfv(GL_FRONT_AND_BACK, GL_AMBIENT, [0.2, 0.2, 0.2, 1.0])
+            glMaterialfv(GL_FRONT_AND_BACK, GL_DIFFUSE, [0.8, 0.8, 0.8, 1.0])
+            glMaterialfv(GL_FRONT_AND_BACK, GL_SPECULAR, [0.5, 0.5, 0.5, 1.0])
+            glMaterialf(GL_FRONT_AND_BACK, GL_SHININESS, 50.0)
+            glMaterialfv(GL_FRONT_AND_BACK, GL_EMISSION, [0.0, 0.0, 0.0, 1.0])
+            glDisable(GL_TEXTURE_2D)
             glDisable(GL_BLEND)
-            glDepthMask(GL_TRUE)  # Enable depth writing for opaque objects
-    
-    def unbind(self):
-        # Restore previous state
-        glPopAttrib()
+            glDepthMask(GL_TRUE)
 
 class OBJ:
     def __init__(self, filename, swapyz=False):
@@ -178,9 +181,24 @@ class OBJ:
     
     def __del__(self):
         # Clean up OpenGL resources
-        if hasattr(self, 'display_list') and self.display_list is not None:
-            glDeleteLists(self.display_list, 1)
-            self.display_list = None
+        try:
+            # Check if OpenGL is still available
+            if hasattr(self, 'display_list') and self.display_list is not None and glDeleteLists:
+                glDeleteLists(self.display_list, 1)
+                self.display_list = None
+            
+            # Clean up any loaded textures
+            if hasattr(self, 'textures'):
+                for tex_id in self.textures:
+                    if glIsTexture(tex_id):
+                        glDeleteTextures([tex_id])
+                self.textures.clear()
+        except Exception as e:
+            # Ignore errors during cleanup, especially during interpreter shutdown
+            import sys
+            if sys is not None and hasattr(sys, 'meta_path') and sys.meta_path is not None:
+                # Only print the error if we're not shutting down
+                print(f"Warning: Error during OBJ cleanup: {e}")
     def load_texture(self, image_path):
         """Load a texture from an image file and return the OpenGL texture ID."""
         if not image_path:
@@ -385,8 +403,8 @@ class OBJ:
                             mtl.emission.append(1.0)  # Add alpha if not present
                     
                     elif values[0] == 'Ns':
-                        # Shininess (0-1000)
-                        mtl.shininess = max(0.1, min(float(values[1]), 1000.0))
+                        # Shininess (0-128) - clamp to valid OpenGL range
+                        mtl.shininess = max(0.0, min(float(values[1]), 128.0))
                         
                     elif values[0] == 'd' or values[0] == 'Tr':
                         # Transparency/opacity
@@ -443,64 +461,73 @@ class OBJ:
     
     def _render_immediate(self):
         """Render the model using immediate mode."""
-        glPushAttrib(GL_ENABLE_BIT | GL_CURRENT_BIT)
-        glEnable(GL_DEPTH_TEST)
-        glEnable(GL_LIGHTING)
-        glEnable(GL_NORMALIZE)
-        glEnable(GL_COLOR_MATERIAL)
-        
-        # Apply scaling and centering
-        glPushMatrix()
-        glScalef(self.scale_factor, self.scale_factor, self.scale_factor)
-        glTranslatef(-self.center[0], -self.center[1], -self.center[2])
-        
+        # Save OpenGL state
+        glPushAttrib(GL_ENABLE_BIT | GL_CURRENT_BIT | GL_TEXTURE_BIT | GL_LIGHTING_BIT | GL_DEPTH_BUFFER_BIT)
         try:
-            current_mtl = None
-            for face in self.faces:
-                vertices, normals, texture_coords, material_name = face
-                
-                # Only change material when necessary
-                if material_name != current_mtl:
-                    if material_name in self.materials:
-                        self.materials[material_name].bind()
-                        current_mtl = material_name
-                    else:
-                        # Use default material if material not found
-                        default_mtl = Material()
-                        default_mtl.diffuse = [0.8, 0.1, 0.1]  # Red color
-                        default_mtl.bind()
-                        current_mtl = material_name
-                
-                glBegin(GL_POLYGON)
-                for i in range(len(vertices)):
-                    if normals and i < len(normals) and 0 <= normals[i] - 1 < len(self.normals):
-                        glNormal3fv(self.normals[normals[i] - 1])
+            # Set up OpenGL state
+            glEnable(GL_DEPTH_TEST)
+            glEnable(GL_LIGHTING)
+            glEnable(GL_NORMALIZE)
+            glEnable(GL_COLOR_MATERIAL)
+            glColorMaterial(GL_FRONT_AND_BACK, GL_AMBIENT_AND_DIFFUSE)
+            
+            # Apply model transformations
+            glPushMatrix()
+            glScalef(self.scale_factor, self.scale_factor, self.scale_factor)
+            glTranslatef(-self.center[0], -self.center[1], -self.center[2])
+            
+            try:
+                current_mtl = None
+                for face in self.faces:
+                    vertices, normals, texture_coords, material_name = face
                     
-                    # Only use texture coordinates if the material has a texture
-                    current_mat = self.materials.get(material_name, None)
-                    if current_mat and current_mat.texture and current_mat.has_texture:
-                        if texture_coords and i < len(texture_coords) and 0 <= texture_coords[i] - 1 < len(self.texcoords):
-                            glTexCoord2fv(self.texcoords[texture_coords[i] - 1])
+                    # Only change material when necessary
+                    if material_name != current_mtl:
+                        if material_name in self.materials:
+                            self.materials[material_name].bind()
+                        else:
+                            # Use default material if material not found
+                            default_mtl = Material()
+                            default_mtl.diffuse = [0.8, 0.1, 0.1, 1.0]  # Red color
+                            default_mtl.bind()
+                        current_mtl = material_name
                     
-                    if 0 <= vertices[i] - 1 < len(self.vertices):
-                        glVertex3fv(self.vertices[vertices[i] - 1])
+                    # Draw the face
+                    glBegin(GL_POLYGON)
+                    for i in range(len(vertices)):
+                        # Set normal if available
+                        if normals and i < len(normals) and 0 <= normals[i] - 1 < len(self.normals):
+                            glNormal3fv(self.normals[normals[i] - 1])
+                        
+                        # Set texture coordinate if available and material has a texture
+                        current_mat = self.materials.get(material_name, None)
+                        if current_mat and current_mat.texture and current_mat.has_texture:
+                            if texture_coords and i < len(texture_coords) and 0 <= texture_coords[i] - 1 < len(self.texcoords):
+                                glTexCoord2fv(self.texcoords[texture_coords[i] - 1])
+                        
+                        # Set vertex position
+                        if 0 <= vertices[i] - 1 < len(self.vertices):
+                            glVertex3fv(self.vertices[vertices[i] - 1])
+                    glEnd()
+                    
+            except Exception as e:
+                # Fallback to a simple shape if rendering fails
+                import traceback
+                traceback.print_exc()
+                glDisable(GL_TEXTURE_2D)
+                glDisable(GL_LIGHTING)
+                glColor3f(1.0, 0.0, 0.0)  # Red color
+                glBegin(GL_TRIANGLES)
+                glVertex3f(0, 0, 0)
+                glVertex3f(1, 0, 0)
+                glVertex3f(0, 1, 0)
                 glEnd()
-                
-        except Exception as e:
-            # Fallback to a simple shape if rendering fails
-            import traceback
-            traceback.print_exc()
-            glDisable(GL_TEXTURE_2D)
-            glDisable(GL_LIGHTING)
-            glColor3f(1.0, 0.0, 0.0)  # Red color
-            glBegin(GL_TRIANGLES)
-            glVertex3f(0, 0, 0)
-            glVertex3f(1, 0, 0)
-            glVertex3f(0, 1, 0)
-            glEnd()
-        
-        glPopMatrix()  # Pop the model transformation
-        glPopAttrib()
+            
+            glPopMatrix()  # Pop the model transformation
+            
+        finally:
+            # Always restore the OpenGL state
+            glPopAttrib()
     
     def render(self):
         """Render the model using display list if available, otherwise use immediate mode."""

@@ -1,0 +1,10169 @@
+{
+  "version": 1,
+  "timestamp": 1761745529.3755994,
+  "structures": [
+    {
+      "position": [
+        -3.6843150494375947,
+        2.9,
+        9.515348720943472
+      ],
+      "orientation": [
+        0.0,
+        0.3826834323650899,
+        0.0,
+        0.9238795325112867
+      ],
+      "size": [
+        1.0,
+        5.8,
+        5.85
+      ],
+      "mass": 1.0,
+      "color": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "fill": "solid",
+      "metadata": {
+        "model_path": "models\\model_objs\\fence\\Fence.obj",
+        "hit_sound": [
+          "concrete-hit.mp3"
+        ],
+        "stiff": true
+      }
+    },
+    {
+      "position": [
+        1.250104401624852,
+        2.9,
+        11.585715439413732
+      ],
+      "orientation": [
+        0.0,
+        0.7071067811865475,
+        0.0,
+        0.7071067811865476
+      ],
+      "size": [
+        1.0,
+        5.8,
+        5.85
+      ],
+      "mass": 1.0,
+      "color": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "fill": "solid",
+      "metadata": {
+        "model_path": "models\\model_objs\\fence\\Fence.obj",
+        "hit_sound": [
+          "concrete-hit.mp3"
+        ],
+        "stiff": true
+      }
+    },
+    {
+      "position": [
+        6.786097702040541,
+        2.900000000000001,
+        11.559841689542608
+      ],
+      "orientation": [
+        0.0,
+        0.7071067811865475,
+        0.0,
+        0.7071067811865476
+      ],
+      "size": [
+        1.0,
+        5.8,
+        5.85
+      ],
+      "mass": 1.0,
+      "color": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "fill": "solid",
+      "metadata": {
+        "model_path": "models\\model_objs\\fence\\Fence.obj",
+        "hit_sound": [
+          "concrete-hit.mp3"
+        ],
+        "stiff": true
+      }
+    },
+    {
+      "position": [
+        11.538928966368498,
+        2.9,
+        9.216001526790468
+      ],
+      "orientation": [
+        3.313870358775352e-17,
+        0.9238795325112867,
+        3.313870358775352e-17,
+        0.3826834323650899
+      ],
+      "size": [
+        1.0,
+        5.8,
+        5.85
+      ],
+      "mass": 1.0,
+      "color": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "fill": "solid",
+      "metadata": {
+        "model_path": "models\\model_objs\\fence\\Fence.obj",
+        "hit_sound": [
+          "concrete-hit.mp3"
+        ],
+        "stiff": true
+      }
+    },
+    {
+      "position": [
+        13.672468937059381,
+        0.050000000000000044,
+        7.123642988004638
+      ],
+      "orientation": [
+        0.0,
+        0.3826834323650899,
+        0.0,
+        0.9238795325112867
+      ],
+      "size": [
+        0.3,
+        0.1,
+        0.3
+      ],
+      "mass": 1.0,
+      "color": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "fill": "stone",
+      "metadata": {
+        "hit_sound": [
+          "concrete-hit.mp3"
+        ],
+        "stiff": true,
+        "shard_config": {
+          "count": 12.0,
+          "size_scale": 0.45,
+          "mass": 3.6,
+          "velocity_scale": 0.3,
+          "impulse_threshold": 1000.0
+        }
+      }
+    },
+    {
+      "position": [
+        13.884600971415345,
+        0.050000000000000044,
+        7.335775022360603
+      ],
+      "orientation": [
+        0.0,
+        0.3826834323650899,
+        0.0,
+        0.9238795325112867
+      ],
+      "size": [
+        0.3,
+        0.1,
+        0.3
+      ],
+      "mass": 1.0,
+      "color": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "fill": "stone",
+      "metadata": {
+        "hit_sound": [
+          "concrete-hit.mp3"
+        ],
+        "stiff": true,
+        "shard_config": {
+          "count": 12.0,
+          "size_scale": 0.45,
+          "mass": 3.6,
+          "velocity_scale": 0.3,
+          "impulse_threshold": 1000.0
+        }
+      }
+    },
+    {
+      "position": [
+        13.672468937059381,
+        0.15000000000000002,
+        7.123642988004638
+      ],
+      "orientation": [
+        0.0,
+        0.3826834323650899,
+        0.0,
+        0.9238795325112867
+      ],
+      "size": [
+        0.3,
+        0.1,
+        0.3
+      ],
+      "mass": 1.0,
+      "color": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "fill": "stone",
+      "metadata": {
+        "hit_sound": [
+          "concrete-hit.mp3"
+        ],
+        "stiff": true,
+        "shard_config": {
+          "count": 12.0,
+          "size_scale": 0.45,
+          "mass": 3.6,
+          "velocity_scale": 0.3,
+          "impulse_threshold": 1000.0
+        }
+      }
+    },
+    {
+      "position": [
+        13.884600971415345,
+        0.15000000000000002,
+        7.335775022360603
+      ],
+      "orientation": [
+        0.0,
+        0.3826834323650899,
+        0.0,
+        0.9238795325112867
+      ],
+      "size": [
+        0.3,
+        0.1,
+        0.3
+      ],
+      "mass": 1.0,
+      "color": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "fill": "stone",
+      "metadata": {
+        "hit_sound": [
+          "concrete-hit.mp3"
+        ],
+        "stiff": true,
+        "shard_config": {
+          "count": 12.0,
+          "size_scale": 0.45,
+          "mass": 3.6,
+          "velocity_scale": 0.3,
+          "impulse_threshold": 1000.0
+        }
+      }
+    },
+    {
+      "position": [
+        13.672468937059381,
+        0.25,
+        7.123642988004638
+      ],
+      "orientation": [
+        0.0,
+        0.3826834323650899,
+        0.0,
+        0.9238795325112867
+      ],
+      "size": [
+        0.3,
+        0.1,
+        0.3
+      ],
+      "mass": 1.0,
+      "color": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "fill": "stone",
+      "metadata": {
+        "hit_sound": [
+          "concrete-hit.mp3"
+        ],
+        "stiff": true,
+        "shard_config": {
+          "count": 12.0,
+          "size_scale": 0.45,
+          "mass": 3.6,
+          "velocity_scale": 0.3,
+          "impulse_threshold": 1000.0
+        }
+      }
+    },
+    {
+      "position": [
+        13.884600971415345,
+        0.25,
+        7.335775022360603
+      ],
+      "orientation": [
+        0.0,
+        0.3826834323650899,
+        0.0,
+        0.9238795325112867
+      ],
+      "size": [
+        0.3,
+        0.1,
+        0.3
+      ],
+      "mass": 1.0,
+      "color": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "fill": "stone",
+      "metadata": {
+        "hit_sound": [
+          "concrete-hit.mp3"
+        ],
+        "stiff": true,
+        "shard_config": {
+          "count": 12.0,
+          "size_scale": 0.45,
+          "mass": 3.6,
+          "velocity_scale": 0.3,
+          "impulse_threshold": 1000.0
+        }
+      }
+    },
+    {
+      "position": [
+        13.672468937059381,
+        0.3500000000000001,
+        7.123642988004638
+      ],
+      "orientation": [
+        0.0,
+        0.3826834323650899,
+        0.0,
+        0.9238795325112867
+      ],
+      "size": [
+        0.3,
+        0.1,
+        0.3
+      ],
+      "mass": 1.0,
+      "color": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "fill": "stone",
+      "metadata": {
+        "hit_sound": [
+          "concrete-hit.mp3"
+        ],
+        "stiff": true,
+        "shard_config": {
+          "count": 12.0,
+          "size_scale": 0.45,
+          "mass": 3.6,
+          "velocity_scale": 0.3,
+          "impulse_threshold": 1000.0
+        }
+      }
+    },
+    {
+      "position": [
+        13.884600971415345,
+        0.3500000000000001,
+        7.335775022360603
+      ],
+      "orientation": [
+        0.0,
+        0.3826834323650899,
+        0.0,
+        0.9238795325112867
+      ],
+      "size": [
+        0.3,
+        0.1,
+        0.3
+      ],
+      "mass": 1.0,
+      "color": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "fill": "stone",
+      "metadata": {
+        "hit_sound": [
+          "concrete-hit.mp3"
+        ],
+        "stiff": true,
+        "shard_config": {
+          "count": 12.0,
+          "size_scale": 0.45,
+          "mass": 3.6,
+          "velocity_scale": 0.3,
+          "impulse_threshold": 1000.0
+        }
+      }
+    },
+    {
+      "position": [
+        13.672468937059381,
+        0.45000000000000007,
+        7.123642988004638
+      ],
+      "orientation": [
+        0.0,
+        0.3826834323650899,
+        0.0,
+        0.9238795325112867
+      ],
+      "size": [
+        0.3,
+        0.1,
+        0.3
+      ],
+      "mass": 1.0,
+      "color": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "fill": "stone",
+      "metadata": {
+        "hit_sound": [
+          "concrete-hit.mp3"
+        ],
+        "stiff": true,
+        "shard_config": {
+          "count": 12.0,
+          "size_scale": 0.45,
+          "mass": 3.6,
+          "velocity_scale": 0.3,
+          "impulse_threshold": 1000.0
+        }
+      }
+    },
+    {
+      "position": [
+        13.884600971415345,
+        0.45000000000000007,
+        7.335775022360603
+      ],
+      "orientation": [
+        0.0,
+        0.3826834323650899,
+        0.0,
+        0.9238795325112867
+      ],
+      "size": [
+        0.3,
+        0.1,
+        0.3
+      ],
+      "mass": 1.0,
+      "color": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "fill": "stone",
+      "metadata": {
+        "hit_sound": [
+          "concrete-hit.mp3"
+        ],
+        "stiff": true,
+        "shard_config": {
+          "count": 12.0,
+          "size_scale": 0.45,
+          "mass": 3.6,
+          "velocity_scale": 0.3,
+          "impulse_threshold": 1000.0
+        }
+      }
+    },
+    {
+      "position": [
+        13.672468937059381,
+        0.55,
+        7.123642988004638
+      ],
+      "orientation": [
+        0.0,
+        0.3826834323650899,
+        0.0,
+        0.9238795325112867
+      ],
+      "size": [
+        0.3,
+        0.1,
+        0.3
+      ],
+      "mass": 1.0,
+      "color": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "fill": "stone",
+      "metadata": {
+        "hit_sound": [
+          "concrete-hit.mp3"
+        ],
+        "stiff": true,
+        "shard_config": {
+          "count": 12.0,
+          "size_scale": 0.45,
+          "mass": 3.6,
+          "velocity_scale": 0.3,
+          "impulse_threshold": 1000.0
+        }
+      }
+    },
+    {
+      "position": [
+        13.884600971415345,
+        0.55,
+        7.335775022360603
+      ],
+      "orientation": [
+        0.0,
+        0.3826834323650899,
+        0.0,
+        0.9238795325112867
+      ],
+      "size": [
+        0.3,
+        0.1,
+        0.3
+      ],
+      "mass": 1.0,
+      "color": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "fill": "stone",
+      "metadata": {
+        "hit_sound": [
+          "concrete-hit.mp3"
+        ],
+        "stiff": true,
+        "shard_config": {
+          "count": 12.0,
+          "size_scale": 0.45,
+          "mass": 3.6,
+          "velocity_scale": 0.3,
+          "impulse_threshold": 1000.0
+        }
+      }
+    },
+    {
+      "position": [
+        13.672468937059381,
+        0.6500000000000001,
+        7.123642988004638
+      ],
+      "orientation": [
+        0.0,
+        0.3826834323650899,
+        0.0,
+        0.9238795325112867
+      ],
+      "size": [
+        0.3,
+        0.1,
+        0.3
+      ],
+      "mass": 1.0,
+      "color": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "fill": "stone",
+      "metadata": {
+        "hit_sound": [
+          "concrete-hit.mp3"
+        ],
+        "stiff": true,
+        "shard_config": {
+          "count": 12.0,
+          "size_scale": 0.45,
+          "mass": 3.6,
+          "velocity_scale": 0.3,
+          "impulse_threshold": 1000.0
+        }
+      }
+    },
+    {
+      "position": [
+        13.884600971415345,
+        0.6500000000000001,
+        7.335775022360603
+      ],
+      "orientation": [
+        0.0,
+        0.3826834323650899,
+        0.0,
+        0.9238795325112867
+      ],
+      "size": [
+        0.3,
+        0.1,
+        0.3
+      ],
+      "mass": 1.0,
+      "color": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "fill": "stone",
+      "metadata": {
+        "hit_sound": [
+          "concrete-hit.mp3"
+        ],
+        "stiff": true,
+        "shard_config": {
+          "count": 12.0,
+          "size_scale": 0.45,
+          "mass": 3.6,
+          "velocity_scale": 0.3,
+          "impulse_threshold": 1000.0
+        }
+      }
+    },
+    {
+      "position": [
+        13.672468937059381,
+        0.75,
+        7.123642988004638
+      ],
+      "orientation": [
+        0.0,
+        0.3826834323650899,
+        0.0,
+        0.9238795325112867
+      ],
+      "size": [
+        0.3,
+        0.1,
+        0.3
+      ],
+      "mass": 1.0,
+      "color": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "fill": "stone",
+      "metadata": {
+        "hit_sound": [
+          "concrete-hit.mp3"
+        ],
+        "stiff": true,
+        "shard_config": {
+          "count": 12.0,
+          "size_scale": 0.45,
+          "mass": 3.6,
+          "velocity_scale": 0.3,
+          "impulse_threshold": 1000.0
+        }
+      }
+    },
+    {
+      "position": [
+        13.884600971415345,
+        0.75,
+        7.335775022360603
+      ],
+      "orientation": [
+        0.0,
+        0.3826834323650899,
+        0.0,
+        0.9238795325112867
+      ],
+      "size": [
+        0.3,
+        0.1,
+        0.3
+      ],
+      "mass": 1.0,
+      "color": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "fill": "stone",
+      "metadata": {
+        "hit_sound": [
+          "concrete-hit.mp3"
+        ],
+        "stiff": true,
+        "shard_config": {
+          "count": 12.0,
+          "size_scale": 0.45,
+          "mass": 3.6,
+          "velocity_scale": 0.3,
+          "impulse_threshold": 1000.0
+        }
+      }
+    },
+    {
+      "position": [
+        13.672468937059381,
+        0.8500000000000001,
+        7.123642988004638
+      ],
+      "orientation": [
+        0.0,
+        0.3826834323650899,
+        0.0,
+        0.9238795325112867
+      ],
+      "size": [
+        0.3,
+        0.1,
+        0.3
+      ],
+      "mass": 1.0,
+      "color": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "fill": "stone",
+      "metadata": {
+        "hit_sound": [
+          "concrete-hit.mp3"
+        ],
+        "stiff": true,
+        "shard_config": {
+          "count": 12.0,
+          "size_scale": 0.45,
+          "mass": 3.6,
+          "velocity_scale": 0.3,
+          "impulse_threshold": 1000.0
+        }
+      }
+    },
+    {
+      "position": [
+        13.884600971415345,
+        0.8500000000000001,
+        7.335775022360603
+      ],
+      "orientation": [
+        0.0,
+        0.3826834323650899,
+        0.0,
+        0.9238795325112867
+      ],
+      "size": [
+        0.3,
+        0.1,
+        0.3
+      ],
+      "mass": 1.0,
+      "color": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "fill": "stone",
+      "metadata": {
+        "hit_sound": [
+          "concrete-hit.mp3"
+        ],
+        "stiff": true,
+        "shard_config": {
+          "count": 12.0,
+          "size_scale": 0.45,
+          "mass": 3.6,
+          "velocity_scale": 0.3,
+          "impulse_threshold": 1000.0
+        }
+      }
+    },
+    {
+      "position": [
+        13.672468937059381,
+        0.9500000000000001,
+        7.123642988004638
+      ],
+      "orientation": [
+        0.0,
+        0.3826834323650899,
+        0.0,
+        0.9238795325112867
+      ],
+      "size": [
+        0.3,
+        0.1,
+        0.3
+      ],
+      "mass": 1.0,
+      "color": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "fill": "stone",
+      "metadata": {
+        "hit_sound": [
+          "concrete-hit.mp3"
+        ],
+        "stiff": true,
+        "shard_config": {
+          "count": 12.0,
+          "size_scale": 0.45,
+          "mass": 3.6,
+          "velocity_scale": 0.3,
+          "impulse_threshold": 1000.0
+        }
+      }
+    },
+    {
+      "position": [
+        13.884600971415345,
+        0.9500000000000001,
+        7.335775022360603
+      ],
+      "orientation": [
+        0.0,
+        0.3826834323650899,
+        0.0,
+        0.9238795325112867
+      ],
+      "size": [
+        0.3,
+        0.1,
+        0.3
+      ],
+      "mass": 1.0,
+      "color": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "fill": "stone",
+      "metadata": {
+        "hit_sound": [
+          "concrete-hit.mp3"
+        ],
+        "stiff": true,
+        "shard_config": {
+          "count": 12.0,
+          "size_scale": 0.45,
+          "mass": 3.6,
+          "velocity_scale": 0.3,
+          "impulse_threshold": 1000.0
+        }
+      }
+    },
+    {
+      "position": [
+        13.672468937059381,
+        1.05,
+        7.123642988004638
+      ],
+      "orientation": [
+        0.0,
+        0.3826834323650899,
+        0.0,
+        0.9238795325112867
+      ],
+      "size": [
+        0.3,
+        0.1,
+        0.3
+      ],
+      "mass": 1.0,
+      "color": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "fill": "stone",
+      "metadata": {
+        "hit_sound": [
+          "concrete-hit.mp3"
+        ],
+        "stiff": true,
+        "shard_config": {
+          "count": 12.0,
+          "size_scale": 0.45,
+          "mass": 3.6,
+          "velocity_scale": 0.3,
+          "impulse_threshold": 1000.0
+        }
+      }
+    },
+    {
+      "position": [
+        13.884600971415345,
+        1.05,
+        7.335775022360603
+      ],
+      "orientation": [
+        0.0,
+        0.3826834323650899,
+        0.0,
+        0.9238795325112867
+      ],
+      "size": [
+        0.3,
+        0.1,
+        0.3
+      ],
+      "mass": 1.0,
+      "color": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "fill": "stone",
+      "metadata": {
+        "hit_sound": [
+          "concrete-hit.mp3"
+        ],
+        "stiff": true,
+        "shard_config": {
+          "count": 12.0,
+          "size_scale": 0.45,
+          "mass": 3.6,
+          "velocity_scale": 0.3,
+          "impulse_threshold": 1000.0
+        }
+      }
+    },
+    {
+      "position": [
+        13.672468937059381,
+        1.1500000000000001,
+        7.123642988004638
+      ],
+      "orientation": [
+        0.0,
+        0.3826834323650899,
+        0.0,
+        0.9238795325112867
+      ],
+      "size": [
+        0.3,
+        0.1,
+        0.3
+      ],
+      "mass": 1.0,
+      "color": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "fill": "stone",
+      "metadata": {
+        "hit_sound": [
+          "concrete-hit.mp3"
+        ],
+        "stiff": true,
+        "shard_config": {
+          "count": 12.0,
+          "size_scale": 0.45,
+          "mass": 3.6,
+          "velocity_scale": 0.3,
+          "impulse_threshold": 1000.0
+        }
+      }
+    },
+    {
+      "position": [
+        13.884600971415345,
+        1.1500000000000001,
+        7.335775022360603
+      ],
+      "orientation": [
+        0.0,
+        0.3826834323650899,
+        0.0,
+        0.9238795325112867
+      ],
+      "size": [
+        0.3,
+        0.1,
+        0.3
+      ],
+      "mass": 1.0,
+      "color": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "fill": "stone",
+      "metadata": {
+        "hit_sound": [
+          "concrete-hit.mp3"
+        ],
+        "stiff": true,
+        "shard_config": {
+          "count": 12.0,
+          "size_scale": 0.45,
+          "mass": 3.6,
+          "velocity_scale": 0.3,
+          "impulse_threshold": 1000.0
+        }
+      }
+    },
+    {
+      "position": [
+        13.672468937059381,
+        1.2500000000000002,
+        7.123642988004638
+      ],
+      "orientation": [
+        0.0,
+        0.3826834323650899,
+        0.0,
+        0.9238795325112867
+      ],
+      "size": [
+        0.3,
+        0.1,
+        0.3
+      ],
+      "mass": 1.0,
+      "color": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "fill": "stone",
+      "metadata": {
+        "hit_sound": [
+          "concrete-hit.mp3"
+        ],
+        "stiff": true,
+        "shard_config": {
+          "count": 12.0,
+          "size_scale": 0.45,
+          "mass": 3.6,
+          "velocity_scale": 0.3,
+          "impulse_threshold": 1000.0
+        }
+      }
+    },
+    {
+      "position": [
+        13.884600971415345,
+        1.2500000000000002,
+        7.335775022360603
+      ],
+      "orientation": [
+        0.0,
+        0.3826834323650899,
+        0.0,
+        0.9238795325112867
+      ],
+      "size": [
+        0.3,
+        0.1,
+        0.3
+      ],
+      "mass": 1.0,
+      "color": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "fill": "stone",
+      "metadata": {
+        "hit_sound": [
+          "concrete-hit.mp3"
+        ],
+        "stiff": true,
+        "shard_config": {
+          "count": 12.0,
+          "size_scale": 0.45,
+          "mass": 3.6,
+          "velocity_scale": 0.3,
+          "impulse_threshold": 1000.0
+        }
+      }
+    },
+    {
+      "position": [
+        13.672468937059381,
+        1.35,
+        7.123642988004638
+      ],
+      "orientation": [
+        0.0,
+        0.3826834323650899,
+        0.0,
+        0.9238795325112867
+      ],
+      "size": [
+        0.3,
+        0.1,
+        0.3
+      ],
+      "mass": 1.0,
+      "color": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "fill": "stone",
+      "metadata": {
+        "hit_sound": [
+          "concrete-hit.mp3"
+        ],
+        "stiff": true,
+        "shard_config": {
+          "count": 12.0,
+          "size_scale": 0.45,
+          "mass": 3.6,
+          "velocity_scale": 0.3,
+          "impulse_threshold": 1000.0
+        }
+      }
+    },
+    {
+      "position": [
+        13.884600971415345,
+        1.35,
+        7.335775022360603
+      ],
+      "orientation": [
+        0.0,
+        0.3826834323650899,
+        0.0,
+        0.9238795325112867
+      ],
+      "size": [
+        0.3,
+        0.1,
+        0.3
+      ],
+      "mass": 1.0,
+      "color": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "fill": "stone",
+      "metadata": {
+        "hit_sound": [
+          "concrete-hit.mp3"
+        ],
+        "stiff": true,
+        "shard_config": {
+          "count": 12.0,
+          "size_scale": 0.45,
+          "mass": 3.6,
+          "velocity_scale": 0.3,
+          "impulse_threshold": 1000.0
+        }
+      }
+    },
+    {
+      "position": [
+        13.672468937059381,
+        1.4500000000000002,
+        7.123642988004638
+      ],
+      "orientation": [
+        0.0,
+        0.3826834323650899,
+        0.0,
+        0.9238795325112867
+      ],
+      "size": [
+        0.3,
+        0.1,
+        0.3
+      ],
+      "mass": 1.0,
+      "color": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "fill": "stone",
+      "metadata": {
+        "hit_sound": [
+          "concrete-hit.mp3"
+        ],
+        "stiff": true,
+        "shard_config": {
+          "count": 12.0,
+          "size_scale": 0.45,
+          "mass": 3.6,
+          "velocity_scale": 0.3,
+          "impulse_threshold": 1000.0
+        }
+      }
+    },
+    {
+      "position": [
+        13.884600971415345,
+        1.4500000000000002,
+        7.335775022360603
+      ],
+      "orientation": [
+        0.0,
+        0.3826834323650899,
+        0.0,
+        0.9238795325112867
+      ],
+      "size": [
+        0.3,
+        0.1,
+        0.3
+      ],
+      "mass": 1.0,
+      "color": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "fill": "stone",
+      "metadata": {
+        "hit_sound": [
+          "concrete-hit.mp3"
+        ],
+        "stiff": true,
+        "shard_config": {
+          "count": 12.0,
+          "size_scale": 0.45,
+          "mass": 3.6,
+          "velocity_scale": 0.3,
+          "impulse_threshold": 1000.0
+        }
+      }
+    },
+    {
+      "position": [
+        13.672468937059381,
+        1.55,
+        7.123642988004638
+      ],
+      "orientation": [
+        0.0,
+        0.3826834323650899,
+        0.0,
+        0.9238795325112867
+      ],
+      "size": [
+        0.3,
+        0.1,
+        0.3
+      ],
+      "mass": 1.0,
+      "color": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "fill": "stone",
+      "metadata": {
+        "hit_sound": [
+          "concrete-hit.mp3"
+        ],
+        "stiff": true,
+        "shard_config": {
+          "count": 12.0,
+          "size_scale": 0.45,
+          "mass": 3.6,
+          "velocity_scale": 0.3,
+          "impulse_threshold": 1000.0
+        }
+      }
+    },
+    {
+      "position": [
+        13.884600971415345,
+        1.55,
+        7.335775022360603
+      ],
+      "orientation": [
+        0.0,
+        0.3826834323650899,
+        0.0,
+        0.9238795325112867
+      ],
+      "size": [
+        0.3,
+        0.1,
+        0.3
+      ],
+      "mass": 1.0,
+      "color": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "fill": "stone",
+      "metadata": {
+        "hit_sound": [
+          "concrete-hit.mp3"
+        ],
+        "stiff": true,
+        "shard_config": {
+          "count": 12.0,
+          "size_scale": 0.45,
+          "mass": 3.6,
+          "velocity_scale": 0.3,
+          "impulse_threshold": 1000.0
+        }
+      }
+    },
+    {
+      "position": [
+        13.672468937059381,
+        1.6500000000000001,
+        7.123642988004638
+      ],
+      "orientation": [
+        0.0,
+        0.3826834323650899,
+        0.0,
+        0.9238795325112867
+      ],
+      "size": [
+        0.3,
+        0.1,
+        0.3
+      ],
+      "mass": 1.0,
+      "color": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "fill": "stone",
+      "metadata": {
+        "hit_sound": [
+          "concrete-hit.mp3"
+        ],
+        "stiff": true,
+        "shard_config": {
+          "count": 12.0,
+          "size_scale": 0.45,
+          "mass": 3.6,
+          "velocity_scale": 0.3,
+          "impulse_threshold": 1000.0
+        }
+      }
+    },
+    {
+      "position": [
+        13.884600971415345,
+        1.6500000000000001,
+        7.335775022360603
+      ],
+      "orientation": [
+        0.0,
+        0.3826834323650899,
+        0.0,
+        0.9238795325112867
+      ],
+      "size": [
+        0.3,
+        0.1,
+        0.3
+      ],
+      "mass": 1.0,
+      "color": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "fill": "stone",
+      "metadata": {
+        "hit_sound": [
+          "concrete-hit.mp3"
+        ],
+        "stiff": true,
+        "shard_config": {
+          "count": 12.0,
+          "size_scale": 0.45,
+          "mass": 3.6,
+          "velocity_scale": 0.3,
+          "impulse_threshold": 1000.0
+        }
+      }
+    },
+    {
+      "position": [
+        13.884600971415345,
+        0.050000000000000044,
+        6.9115109536486745
+      ],
+      "orientation": [
+        0.0,
+        0.3826834323650899,
+        0.0,
+        0.9238795325112867
+      ],
+      "size": [
+        0.3,
+        0.1,
+        0.3
+      ],
+      "mass": 1.0,
+      "color": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "fill": "stone",
+      "metadata": {
+        "hit_sound": [
+          "concrete-hit.mp3"
+        ],
+        "stiff": true,
+        "shard_config": {
+          "count": 12.0,
+          "size_scale": 0.45,
+          "mass": 3.6,
+          "velocity_scale": 0.3,
+          "impulse_threshold": 1000.0
+        }
+      }
+    },
+    {
+      "position": [
+        14.09673300577131,
+        0.050000000000000044,
+        7.123642988004638
+      ],
+      "orientation": [
+        0.0,
+        0.3826834323650899,
+        0.0,
+        0.9238795325112867
+      ],
+      "size": [
+        0.3,
+        0.1,
+        0.3
+      ],
+      "mass": 1.0,
+      "color": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "fill": "stone",
+      "metadata": {
+        "hit_sound": [
+          "concrete-hit.mp3"
+        ],
+        "stiff": true,
+        "shard_config": {
+          "count": 12.0,
+          "size_scale": 0.45,
+          "mass": 3.6,
+          "velocity_scale": 0.3,
+          "impulse_threshold": 1000.0
+        }
+      }
+    },
+    {
+      "position": [
+        13.884600971415345,
+        0.15000000000000002,
+        6.9115109536486745
+      ],
+      "orientation": [
+        0.0,
+        0.3826834323650899,
+        0.0,
+        0.9238795325112867
+      ],
+      "size": [
+        0.3,
+        0.1,
+        0.3
+      ],
+      "mass": 1.0,
+      "color": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "fill": "stone",
+      "metadata": {
+        "hit_sound": [
+          "concrete-hit.mp3"
+        ],
+        "stiff": true,
+        "shard_config": {
+          "count": 12.0,
+          "size_scale": 0.45,
+          "mass": 3.6,
+          "velocity_scale": 0.3,
+          "impulse_threshold": 1000.0
+        }
+      }
+    },
+    {
+      "position": [
+        14.09673300577131,
+        0.15000000000000002,
+        7.123642988004638
+      ],
+      "orientation": [
+        0.0,
+        0.3826834323650899,
+        0.0,
+        0.9238795325112867
+      ],
+      "size": [
+        0.3,
+        0.1,
+        0.3
+      ],
+      "mass": 1.0,
+      "color": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "fill": "stone",
+      "metadata": {
+        "hit_sound": [
+          "concrete-hit.mp3"
+        ],
+        "stiff": true,
+        "shard_config": {
+          "count": 12.0,
+          "size_scale": 0.45,
+          "mass": 3.6,
+          "velocity_scale": 0.3,
+          "impulse_threshold": 1000.0
+        }
+      }
+    },
+    {
+      "position": [
+        13.884600971415345,
+        0.25,
+        6.9115109536486745
+      ],
+      "orientation": [
+        0.0,
+        0.3826834323650899,
+        0.0,
+        0.9238795325112867
+      ],
+      "size": [
+        0.3,
+        0.1,
+        0.3
+      ],
+      "mass": 1.0,
+      "color": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "fill": "stone",
+      "metadata": {
+        "hit_sound": [
+          "concrete-hit.mp3"
+        ],
+        "stiff": true,
+        "shard_config": {
+          "count": 12.0,
+          "size_scale": 0.45,
+          "mass": 3.6,
+          "velocity_scale": 0.3,
+          "impulse_threshold": 1000.0
+        }
+      }
+    },
+    {
+      "position": [
+        14.09673300577131,
+        0.25,
+        7.123642988004638
+      ],
+      "orientation": [
+        0.0,
+        0.3826834323650899,
+        0.0,
+        0.9238795325112867
+      ],
+      "size": [
+        0.3,
+        0.1,
+        0.3
+      ],
+      "mass": 1.0,
+      "color": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "fill": "stone",
+      "metadata": {
+        "hit_sound": [
+          "concrete-hit.mp3"
+        ],
+        "stiff": true,
+        "shard_config": {
+          "count": 12.0,
+          "size_scale": 0.45,
+          "mass": 3.6,
+          "velocity_scale": 0.3,
+          "impulse_threshold": 1000.0
+        }
+      }
+    },
+    {
+      "position": [
+        13.884600971415345,
+        0.3500000000000001,
+        6.9115109536486745
+      ],
+      "orientation": [
+        0.0,
+        0.3826834323650899,
+        0.0,
+        0.9238795325112867
+      ],
+      "size": [
+        0.3,
+        0.1,
+        0.3
+      ],
+      "mass": 1.0,
+      "color": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "fill": "stone",
+      "metadata": {
+        "hit_sound": [
+          "concrete-hit.mp3"
+        ],
+        "stiff": true,
+        "shard_config": {
+          "count": 12.0,
+          "size_scale": 0.45,
+          "mass": 3.6,
+          "velocity_scale": 0.3,
+          "impulse_threshold": 1000.0
+        }
+      }
+    },
+    {
+      "position": [
+        14.09673300577131,
+        0.3500000000000001,
+        7.123642988004638
+      ],
+      "orientation": [
+        0.0,
+        0.3826834323650899,
+        0.0,
+        0.9238795325112867
+      ],
+      "size": [
+        0.3,
+        0.1,
+        0.3
+      ],
+      "mass": 1.0,
+      "color": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "fill": "stone",
+      "metadata": {
+        "hit_sound": [
+          "concrete-hit.mp3"
+        ],
+        "stiff": true,
+        "shard_config": {
+          "count": 12.0,
+          "size_scale": 0.45,
+          "mass": 3.6,
+          "velocity_scale": 0.3,
+          "impulse_threshold": 1000.0
+        }
+      }
+    },
+    {
+      "position": [
+        13.884600971415345,
+        0.45000000000000007,
+        6.9115109536486745
+      ],
+      "orientation": [
+        0.0,
+        0.3826834323650899,
+        0.0,
+        0.9238795325112867
+      ],
+      "size": [
+        0.3,
+        0.1,
+        0.3
+      ],
+      "mass": 1.0,
+      "color": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "fill": "stone",
+      "metadata": {
+        "hit_sound": [
+          "concrete-hit.mp3"
+        ],
+        "stiff": true,
+        "shard_config": {
+          "count": 12.0,
+          "size_scale": 0.45,
+          "mass": 3.6,
+          "velocity_scale": 0.3,
+          "impulse_threshold": 1000.0
+        }
+      }
+    },
+    {
+      "position": [
+        14.09673300577131,
+        0.45000000000000007,
+        7.123642988004638
+      ],
+      "orientation": [
+        0.0,
+        0.3826834323650899,
+        0.0,
+        0.9238795325112867
+      ],
+      "size": [
+        0.3,
+        0.1,
+        0.3
+      ],
+      "mass": 1.0,
+      "color": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "fill": "stone",
+      "metadata": {
+        "hit_sound": [
+          "concrete-hit.mp3"
+        ],
+        "stiff": true,
+        "shard_config": {
+          "count": 12.0,
+          "size_scale": 0.45,
+          "mass": 3.6,
+          "velocity_scale": 0.3,
+          "impulse_threshold": 1000.0
+        }
+      }
+    },
+    {
+      "position": [
+        13.884600971415345,
+        0.55,
+        6.9115109536486745
+      ],
+      "orientation": [
+        0.0,
+        0.3826834323650899,
+        0.0,
+        0.9238795325112867
+      ],
+      "size": [
+        0.3,
+        0.1,
+        0.3
+      ],
+      "mass": 1.0,
+      "color": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "fill": "stone",
+      "metadata": {
+        "hit_sound": [
+          "concrete-hit.mp3"
+        ],
+        "stiff": true,
+        "shard_config": {
+          "count": 12.0,
+          "size_scale": 0.45,
+          "mass": 3.6,
+          "velocity_scale": 0.3,
+          "impulse_threshold": 1000.0
+        }
+      }
+    },
+    {
+      "position": [
+        14.09673300577131,
+        0.55,
+        7.123642988004638
+      ],
+      "orientation": [
+        0.0,
+        0.3826834323650899,
+        0.0,
+        0.9238795325112867
+      ],
+      "size": [
+        0.3,
+        0.1,
+        0.3
+      ],
+      "mass": 1.0,
+      "color": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "fill": "stone",
+      "metadata": {
+        "hit_sound": [
+          "concrete-hit.mp3"
+        ],
+        "stiff": true,
+        "shard_config": {
+          "count": 12.0,
+          "size_scale": 0.45,
+          "mass": 3.6,
+          "velocity_scale": 0.3,
+          "impulse_threshold": 1000.0
+        }
+      }
+    },
+    {
+      "position": [
+        13.884600971415345,
+        0.6500000000000001,
+        6.9115109536486745
+      ],
+      "orientation": [
+        0.0,
+        0.3826834323650899,
+        0.0,
+        0.9238795325112867
+      ],
+      "size": [
+        0.3,
+        0.1,
+        0.3
+      ],
+      "mass": 1.0,
+      "color": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "fill": "stone",
+      "metadata": {
+        "hit_sound": [
+          "concrete-hit.mp3"
+        ],
+        "stiff": true,
+        "shard_config": {
+          "count": 12.0,
+          "size_scale": 0.45,
+          "mass": 3.6,
+          "velocity_scale": 0.3,
+          "impulse_threshold": 1000.0
+        }
+      }
+    },
+    {
+      "position": [
+        14.09673300577131,
+        0.6500000000000001,
+        7.123642988004638
+      ],
+      "orientation": [
+        0.0,
+        0.3826834323650899,
+        0.0,
+        0.9238795325112867
+      ],
+      "size": [
+        0.3,
+        0.1,
+        0.3
+      ],
+      "mass": 1.0,
+      "color": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "fill": "stone",
+      "metadata": {
+        "hit_sound": [
+          "concrete-hit.mp3"
+        ],
+        "stiff": true,
+        "shard_config": {
+          "count": 12.0,
+          "size_scale": 0.45,
+          "mass": 3.6,
+          "velocity_scale": 0.3,
+          "impulse_threshold": 1000.0
+        }
+      }
+    },
+    {
+      "position": [
+        13.884600971415345,
+        0.75,
+        6.9115109536486745
+      ],
+      "orientation": [
+        0.0,
+        0.3826834323650899,
+        0.0,
+        0.9238795325112867
+      ],
+      "size": [
+        0.3,
+        0.1,
+        0.3
+      ],
+      "mass": 1.0,
+      "color": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "fill": "stone",
+      "metadata": {
+        "hit_sound": [
+          "concrete-hit.mp3"
+        ],
+        "stiff": true,
+        "shard_config": {
+          "count": 12.0,
+          "size_scale": 0.45,
+          "mass": 3.6,
+          "velocity_scale": 0.3,
+          "impulse_threshold": 1000.0
+        }
+      }
+    },
+    {
+      "position": [
+        14.09673300577131,
+        0.75,
+        7.123642988004638
+      ],
+      "orientation": [
+        0.0,
+        0.3826834323650899,
+        0.0,
+        0.9238795325112867
+      ],
+      "size": [
+        0.3,
+        0.1,
+        0.3
+      ],
+      "mass": 1.0,
+      "color": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "fill": "stone",
+      "metadata": {
+        "hit_sound": [
+          "concrete-hit.mp3"
+        ],
+        "stiff": true,
+        "shard_config": {
+          "count": 12.0,
+          "size_scale": 0.45,
+          "mass": 3.6,
+          "velocity_scale": 0.3,
+          "impulse_threshold": 1000.0
+        }
+      }
+    },
+    {
+      "position": [
+        13.884600971415345,
+        0.8500000000000001,
+        6.9115109536486745
+      ],
+      "orientation": [
+        0.0,
+        0.3826834323650899,
+        0.0,
+        0.9238795325112867
+      ],
+      "size": [
+        0.3,
+        0.1,
+        0.3
+      ],
+      "mass": 1.0,
+      "color": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "fill": "stone",
+      "metadata": {
+        "hit_sound": [
+          "concrete-hit.mp3"
+        ],
+        "stiff": true,
+        "shard_config": {
+          "count": 12.0,
+          "size_scale": 0.45,
+          "mass": 3.6,
+          "velocity_scale": 0.3,
+          "impulse_threshold": 1000.0
+        }
+      }
+    },
+    {
+      "position": [
+        14.09673300577131,
+        0.8500000000000001,
+        7.123642988004638
+      ],
+      "orientation": [
+        0.0,
+        0.3826834323650899,
+        0.0,
+        0.9238795325112867
+      ],
+      "size": [
+        0.3,
+        0.1,
+        0.3
+      ],
+      "mass": 1.0,
+      "color": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "fill": "stone",
+      "metadata": {
+        "hit_sound": [
+          "concrete-hit.mp3"
+        ],
+        "stiff": true,
+        "shard_config": {
+          "count": 12.0,
+          "size_scale": 0.45,
+          "mass": 3.6,
+          "velocity_scale": 0.3,
+          "impulse_threshold": 1000.0
+        }
+      }
+    },
+    {
+      "position": [
+        13.884600971415345,
+        0.9500000000000001,
+        6.9115109536486745
+      ],
+      "orientation": [
+        0.0,
+        0.3826834323650899,
+        0.0,
+        0.9238795325112867
+      ],
+      "size": [
+        0.3,
+        0.1,
+        0.3
+      ],
+      "mass": 1.0,
+      "color": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "fill": "stone",
+      "metadata": {
+        "hit_sound": [
+          "concrete-hit.mp3"
+        ],
+        "stiff": true,
+        "shard_config": {
+          "count": 12.0,
+          "size_scale": 0.45,
+          "mass": 3.6,
+          "velocity_scale": 0.3,
+          "impulse_threshold": 1000.0
+        }
+      }
+    },
+    {
+      "position": [
+        14.09673300577131,
+        0.9500000000000001,
+        7.123642988004638
+      ],
+      "orientation": [
+        0.0,
+        0.3826834323650899,
+        0.0,
+        0.9238795325112867
+      ],
+      "size": [
+        0.3,
+        0.1,
+        0.3
+      ],
+      "mass": 1.0,
+      "color": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "fill": "stone",
+      "metadata": {
+        "hit_sound": [
+          "concrete-hit.mp3"
+        ],
+        "stiff": true,
+        "shard_config": {
+          "count": 12.0,
+          "size_scale": 0.45,
+          "mass": 3.6,
+          "velocity_scale": 0.3,
+          "impulse_threshold": 1000.0
+        }
+      }
+    },
+    {
+      "position": [
+        13.884600971415345,
+        1.05,
+        6.9115109536486745
+      ],
+      "orientation": [
+        0.0,
+        0.3826834323650899,
+        0.0,
+        0.9238795325112867
+      ],
+      "size": [
+        0.3,
+        0.1,
+        0.3
+      ],
+      "mass": 1.0,
+      "color": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "fill": "stone",
+      "metadata": {
+        "hit_sound": [
+          "concrete-hit.mp3"
+        ],
+        "stiff": true,
+        "shard_config": {
+          "count": 12.0,
+          "size_scale": 0.45,
+          "mass": 3.6,
+          "velocity_scale": 0.3,
+          "impulse_threshold": 1000.0
+        }
+      }
+    },
+    {
+      "position": [
+        14.09673300577131,
+        1.05,
+        7.123642988004638
+      ],
+      "orientation": [
+        0.0,
+        0.3826834323650899,
+        0.0,
+        0.9238795325112867
+      ],
+      "size": [
+        0.3,
+        0.1,
+        0.3
+      ],
+      "mass": 1.0,
+      "color": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "fill": "stone",
+      "metadata": {
+        "hit_sound": [
+          "concrete-hit.mp3"
+        ],
+        "stiff": true,
+        "shard_config": {
+          "count": 12.0,
+          "size_scale": 0.45,
+          "mass": 3.6,
+          "velocity_scale": 0.3,
+          "impulse_threshold": 1000.0
+        }
+      }
+    },
+    {
+      "position": [
+        13.884600971415345,
+        1.1500000000000001,
+        6.9115109536486745
+      ],
+      "orientation": [
+        0.0,
+        0.3826834323650899,
+        0.0,
+        0.9238795325112867
+      ],
+      "size": [
+        0.3,
+        0.1,
+        0.3
+      ],
+      "mass": 1.0,
+      "color": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "fill": "stone",
+      "metadata": {
+        "hit_sound": [
+          "concrete-hit.mp3"
+        ],
+        "stiff": true,
+        "shard_config": {
+          "count": 12.0,
+          "size_scale": 0.45,
+          "mass": 3.6,
+          "velocity_scale": 0.3,
+          "impulse_threshold": 1000.0
+        }
+      }
+    },
+    {
+      "position": [
+        14.09673300577131,
+        1.1500000000000001,
+        7.123642988004638
+      ],
+      "orientation": [
+        0.0,
+        0.3826834323650899,
+        0.0,
+        0.9238795325112867
+      ],
+      "size": [
+        0.3,
+        0.1,
+        0.3
+      ],
+      "mass": 1.0,
+      "color": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "fill": "stone",
+      "metadata": {
+        "hit_sound": [
+          "concrete-hit.mp3"
+        ],
+        "stiff": true,
+        "shard_config": {
+          "count": 12.0,
+          "size_scale": 0.45,
+          "mass": 3.6,
+          "velocity_scale": 0.3,
+          "impulse_threshold": 1000.0
+        }
+      }
+    },
+    {
+      "position": [
+        13.884600971415345,
+        1.2500000000000002,
+        6.9115109536486745
+      ],
+      "orientation": [
+        0.0,
+        0.3826834323650899,
+        0.0,
+        0.9238795325112867
+      ],
+      "size": [
+        0.3,
+        0.1,
+        0.3
+      ],
+      "mass": 1.0,
+      "color": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "fill": "stone",
+      "metadata": {
+        "hit_sound": [
+          "concrete-hit.mp3"
+        ],
+        "stiff": true,
+        "shard_config": {
+          "count": 12.0,
+          "size_scale": 0.45,
+          "mass": 3.6,
+          "velocity_scale": 0.3,
+          "impulse_threshold": 1000.0
+        }
+      }
+    },
+    {
+      "position": [
+        14.09673300577131,
+        1.2500000000000002,
+        7.123642988004638
+      ],
+      "orientation": [
+        0.0,
+        0.3826834323650899,
+        0.0,
+        0.9238795325112867
+      ],
+      "size": [
+        0.3,
+        0.1,
+        0.3
+      ],
+      "mass": 1.0,
+      "color": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "fill": "stone",
+      "metadata": {
+        "hit_sound": [
+          "concrete-hit.mp3"
+        ],
+        "stiff": true,
+        "shard_config": {
+          "count": 12.0,
+          "size_scale": 0.45,
+          "mass": 3.6,
+          "velocity_scale": 0.3,
+          "impulse_threshold": 1000.0
+        }
+      }
+    },
+    {
+      "position": [
+        14.09673300577131,
+        1.35,
+        7.123642988004638
+      ],
+      "orientation": [
+        0.0,
+        0.3826834323650899,
+        0.0,
+        0.9238795325112867
+      ],
+      "size": [
+        0.3,
+        0.1,
+        0.3
+      ],
+      "mass": 1.0,
+      "color": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "fill": "stone",
+      "metadata": {
+        "hit_sound": [
+          "concrete-hit.mp3"
+        ],
+        "stiff": true,
+        "shard_config": {
+          "count": 12.0,
+          "size_scale": 0.45,
+          "mass": 3.6,
+          "velocity_scale": 0.3,
+          "impulse_threshold": 1000.0
+        }
+      }
+    },
+    {
+      "position": [
+        14.09673300577131,
+        1.4500000000000002,
+        7.123642988004638
+      ],
+      "orientation": [
+        0.0,
+        0.3826834323650899,
+        0.0,
+        0.9238795325112867
+      ],
+      "size": [
+        0.3,
+        0.1,
+        0.3
+      ],
+      "mass": 1.0,
+      "color": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "fill": "stone",
+      "metadata": {
+        "hit_sound": [
+          "concrete-hit.mp3"
+        ],
+        "stiff": true,
+        "shard_config": {
+          "count": 12.0,
+          "size_scale": 0.45,
+          "mass": 3.6,
+          "velocity_scale": 0.3,
+          "impulse_threshold": 1000.0
+        }
+      }
+    },
+    {
+      "position": [
+        14.09673300577131,
+        1.55,
+        7.123642988004638
+      ],
+      "orientation": [
+        0.0,
+        0.3826834323650899,
+        0.0,
+        0.9238795325112867
+      ],
+      "size": [
+        0.3,
+        0.1,
+        0.3
+      ],
+      "mass": 1.0,
+      "color": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "fill": "stone",
+      "metadata": {
+        "hit_sound": [
+          "concrete-hit.mp3"
+        ],
+        "stiff": true,
+        "shard_config": {
+          "count": 12.0,
+          "size_scale": 0.45,
+          "mass": 3.6,
+          "velocity_scale": 0.3,
+          "impulse_threshold": 1000.0
+        }
+      }
+    },
+    {
+      "position": [
+        14.09673300577131,
+        0.050000000000000044,
+        6.69937891929271
+      ],
+      "orientation": [
+        0.0,
+        0.3826834323650899,
+        0.0,
+        0.9238795325112867
+      ],
+      "size": [
+        0.3,
+        0.1,
+        0.3
+      ],
+      "mass": 1.0,
+      "color": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "fill": "stone",
+      "metadata": {
+        "hit_sound": [
+          "concrete-hit.mp3"
+        ],
+        "stiff": true,
+        "shard_config": {
+          "count": 12.0,
+          "size_scale": 0.45,
+          "mass": 3.6,
+          "velocity_scale": 0.3,
+          "impulse_threshold": 1000.0
+        }
+      }
+    },
+    {
+      "position": [
+        14.308865040127273,
+        0.050000000000000044,
+        6.9115109536486745
+      ],
+      "orientation": [
+        0.0,
+        0.3826834323650899,
+        0.0,
+        0.9238795325112867
+      ],
+      "size": [
+        0.3,
+        0.1,
+        0.3
+      ],
+      "mass": 1.0,
+      "color": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "fill": "stone",
+      "metadata": {
+        "hit_sound": [
+          "concrete-hit.mp3"
+        ],
+        "stiff": true,
+        "shard_config": {
+          "count": 12.0,
+          "size_scale": 0.45,
+          "mass": 3.6,
+          "velocity_scale": 0.3,
+          "impulse_threshold": 1000.0
+        }
+      }
+    },
+    {
+      "position": [
+        14.09673300577131,
+        0.15000000000000002,
+        6.69937891929271
+      ],
+      "orientation": [
+        0.0,
+        0.3826834323650899,
+        0.0,
+        0.9238795325112867
+      ],
+      "size": [
+        0.3,
+        0.1,
+        0.3
+      ],
+      "mass": 1.0,
+      "color": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "fill": "stone",
+      "metadata": {
+        "hit_sound": [
+          "concrete-hit.mp3"
+        ],
+        "stiff": true,
+        "shard_config": {
+          "count": 12.0,
+          "size_scale": 0.45,
+          "mass": 3.6,
+          "velocity_scale": 0.3,
+          "impulse_threshold": 1000.0
+        }
+      }
+    },
+    {
+      "position": [
+        14.308865040127273,
+        0.15000000000000002,
+        6.9115109536486745
+      ],
+      "orientation": [
+        0.0,
+        0.3826834323650899,
+        0.0,
+        0.9238795325112867
+      ],
+      "size": [
+        0.3,
+        0.1,
+        0.3
+      ],
+      "mass": 1.0,
+      "color": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "fill": "stone",
+      "metadata": {
+        "hit_sound": [
+          "concrete-hit.mp3"
+        ],
+        "stiff": true,
+        "shard_config": {
+          "count": 12.0,
+          "size_scale": 0.45,
+          "mass": 3.6,
+          "velocity_scale": 0.3,
+          "impulse_threshold": 1000.0
+        }
+      }
+    },
+    {
+      "position": [
+        14.09673300577131,
+        0.25,
+        6.69937891929271
+      ],
+      "orientation": [
+        0.0,
+        0.3826834323650899,
+        0.0,
+        0.9238795325112867
+      ],
+      "size": [
+        0.3,
+        0.1,
+        0.3
+      ],
+      "mass": 1.0,
+      "color": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "fill": "stone",
+      "metadata": {
+        "hit_sound": [
+          "concrete-hit.mp3"
+        ],
+        "stiff": true,
+        "shard_config": {
+          "count": 12.0,
+          "size_scale": 0.45,
+          "mass": 3.6,
+          "velocity_scale": 0.3,
+          "impulse_threshold": 1000.0
+        }
+      }
+    },
+    {
+      "position": [
+        14.308865040127273,
+        0.25,
+        6.9115109536486745
+      ],
+      "orientation": [
+        0.0,
+        0.3826834323650899,
+        0.0,
+        0.9238795325112867
+      ],
+      "size": [
+        0.3,
+        0.1,
+        0.3
+      ],
+      "mass": 1.0,
+      "color": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "fill": "stone",
+      "metadata": {
+        "hit_sound": [
+          "concrete-hit.mp3"
+        ],
+        "stiff": true,
+        "shard_config": {
+          "count": 12.0,
+          "size_scale": 0.45,
+          "mass": 3.6,
+          "velocity_scale": 0.3,
+          "impulse_threshold": 1000.0
+        }
+      }
+    },
+    {
+      "position": [
+        14.09673300577131,
+        0.3500000000000001,
+        6.69937891929271
+      ],
+      "orientation": [
+        0.0,
+        0.3826834323650899,
+        0.0,
+        0.9238795325112867
+      ],
+      "size": [
+        0.3,
+        0.1,
+        0.3
+      ],
+      "mass": 1.0,
+      "color": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "fill": "stone",
+      "metadata": {
+        "hit_sound": [
+          "concrete-hit.mp3"
+        ],
+        "stiff": true,
+        "shard_config": {
+          "count": 12.0,
+          "size_scale": 0.45,
+          "mass": 3.6,
+          "velocity_scale": 0.3,
+          "impulse_threshold": 1000.0
+        }
+      }
+    },
+    {
+      "position": [
+        14.308865040127273,
+        0.3500000000000001,
+        6.9115109536486745
+      ],
+      "orientation": [
+        0.0,
+        0.3826834323650899,
+        0.0,
+        0.9238795325112867
+      ],
+      "size": [
+        0.3,
+        0.1,
+        0.3
+      ],
+      "mass": 1.0,
+      "color": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "fill": "stone",
+      "metadata": {
+        "hit_sound": [
+          "concrete-hit.mp3"
+        ],
+        "stiff": true,
+        "shard_config": {
+          "count": 12.0,
+          "size_scale": 0.45,
+          "mass": 3.6,
+          "velocity_scale": 0.3,
+          "impulse_threshold": 1000.0
+        }
+      }
+    },
+    {
+      "position": [
+        14.09673300577131,
+        0.45000000000000007,
+        6.69937891929271
+      ],
+      "orientation": [
+        0.0,
+        0.3826834323650899,
+        0.0,
+        0.9238795325112867
+      ],
+      "size": [
+        0.3,
+        0.1,
+        0.3
+      ],
+      "mass": 1.0,
+      "color": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "fill": "stone",
+      "metadata": {
+        "hit_sound": [
+          "concrete-hit.mp3"
+        ],
+        "stiff": true,
+        "shard_config": {
+          "count": 12.0,
+          "size_scale": 0.45,
+          "mass": 3.6,
+          "velocity_scale": 0.3,
+          "impulse_threshold": 1000.0
+        }
+      }
+    },
+    {
+      "position": [
+        14.308865040127273,
+        0.45000000000000007,
+        6.9115109536486745
+      ],
+      "orientation": [
+        0.0,
+        0.3826834323650899,
+        0.0,
+        0.9238795325112867
+      ],
+      "size": [
+        0.3,
+        0.1,
+        0.3
+      ],
+      "mass": 1.0,
+      "color": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "fill": "stone",
+      "metadata": {
+        "hit_sound": [
+          "concrete-hit.mp3"
+        ],
+        "stiff": true,
+        "shard_config": {
+          "count": 12.0,
+          "size_scale": 0.45,
+          "mass": 3.6,
+          "velocity_scale": 0.3,
+          "impulse_threshold": 1000.0
+        }
+      }
+    },
+    {
+      "position": [
+        14.09673300577131,
+        0.55,
+        6.69937891929271
+      ],
+      "orientation": [
+        0.0,
+        0.3826834323650899,
+        0.0,
+        0.9238795325112867
+      ],
+      "size": [
+        0.3,
+        0.1,
+        0.3
+      ],
+      "mass": 1.0,
+      "color": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "fill": "stone",
+      "metadata": {
+        "hit_sound": [
+          "concrete-hit.mp3"
+        ],
+        "stiff": true,
+        "shard_config": {
+          "count": 12.0,
+          "size_scale": 0.45,
+          "mass": 3.6,
+          "velocity_scale": 0.3,
+          "impulse_threshold": 1000.0
+        }
+      }
+    },
+    {
+      "position": [
+        14.308865040127273,
+        0.55,
+        6.9115109536486745
+      ],
+      "orientation": [
+        0.0,
+        0.3826834323650899,
+        0.0,
+        0.9238795325112867
+      ],
+      "size": [
+        0.3,
+        0.1,
+        0.3
+      ],
+      "mass": 1.0,
+      "color": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "fill": "stone",
+      "metadata": {
+        "hit_sound": [
+          "concrete-hit.mp3"
+        ],
+        "stiff": true,
+        "shard_config": {
+          "count": 12.0,
+          "size_scale": 0.45,
+          "mass": 3.6,
+          "velocity_scale": 0.3,
+          "impulse_threshold": 1000.0
+        }
+      }
+    },
+    {
+      "position": [
+        14.09673300577131,
+        0.6500000000000001,
+        6.69937891929271
+      ],
+      "orientation": [
+        0.0,
+        0.3826834323650899,
+        0.0,
+        0.9238795325112867
+      ],
+      "size": [
+        0.3,
+        0.1,
+        0.3
+      ],
+      "mass": 1.0,
+      "color": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "fill": "stone",
+      "metadata": {
+        "hit_sound": [
+          "concrete-hit.mp3"
+        ],
+        "stiff": true,
+        "shard_config": {
+          "count": 12.0,
+          "size_scale": 0.45,
+          "mass": 3.6,
+          "velocity_scale": 0.3,
+          "impulse_threshold": 1000.0
+        }
+      }
+    },
+    {
+      "position": [
+        14.308865040127273,
+        0.6500000000000001,
+        6.9115109536486745
+      ],
+      "orientation": [
+        0.0,
+        0.3826834323650899,
+        0.0,
+        0.9238795325112867
+      ],
+      "size": [
+        0.3,
+        0.1,
+        0.3
+      ],
+      "mass": 1.0,
+      "color": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "fill": "stone",
+      "metadata": {
+        "hit_sound": [
+          "concrete-hit.mp3"
+        ],
+        "stiff": true,
+        "shard_config": {
+          "count": 12.0,
+          "size_scale": 0.45,
+          "mass": 3.6,
+          "velocity_scale": 0.3,
+          "impulse_threshold": 1000.0
+        }
+      }
+    },
+    {
+      "position": [
+        14.09673300577131,
+        0.75,
+        6.69937891929271
+      ],
+      "orientation": [
+        0.0,
+        0.3826834323650899,
+        0.0,
+        0.9238795325112867
+      ],
+      "size": [
+        0.3,
+        0.1,
+        0.3
+      ],
+      "mass": 1.0,
+      "color": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "fill": "stone",
+      "metadata": {
+        "hit_sound": [
+          "concrete-hit.mp3"
+        ],
+        "stiff": true,
+        "shard_config": {
+          "count": 12.0,
+          "size_scale": 0.45,
+          "mass": 3.6,
+          "velocity_scale": 0.3,
+          "impulse_threshold": 1000.0
+        }
+      }
+    },
+    {
+      "position": [
+        14.308865040127273,
+        0.75,
+        6.9115109536486745
+      ],
+      "orientation": [
+        0.0,
+        0.3826834323650899,
+        0.0,
+        0.9238795325112867
+      ],
+      "size": [
+        0.3,
+        0.1,
+        0.3
+      ],
+      "mass": 1.0,
+      "color": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "fill": "stone",
+      "metadata": {
+        "hit_sound": [
+          "concrete-hit.mp3"
+        ],
+        "stiff": true,
+        "shard_config": {
+          "count": 12.0,
+          "size_scale": 0.45,
+          "mass": 3.6,
+          "velocity_scale": 0.3,
+          "impulse_threshold": 1000.0
+        }
+      }
+    },
+    {
+      "position": [
+        14.09673300577131,
+        0.8500000000000001,
+        6.69937891929271
+      ],
+      "orientation": [
+        0.0,
+        0.3826834323650899,
+        0.0,
+        0.9238795325112867
+      ],
+      "size": [
+        0.3,
+        0.1,
+        0.3
+      ],
+      "mass": 1.0,
+      "color": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "fill": "stone",
+      "metadata": {
+        "hit_sound": [
+          "concrete-hit.mp3"
+        ],
+        "stiff": true,
+        "shard_config": {
+          "count": 12.0,
+          "size_scale": 0.45,
+          "mass": 3.6,
+          "velocity_scale": 0.3,
+          "impulse_threshold": 1000.0
+        }
+      }
+    },
+    {
+      "position": [
+        14.308865040127273,
+        0.8500000000000001,
+        6.9115109536486745
+      ],
+      "orientation": [
+        0.0,
+        0.3826834323650899,
+        0.0,
+        0.9238795325112867
+      ],
+      "size": [
+        0.3,
+        0.1,
+        0.3
+      ],
+      "mass": 1.0,
+      "color": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "fill": "stone",
+      "metadata": {
+        "hit_sound": [
+          "concrete-hit.mp3"
+        ],
+        "stiff": true,
+        "shard_config": {
+          "count": 12.0,
+          "size_scale": 0.45,
+          "mass": 3.6,
+          "velocity_scale": 0.3,
+          "impulse_threshold": 1000.0
+        }
+      }
+    },
+    {
+      "position": [
+        14.09673300577131,
+        0.9500000000000001,
+        6.69937891929271
+      ],
+      "orientation": [
+        0.0,
+        0.3826834323650899,
+        0.0,
+        0.9238795325112867
+      ],
+      "size": [
+        0.3,
+        0.1,
+        0.3
+      ],
+      "mass": 1.0,
+      "color": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "fill": "stone",
+      "metadata": {
+        "hit_sound": [
+          "concrete-hit.mp3"
+        ],
+        "stiff": true,
+        "shard_config": {
+          "count": 12.0,
+          "size_scale": 0.45,
+          "mass": 3.6,
+          "velocity_scale": 0.3,
+          "impulse_threshold": 1000.0
+        }
+      }
+    },
+    {
+      "position": [
+        14.308865040127273,
+        0.9500000000000001,
+        6.9115109536486745
+      ],
+      "orientation": [
+        0.0,
+        0.3826834323650899,
+        0.0,
+        0.9238795325112867
+      ],
+      "size": [
+        0.3,
+        0.1,
+        0.3
+      ],
+      "mass": 1.0,
+      "color": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "fill": "stone",
+      "metadata": {
+        "hit_sound": [
+          "concrete-hit.mp3"
+        ],
+        "stiff": true,
+        "shard_config": {
+          "count": 12.0,
+          "size_scale": 0.45,
+          "mass": 3.6,
+          "velocity_scale": 0.3,
+          "impulse_threshold": 1000.0
+        }
+      }
+    },
+    {
+      "position": [
+        14.09673300577131,
+        1.05,
+        6.69937891929271
+      ],
+      "orientation": [
+        0.0,
+        0.3826834323650899,
+        0.0,
+        0.9238795325112867
+      ],
+      "size": [
+        0.3,
+        0.1,
+        0.3
+      ],
+      "mass": 1.0,
+      "color": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "fill": "stone",
+      "metadata": {
+        "hit_sound": [
+          "concrete-hit.mp3"
+        ],
+        "stiff": true,
+        "shard_config": {
+          "count": 12.0,
+          "size_scale": 0.45,
+          "mass": 3.6,
+          "velocity_scale": 0.3,
+          "impulse_threshold": 1000.0
+        }
+      }
+    },
+    {
+      "position": [
+        14.308865040127273,
+        1.05,
+        6.9115109536486745
+      ],
+      "orientation": [
+        0.0,
+        0.3826834323650899,
+        0.0,
+        0.9238795325112867
+      ],
+      "size": [
+        0.3,
+        0.1,
+        0.3
+      ],
+      "mass": 1.0,
+      "color": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "fill": "stone",
+      "metadata": {
+        "hit_sound": [
+          "concrete-hit.mp3"
+        ],
+        "stiff": true,
+        "shard_config": {
+          "count": 12.0,
+          "size_scale": 0.45,
+          "mass": 3.6,
+          "velocity_scale": 0.3,
+          "impulse_threshold": 1000.0
+        }
+      }
+    },
+    {
+      "position": [
+        14.09673300577131,
+        1.1500000000000001,
+        6.69937891929271
+      ],
+      "orientation": [
+        0.0,
+        0.3826834323650899,
+        0.0,
+        0.9238795325112867
+      ],
+      "size": [
+        0.3,
+        0.1,
+        0.3
+      ],
+      "mass": 1.0,
+      "color": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "fill": "stone",
+      "metadata": {
+        "hit_sound": [
+          "concrete-hit.mp3"
+        ],
+        "stiff": true,
+        "shard_config": {
+          "count": 12.0,
+          "size_scale": 0.45,
+          "mass": 3.6,
+          "velocity_scale": 0.3,
+          "impulse_threshold": 1000.0
+        }
+      }
+    },
+    {
+      "position": [
+        14.308865040127273,
+        1.1500000000000001,
+        6.9115109536486745
+      ],
+      "orientation": [
+        0.0,
+        0.3826834323650899,
+        0.0,
+        0.9238795325112867
+      ],
+      "size": [
+        0.3,
+        0.1,
+        0.3
+      ],
+      "mass": 1.0,
+      "color": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "fill": "stone",
+      "metadata": {
+        "hit_sound": [
+          "concrete-hit.mp3"
+        ],
+        "stiff": true,
+        "shard_config": {
+          "count": 12.0,
+          "size_scale": 0.45,
+          "mass": 3.6,
+          "velocity_scale": 0.3,
+          "impulse_threshold": 1000.0
+        }
+      }
+    },
+    {
+      "position": [
+        14.308865040127273,
+        1.2500000000000002,
+        6.9115109536486745
+      ],
+      "orientation": [
+        0.0,
+        0.3826834323650899,
+        0.0,
+        0.9238795325112867
+      ],
+      "size": [
+        0.3,
+        0.1,
+        0.3
+      ],
+      "mass": 1.0,
+      "color": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "fill": "stone",
+      "metadata": {
+        "hit_sound": [
+          "concrete-hit.mp3"
+        ],
+        "stiff": true,
+        "shard_config": {
+          "count": 12.0,
+          "size_scale": 0.45,
+          "mass": 3.6,
+          "velocity_scale": 0.3,
+          "impulse_threshold": 1000.0
+        }
+      }
+    },
+    {
+      "position": [
+        14.308865040127273,
+        1.35,
+        6.9115109536486745
+      ],
+      "orientation": [
+        0.0,
+        0.3826834323650899,
+        0.0,
+        0.9238795325112867
+      ],
+      "size": [
+        0.3,
+        0.1,
+        0.3
+      ],
+      "mass": 1.0,
+      "color": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "fill": "stone",
+      "metadata": {
+        "hit_sound": [
+          "concrete-hit.mp3"
+        ],
+        "stiff": true,
+        "shard_config": {
+          "count": 12.0,
+          "size_scale": 0.45,
+          "mass": 3.6,
+          "velocity_scale": 0.3,
+          "impulse_threshold": 1000.0
+        }
+      }
+    },
+    {
+      "position": [
+        14.308865040127273,
+        1.4500000000000002,
+        6.9115109536486745
+      ],
+      "orientation": [
+        0.0,
+        0.3826834323650899,
+        0.0,
+        0.9238795325112867
+      ],
+      "size": [
+        0.3,
+        0.1,
+        0.3
+      ],
+      "mass": 1.0,
+      "color": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "fill": "stone",
+      "metadata": {
+        "hit_sound": [
+          "concrete-hit.mp3"
+        ],
+        "stiff": true,
+        "shard_config": {
+          "count": 12.0,
+          "size_scale": 0.45,
+          "mass": 3.6,
+          "velocity_scale": 0.3,
+          "impulse_threshold": 1000.0
+        }
+      }
+    },
+    {
+      "position": [
+        14.308865040127273,
+        0.050000000000000044,
+        6.487246884936746
+      ],
+      "orientation": [
+        0.0,
+        0.3826834323650899,
+        0.0,
+        0.9238795325112867
+      ],
+      "size": [
+        0.3,
+        0.1,
+        0.3
+      ],
+      "mass": 1.0,
+      "color": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "fill": "stone",
+      "metadata": {
+        "hit_sound": [
+          "concrete-hit.mp3"
+        ],
+        "stiff": true,
+        "shard_config": {
+          "count": 12.0,
+          "size_scale": 0.45,
+          "mass": 3.6,
+          "velocity_scale": 0.3,
+          "impulse_threshold": 1000.0
+        }
+      }
+    },
+    {
+      "position": [
+        14.520997074483239,
+        0.050000000000000044,
+        6.69937891929271
+      ],
+      "orientation": [
+        0.0,
+        0.3826834323650899,
+        0.0,
+        0.9238795325112867
+      ],
+      "size": [
+        0.3,
+        0.1,
+        0.3
+      ],
+      "mass": 1.0,
+      "color": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "fill": "stone",
+      "metadata": {
+        "hit_sound": [
+          "concrete-hit.mp3"
+        ],
+        "stiff": true,
+        "shard_config": {
+          "count": 12.0,
+          "size_scale": 0.45,
+          "mass": 3.6,
+          "velocity_scale": 0.3,
+          "impulse_threshold": 1000.0
+        }
+      }
+    },
+    {
+      "position": [
+        14.308865040127273,
+        0.15000000000000002,
+        6.487246884936746
+      ],
+      "orientation": [
+        0.0,
+        0.3826834323650899,
+        0.0,
+        0.9238795325112867
+      ],
+      "size": [
+        0.3,
+        0.1,
+        0.3
+      ],
+      "mass": 1.0,
+      "color": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "fill": "stone",
+      "metadata": {
+        "hit_sound": [
+          "concrete-hit.mp3"
+        ],
+        "stiff": true,
+        "shard_config": {
+          "count": 12.0,
+          "size_scale": 0.45,
+          "mass": 3.6,
+          "velocity_scale": 0.3,
+          "impulse_threshold": 1000.0
+        }
+      }
+    },
+    {
+      "position": [
+        14.520997074483239,
+        0.15000000000000002,
+        6.69937891929271
+      ],
+      "orientation": [
+        0.0,
+        0.3826834323650899,
+        0.0,
+        0.9238795325112867
+      ],
+      "size": [
+        0.3,
+        0.1,
+        0.3
+      ],
+      "mass": 1.0,
+      "color": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "fill": "stone",
+      "metadata": {
+        "hit_sound": [
+          "concrete-hit.mp3"
+        ],
+        "stiff": true,
+        "shard_config": {
+          "count": 12.0,
+          "size_scale": 0.45,
+          "mass": 3.6,
+          "velocity_scale": 0.3,
+          "impulse_threshold": 1000.0
+        }
+      }
+    },
+    {
+      "position": [
+        14.308865040127273,
+        0.25,
+        6.487246884936746
+      ],
+      "orientation": [
+        0.0,
+        0.3826834323650899,
+        0.0,
+        0.9238795325112867
+      ],
+      "size": [
+        0.3,
+        0.1,
+        0.3
+      ],
+      "mass": 1.0,
+      "color": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "fill": "stone",
+      "metadata": {
+        "hit_sound": [
+          "concrete-hit.mp3"
+        ],
+        "stiff": true,
+        "shard_config": {
+          "count": 12.0,
+          "size_scale": 0.45,
+          "mass": 3.6,
+          "velocity_scale": 0.3,
+          "impulse_threshold": 1000.0
+        }
+      }
+    },
+    {
+      "position": [
+        14.520997074483239,
+        0.25,
+        6.69937891929271
+      ],
+      "orientation": [
+        0.0,
+        0.3826834323650899,
+        0.0,
+        0.9238795325112867
+      ],
+      "size": [
+        0.3,
+        0.1,
+        0.3
+      ],
+      "mass": 1.0,
+      "color": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "fill": "stone",
+      "metadata": {
+        "hit_sound": [
+          "concrete-hit.mp3"
+        ],
+        "stiff": true,
+        "shard_config": {
+          "count": 12.0,
+          "size_scale": 0.45,
+          "mass": 3.6,
+          "velocity_scale": 0.3,
+          "impulse_threshold": 1000.0
+        }
+      }
+    },
+    {
+      "position": [
+        14.308865040127273,
+        0.3500000000000001,
+        6.487246884936746
+      ],
+      "orientation": [
+        0.0,
+        0.3826834323650899,
+        0.0,
+        0.9238795325112867
+      ],
+      "size": [
+        0.3,
+        0.1,
+        0.3
+      ],
+      "mass": 1.0,
+      "color": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "fill": "stone",
+      "metadata": {
+        "hit_sound": [
+          "concrete-hit.mp3"
+        ],
+        "stiff": true,
+        "shard_config": {
+          "count": 12.0,
+          "size_scale": 0.45,
+          "mass": 3.6,
+          "velocity_scale": 0.3,
+          "impulse_threshold": 1000.0
+        }
+      }
+    },
+    {
+      "position": [
+        14.520997074483239,
+        0.3500000000000001,
+        6.69937891929271
+      ],
+      "orientation": [
+        0.0,
+        0.3826834323650899,
+        0.0,
+        0.9238795325112867
+      ],
+      "size": [
+        0.3,
+        0.1,
+        0.3
+      ],
+      "mass": 1.0,
+      "color": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "fill": "stone",
+      "metadata": {
+        "hit_sound": [
+          "concrete-hit.mp3"
+        ],
+        "stiff": true,
+        "shard_config": {
+          "count": 12.0,
+          "size_scale": 0.45,
+          "mass": 3.6,
+          "velocity_scale": 0.3,
+          "impulse_threshold": 1000.0
+        }
+      }
+    },
+    {
+      "position": [
+        14.308865040127273,
+        0.45000000000000007,
+        6.487246884936746
+      ],
+      "orientation": [
+        0.0,
+        0.3826834323650899,
+        0.0,
+        0.9238795325112867
+      ],
+      "size": [
+        0.3,
+        0.1,
+        0.3
+      ],
+      "mass": 1.0,
+      "color": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "fill": "stone",
+      "metadata": {
+        "hit_sound": [
+          "concrete-hit.mp3"
+        ],
+        "stiff": true,
+        "shard_config": {
+          "count": 12.0,
+          "size_scale": 0.45,
+          "mass": 3.6,
+          "velocity_scale": 0.3,
+          "impulse_threshold": 1000.0
+        }
+      }
+    },
+    {
+      "position": [
+        14.520997074483239,
+        0.45000000000000007,
+        6.69937891929271
+      ],
+      "orientation": [
+        0.0,
+        0.3826834323650899,
+        0.0,
+        0.9238795325112867
+      ],
+      "size": [
+        0.3,
+        0.1,
+        0.3
+      ],
+      "mass": 1.0,
+      "color": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "fill": "stone",
+      "metadata": {
+        "hit_sound": [
+          "concrete-hit.mp3"
+        ],
+        "stiff": true,
+        "shard_config": {
+          "count": 12.0,
+          "size_scale": 0.45,
+          "mass": 3.6,
+          "velocity_scale": 0.3,
+          "impulse_threshold": 1000.0
+        }
+      }
+    },
+    {
+      "position": [
+        14.308865040127273,
+        0.55,
+        6.487246884936746
+      ],
+      "orientation": [
+        0.0,
+        0.3826834323650899,
+        0.0,
+        0.9238795325112867
+      ],
+      "size": [
+        0.3,
+        0.1,
+        0.3
+      ],
+      "mass": 1.0,
+      "color": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "fill": "stone",
+      "metadata": {
+        "hit_sound": [
+          "concrete-hit.mp3"
+        ],
+        "stiff": true,
+        "shard_config": {
+          "count": 12.0,
+          "size_scale": 0.45,
+          "mass": 3.6,
+          "velocity_scale": 0.3,
+          "impulse_threshold": 1000.0
+        }
+      }
+    },
+    {
+      "position": [
+        14.520997074483239,
+        0.55,
+        6.69937891929271
+      ],
+      "orientation": [
+        0.0,
+        0.3826834323650899,
+        0.0,
+        0.9238795325112867
+      ],
+      "size": [
+        0.3,
+        0.1,
+        0.3
+      ],
+      "mass": 1.0,
+      "color": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "fill": "stone",
+      "metadata": {
+        "hit_sound": [
+          "concrete-hit.mp3"
+        ],
+        "stiff": true,
+        "shard_config": {
+          "count": 12.0,
+          "size_scale": 0.45,
+          "mass": 3.6,
+          "velocity_scale": 0.3,
+          "impulse_threshold": 1000.0
+        }
+      }
+    },
+    {
+      "position": [
+        14.308865040127273,
+        0.6500000000000001,
+        6.487246884936746
+      ],
+      "orientation": [
+        0.0,
+        0.3826834323650899,
+        0.0,
+        0.9238795325112867
+      ],
+      "size": [
+        0.3,
+        0.1,
+        0.3
+      ],
+      "mass": 1.0,
+      "color": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "fill": "stone",
+      "metadata": {
+        "hit_sound": [
+          "concrete-hit.mp3"
+        ],
+        "stiff": true,
+        "shard_config": {
+          "count": 12.0,
+          "size_scale": 0.45,
+          "mass": 3.6,
+          "velocity_scale": 0.3,
+          "impulse_threshold": 1000.0
+        }
+      }
+    },
+    {
+      "position": [
+        14.520997074483239,
+        0.6500000000000001,
+        6.69937891929271
+      ],
+      "orientation": [
+        0.0,
+        0.3826834323650899,
+        0.0,
+        0.9238795325112867
+      ],
+      "size": [
+        0.3,
+        0.1,
+        0.3
+      ],
+      "mass": 1.0,
+      "color": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "fill": "stone",
+      "metadata": {
+        "hit_sound": [
+          "concrete-hit.mp3"
+        ],
+        "stiff": true,
+        "shard_config": {
+          "count": 12.0,
+          "size_scale": 0.45,
+          "mass": 3.6,
+          "velocity_scale": 0.3,
+          "impulse_threshold": 1000.0
+        }
+      }
+    },
+    {
+      "position": [
+        14.308865040127273,
+        0.75,
+        6.487246884936746
+      ],
+      "orientation": [
+        0.0,
+        0.3826834323650899,
+        0.0,
+        0.9238795325112867
+      ],
+      "size": [
+        0.3,
+        0.1,
+        0.3
+      ],
+      "mass": 1.0,
+      "color": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "fill": "stone",
+      "metadata": {
+        "hit_sound": [
+          "concrete-hit.mp3"
+        ],
+        "stiff": true,
+        "shard_config": {
+          "count": 12.0,
+          "size_scale": 0.45,
+          "mass": 3.6,
+          "velocity_scale": 0.3,
+          "impulse_threshold": 1000.0
+        }
+      }
+    },
+    {
+      "position": [
+        14.520997074483239,
+        0.75,
+        6.69937891929271
+      ],
+      "orientation": [
+        0.0,
+        0.3826834323650899,
+        0.0,
+        0.9238795325112867
+      ],
+      "size": [
+        0.3,
+        0.1,
+        0.3
+      ],
+      "mass": 1.0,
+      "color": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "fill": "stone",
+      "metadata": {
+        "hit_sound": [
+          "concrete-hit.mp3"
+        ],
+        "stiff": true,
+        "shard_config": {
+          "count": 12.0,
+          "size_scale": 0.45,
+          "mass": 3.6,
+          "velocity_scale": 0.3,
+          "impulse_threshold": 1000.0
+        }
+      }
+    },
+    {
+      "position": [
+        14.308865040127273,
+        0.8500000000000001,
+        6.487246884936746
+      ],
+      "orientation": [
+        0.0,
+        0.3826834323650899,
+        0.0,
+        0.9238795325112867
+      ],
+      "size": [
+        0.3,
+        0.1,
+        0.3
+      ],
+      "mass": 1.0,
+      "color": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "fill": "stone",
+      "metadata": {
+        "hit_sound": [
+          "concrete-hit.mp3"
+        ],
+        "stiff": true,
+        "shard_config": {
+          "count": 12.0,
+          "size_scale": 0.45,
+          "mass": 3.6,
+          "velocity_scale": 0.3,
+          "impulse_threshold": 1000.0
+        }
+      }
+    },
+    {
+      "position": [
+        14.520997074483239,
+        0.8500000000000001,
+        6.69937891929271
+      ],
+      "orientation": [
+        0.0,
+        0.3826834323650899,
+        0.0,
+        0.9238795325112867
+      ],
+      "size": [
+        0.3,
+        0.1,
+        0.3
+      ],
+      "mass": 1.0,
+      "color": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "fill": "stone",
+      "metadata": {
+        "hit_sound": [
+          "concrete-hit.mp3"
+        ],
+        "stiff": true,
+        "shard_config": {
+          "count": 12.0,
+          "size_scale": 0.45,
+          "mass": 3.6,
+          "velocity_scale": 0.3,
+          "impulse_threshold": 1000.0
+        }
+      }
+    },
+    {
+      "position": [
+        14.308865040127273,
+        0.9500000000000001,
+        6.487246884936746
+      ],
+      "orientation": [
+        0.0,
+        0.3826834323650899,
+        0.0,
+        0.9238795325112867
+      ],
+      "size": [
+        0.3,
+        0.1,
+        0.3
+      ],
+      "mass": 1.0,
+      "color": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "fill": "stone",
+      "metadata": {
+        "hit_sound": [
+          "concrete-hit.mp3"
+        ],
+        "stiff": true,
+        "shard_config": {
+          "count": 12.0,
+          "size_scale": 0.45,
+          "mass": 3.6,
+          "velocity_scale": 0.3,
+          "impulse_threshold": 1000.0
+        }
+      }
+    },
+    {
+      "position": [
+        14.520997074483239,
+        0.9500000000000001,
+        6.69937891929271
+      ],
+      "orientation": [
+        0.0,
+        0.3826834323650899,
+        0.0,
+        0.9238795325112867
+      ],
+      "size": [
+        0.3,
+        0.1,
+        0.3
+      ],
+      "mass": 1.0,
+      "color": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "fill": "stone",
+      "metadata": {
+        "hit_sound": [
+          "concrete-hit.mp3"
+        ],
+        "stiff": true,
+        "shard_config": {
+          "count": 12.0,
+          "size_scale": 0.45,
+          "mass": 3.6,
+          "velocity_scale": 0.3,
+          "impulse_threshold": 1000.0
+        }
+      }
+    },
+    {
+      "position": [
+        14.308865040127273,
+        1.05,
+        6.487246884936746
+      ],
+      "orientation": [
+        0.0,
+        0.3826834323650899,
+        0.0,
+        0.9238795325112867
+      ],
+      "size": [
+        0.3,
+        0.1,
+        0.3
+      ],
+      "mass": 1.0,
+      "color": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "fill": "stone",
+      "metadata": {
+        "hit_sound": [
+          "concrete-hit.mp3"
+        ],
+        "stiff": true,
+        "shard_config": {
+          "count": 12.0,
+          "size_scale": 0.45,
+          "mass": 3.6,
+          "velocity_scale": 0.3,
+          "impulse_threshold": 1000.0
+        }
+      }
+    },
+    {
+      "position": [
+        14.520997074483239,
+        1.05,
+        6.69937891929271
+      ],
+      "orientation": [
+        0.0,
+        0.3826834323650899,
+        0.0,
+        0.9238795325112867
+      ],
+      "size": [
+        0.3,
+        0.1,
+        0.3
+      ],
+      "mass": 1.0,
+      "color": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "fill": "stone",
+      "metadata": {
+        "hit_sound": [
+          "concrete-hit.mp3"
+        ],
+        "stiff": true,
+        "shard_config": {
+          "count": 12.0,
+          "size_scale": 0.45,
+          "mass": 3.6,
+          "velocity_scale": 0.3,
+          "impulse_threshold": 1000.0
+        }
+      }
+    },
+    {
+      "position": [
+        14.308865040127273,
+        1.1500000000000001,
+        6.487246884936746
+      ],
+      "orientation": [
+        0.0,
+        0.3826834323650899,
+        0.0,
+        0.9238795325112867
+      ],
+      "size": [
+        0.3,
+        0.1,
+        0.3
+      ],
+      "mass": 1.0,
+      "color": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "fill": "stone",
+      "metadata": {
+        "hit_sound": [
+          "concrete-hit.mp3"
+        ],
+        "stiff": true,
+        "shard_config": {
+          "count": 12.0,
+          "size_scale": 0.45,
+          "mass": 3.6,
+          "velocity_scale": 0.3,
+          "impulse_threshold": 1000.0
+        }
+      }
+    },
+    {
+      "position": [
+        14.520997074483239,
+        1.1500000000000001,
+        6.69937891929271
+      ],
+      "orientation": [
+        0.0,
+        0.3826834323650899,
+        0.0,
+        0.9238795325112867
+      ],
+      "size": [
+        0.3,
+        0.1,
+        0.3
+      ],
+      "mass": 1.0,
+      "color": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "fill": "stone",
+      "metadata": {
+        "hit_sound": [
+          "concrete-hit.mp3"
+        ],
+        "stiff": true,
+        "shard_config": {
+          "count": 12.0,
+          "size_scale": 0.45,
+          "mass": 3.6,
+          "velocity_scale": 0.3,
+          "impulse_threshold": 1000.0
+        }
+      }
+    },
+    {
+      "position": [
+        14.308865040127273,
+        1.2500000000000002,
+        6.487246884936746
+      ],
+      "orientation": [
+        0.0,
+        0.3826834323650899,
+        0.0,
+        0.9238795325112867
+      ],
+      "size": [
+        0.3,
+        0.1,
+        0.3
+      ],
+      "mass": 1.0,
+      "color": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "fill": "stone",
+      "metadata": {
+        "hit_sound": [
+          "concrete-hit.mp3"
+        ],
+        "stiff": true,
+        "shard_config": {
+          "count": 12.0,
+          "size_scale": 0.45,
+          "mass": 3.6,
+          "velocity_scale": 0.3,
+          "impulse_threshold": 1000.0
+        }
+      }
+    },
+    {
+      "position": [
+        14.520997074483239,
+        1.2500000000000002,
+        6.69937891929271
+      ],
+      "orientation": [
+        0.0,
+        0.3826834323650899,
+        0.0,
+        0.9238795325112867
+      ],
+      "size": [
+        0.3,
+        0.1,
+        0.3
+      ],
+      "mass": 1.0,
+      "color": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "fill": "stone",
+      "metadata": {
+        "hit_sound": [
+          "concrete-hit.mp3"
+        ],
+        "stiff": true,
+        "shard_config": {
+          "count": 12.0,
+          "size_scale": 0.45,
+          "mass": 3.6,
+          "velocity_scale": 0.3,
+          "impulse_threshold": 1000.0
+        }
+      }
+    },
+    {
+      "position": [
+        14.520997074483239,
+        1.35,
+        6.69937891929271
+      ],
+      "orientation": [
+        0.0,
+        0.3826834323650899,
+        0.0,
+        0.9238795325112867
+      ],
+      "size": [
+        0.3,
+        0.1,
+        0.3
+      ],
+      "mass": 1.0,
+      "color": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "fill": "stone",
+      "metadata": {
+        "hit_sound": [
+          "concrete-hit.mp3"
+        ],
+        "stiff": true,
+        "shard_config": {
+          "count": 12.0,
+          "size_scale": 0.45,
+          "mass": 3.6,
+          "velocity_scale": 0.3,
+          "impulse_threshold": 1000.0
+        }
+      }
+    },
+    {
+      "position": [
+        14.520997074483239,
+        1.55,
+        6.69937891929271
+      ],
+      "orientation": [
+        0.0,
+        0.3826834323650899,
+        0.0,
+        0.9238795325112867
+      ],
+      "size": [
+        0.3,
+        0.1,
+        0.3
+      ],
+      "mass": 1.0,
+      "color": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "fill": "stone",
+      "metadata": {
+        "hit_sound": [
+          "concrete-hit.mp3"
+        ],
+        "stiff": true,
+        "shard_config": {
+          "count": 12.0,
+          "size_scale": 0.45,
+          "mass": 3.6,
+          "velocity_scale": 0.3,
+          "impulse_threshold": 1000.0
+        }
+      }
+    },
+    {
+      "position": [
+        14.520997074483239,
+        0.050000000000000044,
+        6.275114850580781
+      ],
+      "orientation": [
+        0.0,
+        0.3826834323650899,
+        0.0,
+        0.9238795325112867
+      ],
+      "size": [
+        0.3,
+        0.1,
+        0.3
+      ],
+      "mass": 1.0,
+      "color": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "fill": "stone",
+      "metadata": {
+        "hit_sound": [
+          "concrete-hit.mp3"
+        ],
+        "stiff": true,
+        "shard_config": {
+          "count": 12.0,
+          "size_scale": 0.45,
+          "mass": 3.6,
+          "velocity_scale": 0.3,
+          "impulse_threshold": 1000.0
+        }
+      }
+    },
+    {
+      "position": [
+        14.733129108839202,
+        0.050000000000000044,
+        6.487246884936746
+      ],
+      "orientation": [
+        0.0,
+        0.3826834323650899,
+        0.0,
+        0.9238795325112867
+      ],
+      "size": [
+        0.3,
+        0.1,
+        0.3
+      ],
+      "mass": 1.0,
+      "color": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "fill": "stone",
+      "metadata": {
+        "hit_sound": [
+          "concrete-hit.mp3"
+        ],
+        "stiff": true,
+        "shard_config": {
+          "count": 12.0,
+          "size_scale": 0.45,
+          "mass": 3.6,
+          "velocity_scale": 0.3,
+          "impulse_threshold": 1000.0
+        }
+      }
+    },
+    {
+      "position": [
+        14.520997074483239,
+        0.15000000000000002,
+        6.275114850580781
+      ],
+      "orientation": [
+        0.0,
+        0.3826834323650899,
+        0.0,
+        0.9238795325112867
+      ],
+      "size": [
+        0.3,
+        0.1,
+        0.3
+      ],
+      "mass": 1.0,
+      "color": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "fill": "stone",
+      "metadata": {
+        "hit_sound": [
+          "concrete-hit.mp3"
+        ],
+        "stiff": true,
+        "shard_config": {
+          "count": 12.0,
+          "size_scale": 0.45,
+          "mass": 3.6,
+          "velocity_scale": 0.3,
+          "impulse_threshold": 1000.0
+        }
+      }
+    },
+    {
+      "position": [
+        14.733129108839202,
+        0.15000000000000002,
+        6.487246884936746
+      ],
+      "orientation": [
+        0.0,
+        0.3826834323650899,
+        0.0,
+        0.9238795325112867
+      ],
+      "size": [
+        0.3,
+        0.1,
+        0.3
+      ],
+      "mass": 1.0,
+      "color": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "fill": "stone",
+      "metadata": {
+        "hit_sound": [
+          "concrete-hit.mp3"
+        ],
+        "stiff": true,
+        "shard_config": {
+          "count": 12.0,
+          "size_scale": 0.45,
+          "mass": 3.6,
+          "velocity_scale": 0.3,
+          "impulse_threshold": 1000.0
+        }
+      }
+    },
+    {
+      "position": [
+        14.520997074483239,
+        0.25,
+        6.275114850580781
+      ],
+      "orientation": [
+        0.0,
+        0.3826834323650899,
+        0.0,
+        0.9238795325112867
+      ],
+      "size": [
+        0.3,
+        0.1,
+        0.3
+      ],
+      "mass": 1.0,
+      "color": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "fill": "stone",
+      "metadata": {
+        "hit_sound": [
+          "concrete-hit.mp3"
+        ],
+        "stiff": true,
+        "shard_config": {
+          "count": 12.0,
+          "size_scale": 0.45,
+          "mass": 3.6,
+          "velocity_scale": 0.3,
+          "impulse_threshold": 1000.0
+        }
+      }
+    },
+    {
+      "position": [
+        14.733129108839202,
+        0.25,
+        6.487246884936746
+      ],
+      "orientation": [
+        0.0,
+        0.3826834323650899,
+        0.0,
+        0.9238795325112867
+      ],
+      "size": [
+        0.3,
+        0.1,
+        0.3
+      ],
+      "mass": 1.0,
+      "color": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "fill": "stone",
+      "metadata": {
+        "hit_sound": [
+          "concrete-hit.mp3"
+        ],
+        "stiff": true,
+        "shard_config": {
+          "count": 12.0,
+          "size_scale": 0.45,
+          "mass": 3.6,
+          "velocity_scale": 0.3,
+          "impulse_threshold": 1000.0
+        }
+      }
+    },
+    {
+      "position": [
+        14.520997074483239,
+        0.3500000000000001,
+        6.275114850580781
+      ],
+      "orientation": [
+        0.0,
+        0.3826834323650899,
+        0.0,
+        0.9238795325112867
+      ],
+      "size": [
+        0.3,
+        0.1,
+        0.3
+      ],
+      "mass": 1.0,
+      "color": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "fill": "stone",
+      "metadata": {
+        "hit_sound": [
+          "concrete-hit.mp3"
+        ],
+        "stiff": true,
+        "shard_config": {
+          "count": 12.0,
+          "size_scale": 0.45,
+          "mass": 3.6,
+          "velocity_scale": 0.3,
+          "impulse_threshold": 1000.0
+        }
+      }
+    },
+    {
+      "position": [
+        14.733129108839202,
+        0.3500000000000001,
+        6.487246884936746
+      ],
+      "orientation": [
+        0.0,
+        0.3826834323650899,
+        0.0,
+        0.9238795325112867
+      ],
+      "size": [
+        0.3,
+        0.1,
+        0.3
+      ],
+      "mass": 1.0,
+      "color": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "fill": "stone",
+      "metadata": {
+        "hit_sound": [
+          "concrete-hit.mp3"
+        ],
+        "stiff": true,
+        "shard_config": {
+          "count": 12.0,
+          "size_scale": 0.45,
+          "mass": 3.6,
+          "velocity_scale": 0.3,
+          "impulse_threshold": 1000.0
+        }
+      }
+    },
+    {
+      "position": [
+        14.520997074483239,
+        0.45000000000000007,
+        6.275114850580781
+      ],
+      "orientation": [
+        0.0,
+        0.3826834323650899,
+        0.0,
+        0.9238795325112867
+      ],
+      "size": [
+        0.3,
+        0.1,
+        0.3
+      ],
+      "mass": 1.0,
+      "color": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "fill": "stone",
+      "metadata": {
+        "hit_sound": [
+          "concrete-hit.mp3"
+        ],
+        "stiff": true,
+        "shard_config": {
+          "count": 12.0,
+          "size_scale": 0.45,
+          "mass": 3.6,
+          "velocity_scale": 0.3,
+          "impulse_threshold": 1000.0
+        }
+      }
+    },
+    {
+      "position": [
+        14.733129108839202,
+        0.45000000000000007,
+        6.487246884936746
+      ],
+      "orientation": [
+        0.0,
+        0.3826834323650899,
+        0.0,
+        0.9238795325112867
+      ],
+      "size": [
+        0.3,
+        0.1,
+        0.3
+      ],
+      "mass": 1.0,
+      "color": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "fill": "stone",
+      "metadata": {
+        "hit_sound": [
+          "concrete-hit.mp3"
+        ],
+        "stiff": true,
+        "shard_config": {
+          "count": 12.0,
+          "size_scale": 0.45,
+          "mass": 3.6,
+          "velocity_scale": 0.3,
+          "impulse_threshold": 1000.0
+        }
+      }
+    },
+    {
+      "position": [
+        14.520997074483239,
+        0.55,
+        6.275114850580781
+      ],
+      "orientation": [
+        0.0,
+        0.3826834323650899,
+        0.0,
+        0.9238795325112867
+      ],
+      "size": [
+        0.3,
+        0.1,
+        0.3
+      ],
+      "mass": 1.0,
+      "color": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "fill": "stone",
+      "metadata": {
+        "hit_sound": [
+          "concrete-hit.mp3"
+        ],
+        "stiff": true,
+        "shard_config": {
+          "count": 12.0,
+          "size_scale": 0.45,
+          "mass": 3.6,
+          "velocity_scale": 0.3,
+          "impulse_threshold": 1000.0
+        }
+      }
+    },
+    {
+      "position": [
+        14.733129108839202,
+        0.55,
+        6.487246884936746
+      ],
+      "orientation": [
+        0.0,
+        0.3826834323650899,
+        0.0,
+        0.9238795325112867
+      ],
+      "size": [
+        0.3,
+        0.1,
+        0.3
+      ],
+      "mass": 1.0,
+      "color": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "fill": "stone",
+      "metadata": {
+        "hit_sound": [
+          "concrete-hit.mp3"
+        ],
+        "stiff": true,
+        "shard_config": {
+          "count": 12.0,
+          "size_scale": 0.45,
+          "mass": 3.6,
+          "velocity_scale": 0.3,
+          "impulse_threshold": 1000.0
+        }
+      }
+    },
+    {
+      "position": [
+        14.520997074483239,
+        0.6500000000000001,
+        6.275114850580781
+      ],
+      "orientation": [
+        0.0,
+        0.3826834323650899,
+        0.0,
+        0.9238795325112867
+      ],
+      "size": [
+        0.3,
+        0.1,
+        0.3
+      ],
+      "mass": 1.0,
+      "color": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "fill": "stone",
+      "metadata": {
+        "hit_sound": [
+          "concrete-hit.mp3"
+        ],
+        "stiff": true,
+        "shard_config": {
+          "count": 12.0,
+          "size_scale": 0.45,
+          "mass": 3.6,
+          "velocity_scale": 0.3,
+          "impulse_threshold": 1000.0
+        }
+      }
+    },
+    {
+      "position": [
+        14.733129108839202,
+        0.6500000000000001,
+        6.487246884936746
+      ],
+      "orientation": [
+        0.0,
+        0.3826834323650899,
+        0.0,
+        0.9238795325112867
+      ],
+      "size": [
+        0.3,
+        0.1,
+        0.3
+      ],
+      "mass": 1.0,
+      "color": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "fill": "stone",
+      "metadata": {
+        "hit_sound": [
+          "concrete-hit.mp3"
+        ],
+        "stiff": true,
+        "shard_config": {
+          "count": 12.0,
+          "size_scale": 0.45,
+          "mass": 3.6,
+          "velocity_scale": 0.3,
+          "impulse_threshold": 1000.0
+        }
+      }
+    },
+    {
+      "position": [
+        14.520997074483239,
+        0.75,
+        6.275114850580781
+      ],
+      "orientation": [
+        0.0,
+        0.3826834323650899,
+        0.0,
+        0.9238795325112867
+      ],
+      "size": [
+        0.3,
+        0.1,
+        0.3
+      ],
+      "mass": 1.0,
+      "color": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "fill": "stone",
+      "metadata": {
+        "hit_sound": [
+          "concrete-hit.mp3"
+        ],
+        "stiff": true,
+        "shard_config": {
+          "count": 12.0,
+          "size_scale": 0.45,
+          "mass": 3.6,
+          "velocity_scale": 0.3,
+          "impulse_threshold": 1000.0
+        }
+      }
+    },
+    {
+      "position": [
+        14.733129108839202,
+        0.75,
+        6.487246884936746
+      ],
+      "orientation": [
+        0.0,
+        0.3826834323650899,
+        0.0,
+        0.9238795325112867
+      ],
+      "size": [
+        0.3,
+        0.1,
+        0.3
+      ],
+      "mass": 1.0,
+      "color": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "fill": "stone",
+      "metadata": {
+        "hit_sound": [
+          "concrete-hit.mp3"
+        ],
+        "stiff": true,
+        "shard_config": {
+          "count": 12.0,
+          "size_scale": 0.45,
+          "mass": 3.6,
+          "velocity_scale": 0.3,
+          "impulse_threshold": 1000.0
+        }
+      }
+    },
+    {
+      "position": [
+        14.520997074483239,
+        0.8500000000000001,
+        6.275114850580781
+      ],
+      "orientation": [
+        0.0,
+        0.3826834323650899,
+        0.0,
+        0.9238795325112867
+      ],
+      "size": [
+        0.3,
+        0.1,
+        0.3
+      ],
+      "mass": 1.0,
+      "color": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "fill": "stone",
+      "metadata": {
+        "hit_sound": [
+          "concrete-hit.mp3"
+        ],
+        "stiff": true,
+        "shard_config": {
+          "count": 12.0,
+          "size_scale": 0.45,
+          "mass": 3.6,
+          "velocity_scale": 0.3,
+          "impulse_threshold": 1000.0
+        }
+      }
+    },
+    {
+      "position": [
+        14.733129108839202,
+        0.8500000000000001,
+        6.487246884936746
+      ],
+      "orientation": [
+        0.0,
+        0.3826834323650899,
+        0.0,
+        0.9238795325112867
+      ],
+      "size": [
+        0.3,
+        0.1,
+        0.3
+      ],
+      "mass": 1.0,
+      "color": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "fill": "stone",
+      "metadata": {
+        "hit_sound": [
+          "concrete-hit.mp3"
+        ],
+        "stiff": true,
+        "shard_config": {
+          "count": 12.0,
+          "size_scale": 0.45,
+          "mass": 3.6,
+          "velocity_scale": 0.3,
+          "impulse_threshold": 1000.0
+        }
+      }
+    },
+    {
+      "position": [
+        14.520997074483239,
+        0.9500000000000001,
+        6.275114850580781
+      ],
+      "orientation": [
+        0.0,
+        0.3826834323650899,
+        0.0,
+        0.9238795325112867
+      ],
+      "size": [
+        0.3,
+        0.1,
+        0.3
+      ],
+      "mass": 1.0,
+      "color": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "fill": "stone",
+      "metadata": {
+        "hit_sound": [
+          "concrete-hit.mp3"
+        ],
+        "stiff": true,
+        "shard_config": {
+          "count": 12.0,
+          "size_scale": 0.45,
+          "mass": 3.6,
+          "velocity_scale": 0.3,
+          "impulse_threshold": 1000.0
+        }
+      }
+    },
+    {
+      "position": [
+        14.733129108839202,
+        0.9500000000000001,
+        6.487246884936746
+      ],
+      "orientation": [
+        0.0,
+        0.3826834323650899,
+        0.0,
+        0.9238795325112867
+      ],
+      "size": [
+        0.3,
+        0.1,
+        0.3
+      ],
+      "mass": 1.0,
+      "color": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "fill": "stone",
+      "metadata": {
+        "hit_sound": [
+          "concrete-hit.mp3"
+        ],
+        "stiff": true,
+        "shard_config": {
+          "count": 12.0,
+          "size_scale": 0.45,
+          "mass": 3.6,
+          "velocity_scale": 0.3,
+          "impulse_threshold": 1000.0
+        }
+      }
+    },
+    {
+      "position": [
+        14.520997074483239,
+        1.05,
+        6.275114850580781
+      ],
+      "orientation": [
+        0.0,
+        0.3826834323650899,
+        0.0,
+        0.9238795325112867
+      ],
+      "size": [
+        0.3,
+        0.1,
+        0.3
+      ],
+      "mass": 1.0,
+      "color": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "fill": "stone",
+      "metadata": {
+        "hit_sound": [
+          "concrete-hit.mp3"
+        ],
+        "stiff": true,
+        "shard_config": {
+          "count": 12.0,
+          "size_scale": 0.45,
+          "mass": 3.6,
+          "velocity_scale": 0.3,
+          "impulse_threshold": 1000.0
+        }
+      }
+    },
+    {
+      "position": [
+        14.733129108839202,
+        1.05,
+        6.487246884936746
+      ],
+      "orientation": [
+        0.0,
+        0.3826834323650899,
+        0.0,
+        0.9238795325112867
+      ],
+      "size": [
+        0.3,
+        0.1,
+        0.3
+      ],
+      "mass": 1.0,
+      "color": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "fill": "stone",
+      "metadata": {
+        "hit_sound": [
+          "concrete-hit.mp3"
+        ],
+        "stiff": true,
+        "shard_config": {
+          "count": 12.0,
+          "size_scale": 0.45,
+          "mass": 3.6,
+          "velocity_scale": 0.3,
+          "impulse_threshold": 1000.0
+        }
+      }
+    },
+    {
+      "position": [
+        14.520997074483239,
+        1.1500000000000001,
+        6.275114850580781
+      ],
+      "orientation": [
+        0.0,
+        0.3826834323650899,
+        0.0,
+        0.9238795325112867
+      ],
+      "size": [
+        0.3,
+        0.1,
+        0.3
+      ],
+      "mass": 1.0,
+      "color": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "fill": "stone",
+      "metadata": {
+        "hit_sound": [
+          "concrete-hit.mp3"
+        ],
+        "stiff": true,
+        "shard_config": {
+          "count": 12.0,
+          "size_scale": 0.45,
+          "mass": 3.6,
+          "velocity_scale": 0.3,
+          "impulse_threshold": 1000.0
+        }
+      }
+    },
+    {
+      "position": [
+        14.733129108839202,
+        1.1500000000000001,
+        6.487246884936746
+      ],
+      "orientation": [
+        0.0,
+        0.3826834323650899,
+        0.0,
+        0.9238795325112867
+      ],
+      "size": [
+        0.3,
+        0.1,
+        0.3
+      ],
+      "mass": 1.0,
+      "color": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "fill": "stone",
+      "metadata": {
+        "hit_sound": [
+          "concrete-hit.mp3"
+        ],
+        "stiff": true,
+        "shard_config": {
+          "count": 12.0,
+          "size_scale": 0.45,
+          "mass": 3.6,
+          "velocity_scale": 0.3,
+          "impulse_threshold": 1000.0
+        }
+      }
+    },
+    {
+      "position": [
+        14.733129108839202,
+        1.2500000000000002,
+        6.487246884936746
+      ],
+      "orientation": [
+        0.0,
+        0.3826834323650899,
+        0.0,
+        0.9238795325112867
+      ],
+      "size": [
+        0.3,
+        0.1,
+        0.3
+      ],
+      "mass": 1.0,
+      "color": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "fill": "stone",
+      "metadata": {
+        "hit_sound": [
+          "concrete-hit.mp3"
+        ],
+        "stiff": true,
+        "shard_config": {
+          "count": 12.0,
+          "size_scale": 0.45,
+          "mass": 3.6,
+          "velocity_scale": 0.3,
+          "impulse_threshold": 1000.0
+        }
+      }
+    },
+    {
+      "position": [
+        14.733129108839202,
+        0.050000000000000044,
+        6.062982816224817
+      ],
+      "orientation": [
+        0.0,
+        0.3826834323650899,
+        0.0,
+        0.9238795325112867
+      ],
+      "size": [
+        0.3,
+        0.1,
+        0.3
+      ],
+      "mass": 1.0,
+      "color": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "fill": "stone",
+      "metadata": {
+        "hit_sound": [
+          "concrete-hit.mp3"
+        ],
+        "stiff": true,
+        "shard_config": {
+          "count": 12.0,
+          "size_scale": 0.45,
+          "mass": 3.6,
+          "velocity_scale": 0.3,
+          "impulse_threshold": 1000.0
+        }
+      }
+    },
+    {
+      "position": [
+        14.945261143195166,
+        0.050000000000000044,
+        6.275114850580781
+      ],
+      "orientation": [
+        0.0,
+        0.3826834323650899,
+        0.0,
+        0.9238795325112867
+      ],
+      "size": [
+        0.3,
+        0.1,
+        0.3
+      ],
+      "mass": 1.0,
+      "color": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "fill": "stone",
+      "metadata": {
+        "hit_sound": [
+          "concrete-hit.mp3"
+        ],
+        "stiff": true,
+        "shard_config": {
+          "count": 12.0,
+          "size_scale": 0.45,
+          "mass": 3.6,
+          "velocity_scale": 0.3,
+          "impulse_threshold": 1000.0
+        }
+      }
+    },
+    {
+      "position": [
+        14.733129108839202,
+        0.15000000000000002,
+        6.062982816224817
+      ],
+      "orientation": [
+        0.0,
+        0.3826834323650899,
+        0.0,
+        0.9238795325112867
+      ],
+      "size": [
+        0.3,
+        0.1,
+        0.3
+      ],
+      "mass": 1.0,
+      "color": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "fill": "stone",
+      "metadata": {
+        "hit_sound": [
+          "concrete-hit.mp3"
+        ],
+        "stiff": true,
+        "shard_config": {
+          "count": 12.0,
+          "size_scale": 0.45,
+          "mass": 3.6,
+          "velocity_scale": 0.3,
+          "impulse_threshold": 1000.0
+        }
+      }
+    },
+    {
+      "position": [
+        14.945261143195166,
+        0.15000000000000002,
+        6.275114850580781
+      ],
+      "orientation": [
+        0.0,
+        0.3826834323650899,
+        0.0,
+        0.9238795325112867
+      ],
+      "size": [
+        0.3,
+        0.1,
+        0.3
+      ],
+      "mass": 1.0,
+      "color": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "fill": "stone",
+      "metadata": {
+        "hit_sound": [
+          "concrete-hit.mp3"
+        ],
+        "stiff": true,
+        "shard_config": {
+          "count": 12.0,
+          "size_scale": 0.45,
+          "mass": 3.6,
+          "velocity_scale": 0.3,
+          "impulse_threshold": 1000.0
+        }
+      }
+    },
+    {
+      "position": [
+        14.733129108839202,
+        0.25,
+        6.062982816224817
+      ],
+      "orientation": [
+        0.0,
+        0.3826834323650899,
+        0.0,
+        0.9238795325112867
+      ],
+      "size": [
+        0.3,
+        0.1,
+        0.3
+      ],
+      "mass": 1.0,
+      "color": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "fill": "stone",
+      "metadata": {
+        "hit_sound": [
+          "concrete-hit.mp3"
+        ],
+        "stiff": true,
+        "shard_config": {
+          "count": 12.0,
+          "size_scale": 0.45,
+          "mass": 3.6,
+          "velocity_scale": 0.3,
+          "impulse_threshold": 1000.0
+        }
+      }
+    },
+    {
+      "position": [
+        14.945261143195166,
+        0.25,
+        6.275114850580781
+      ],
+      "orientation": [
+        0.0,
+        0.3826834323650899,
+        0.0,
+        0.9238795325112867
+      ],
+      "size": [
+        0.3,
+        0.1,
+        0.3
+      ],
+      "mass": 1.0,
+      "color": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "fill": "stone",
+      "metadata": {
+        "hit_sound": [
+          "concrete-hit.mp3"
+        ],
+        "stiff": true,
+        "shard_config": {
+          "count": 12.0,
+          "size_scale": 0.45,
+          "mass": 3.6,
+          "velocity_scale": 0.3,
+          "impulse_threshold": 1000.0
+        }
+      }
+    },
+    {
+      "position": [
+        14.733129108839202,
+        0.3500000000000001,
+        6.062982816224817
+      ],
+      "orientation": [
+        0.0,
+        0.3826834323650899,
+        0.0,
+        0.9238795325112867
+      ],
+      "size": [
+        0.3,
+        0.1,
+        0.3
+      ],
+      "mass": 1.0,
+      "color": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "fill": "stone",
+      "metadata": {
+        "hit_sound": [
+          "concrete-hit.mp3"
+        ],
+        "stiff": true,
+        "shard_config": {
+          "count": 12.0,
+          "size_scale": 0.45,
+          "mass": 3.6,
+          "velocity_scale": 0.3,
+          "impulse_threshold": 1000.0
+        }
+      }
+    },
+    {
+      "position": [
+        14.945261143195166,
+        0.3500000000000001,
+        6.275114850580781
+      ],
+      "orientation": [
+        0.0,
+        0.3826834323650899,
+        0.0,
+        0.9238795325112867
+      ],
+      "size": [
+        0.3,
+        0.1,
+        0.3
+      ],
+      "mass": 1.0,
+      "color": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "fill": "stone",
+      "metadata": {
+        "hit_sound": [
+          "concrete-hit.mp3"
+        ],
+        "stiff": true,
+        "shard_config": {
+          "count": 12.0,
+          "size_scale": 0.45,
+          "mass": 3.6,
+          "velocity_scale": 0.3,
+          "impulse_threshold": 1000.0
+        }
+      }
+    },
+    {
+      "position": [
+        14.733129108839202,
+        0.45000000000000007,
+        6.062982816224817
+      ],
+      "orientation": [
+        0.0,
+        0.3826834323650899,
+        0.0,
+        0.9238795325112867
+      ],
+      "size": [
+        0.3,
+        0.1,
+        0.3
+      ],
+      "mass": 1.0,
+      "color": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "fill": "stone",
+      "metadata": {
+        "hit_sound": [
+          "concrete-hit.mp3"
+        ],
+        "stiff": true,
+        "shard_config": {
+          "count": 12.0,
+          "size_scale": 0.45,
+          "mass": 3.6,
+          "velocity_scale": 0.3,
+          "impulse_threshold": 1000.0
+        }
+      }
+    },
+    {
+      "position": [
+        14.945261143195166,
+        0.45000000000000007,
+        6.275114850580781
+      ],
+      "orientation": [
+        0.0,
+        0.3826834323650899,
+        0.0,
+        0.9238795325112867
+      ],
+      "size": [
+        0.3,
+        0.1,
+        0.3
+      ],
+      "mass": 1.0,
+      "color": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "fill": "stone",
+      "metadata": {
+        "hit_sound": [
+          "concrete-hit.mp3"
+        ],
+        "stiff": true,
+        "shard_config": {
+          "count": 12.0,
+          "size_scale": 0.45,
+          "mass": 3.6,
+          "velocity_scale": 0.3,
+          "impulse_threshold": 1000.0
+        }
+      }
+    },
+    {
+      "position": [
+        14.733129108839202,
+        0.55,
+        6.062982816224817
+      ],
+      "orientation": [
+        0.0,
+        0.3826834323650899,
+        0.0,
+        0.9238795325112867
+      ],
+      "size": [
+        0.3,
+        0.1,
+        0.3
+      ],
+      "mass": 1.0,
+      "color": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "fill": "stone",
+      "metadata": {
+        "hit_sound": [
+          "concrete-hit.mp3"
+        ],
+        "stiff": true,
+        "shard_config": {
+          "count": 12.0,
+          "size_scale": 0.45,
+          "mass": 3.6,
+          "velocity_scale": 0.3,
+          "impulse_threshold": 1000.0
+        }
+      }
+    },
+    {
+      "position": [
+        14.945261143195166,
+        0.55,
+        6.275114850580781
+      ],
+      "orientation": [
+        0.0,
+        0.3826834323650899,
+        0.0,
+        0.9238795325112867
+      ],
+      "size": [
+        0.3,
+        0.1,
+        0.3
+      ],
+      "mass": 1.0,
+      "color": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "fill": "stone",
+      "metadata": {
+        "hit_sound": [
+          "concrete-hit.mp3"
+        ],
+        "stiff": true,
+        "shard_config": {
+          "count": 12.0,
+          "size_scale": 0.45,
+          "mass": 3.6,
+          "velocity_scale": 0.3,
+          "impulse_threshold": 1000.0
+        }
+      }
+    },
+    {
+      "position": [
+        14.733129108839202,
+        0.6500000000000001,
+        6.062982816224817
+      ],
+      "orientation": [
+        0.0,
+        0.3826834323650899,
+        0.0,
+        0.9238795325112867
+      ],
+      "size": [
+        0.3,
+        0.1,
+        0.3
+      ],
+      "mass": 1.0,
+      "color": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "fill": "stone",
+      "metadata": {
+        "hit_sound": [
+          "concrete-hit.mp3"
+        ],
+        "stiff": true,
+        "shard_config": {
+          "count": 12.0,
+          "size_scale": 0.45,
+          "mass": 3.6,
+          "velocity_scale": 0.3,
+          "impulse_threshold": 1000.0
+        }
+      }
+    },
+    {
+      "position": [
+        14.945261143195166,
+        0.6500000000000001,
+        6.275114850580781
+      ],
+      "orientation": [
+        0.0,
+        0.3826834323650899,
+        0.0,
+        0.9238795325112867
+      ],
+      "size": [
+        0.3,
+        0.1,
+        0.3
+      ],
+      "mass": 1.0,
+      "color": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "fill": "stone",
+      "metadata": {
+        "hit_sound": [
+          "concrete-hit.mp3"
+        ],
+        "stiff": true,
+        "shard_config": {
+          "count": 12.0,
+          "size_scale": 0.45,
+          "mass": 3.6,
+          "velocity_scale": 0.3,
+          "impulse_threshold": 1000.0
+        }
+      }
+    },
+    {
+      "position": [
+        14.733129108839202,
+        0.75,
+        6.062982816224817
+      ],
+      "orientation": [
+        0.0,
+        0.3826834323650899,
+        0.0,
+        0.9238795325112867
+      ],
+      "size": [
+        0.3,
+        0.1,
+        0.3
+      ],
+      "mass": 1.0,
+      "color": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "fill": "stone",
+      "metadata": {
+        "hit_sound": [
+          "concrete-hit.mp3"
+        ],
+        "stiff": true,
+        "shard_config": {
+          "count": 12.0,
+          "size_scale": 0.45,
+          "mass": 3.6,
+          "velocity_scale": 0.3,
+          "impulse_threshold": 1000.0
+        }
+      }
+    },
+    {
+      "position": [
+        14.945261143195166,
+        0.75,
+        6.275114850580781
+      ],
+      "orientation": [
+        0.0,
+        0.3826834323650899,
+        0.0,
+        0.9238795325112867
+      ],
+      "size": [
+        0.3,
+        0.1,
+        0.3
+      ],
+      "mass": 1.0,
+      "color": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "fill": "stone",
+      "metadata": {
+        "hit_sound": [
+          "concrete-hit.mp3"
+        ],
+        "stiff": true,
+        "shard_config": {
+          "count": 12.0,
+          "size_scale": 0.45,
+          "mass": 3.6,
+          "velocity_scale": 0.3,
+          "impulse_threshold": 1000.0
+        }
+      }
+    },
+    {
+      "position": [
+        14.945261143195166,
+        0.8500000000000001,
+        6.275114850580781
+      ],
+      "orientation": [
+        0.0,
+        0.3826834323650899,
+        0.0,
+        0.9238795325112867
+      ],
+      "size": [
+        0.3,
+        0.1,
+        0.3
+      ],
+      "mass": 1.0,
+      "color": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "fill": "stone",
+      "metadata": {
+        "hit_sound": [
+          "concrete-hit.mp3"
+        ],
+        "stiff": true,
+        "shard_config": {
+          "count": 12.0,
+          "size_scale": 0.45,
+          "mass": 3.6,
+          "velocity_scale": 0.3,
+          "impulse_threshold": 1000.0
+        }
+      }
+    },
+    {
+      "position": [
+        14.945261143195166,
+        0.9500000000000001,
+        6.275114850580781
+      ],
+      "orientation": [
+        0.0,
+        0.3826834323650899,
+        0.0,
+        0.9238795325112867
+      ],
+      "size": [
+        0.3,
+        0.1,
+        0.3
+      ],
+      "mass": 1.0,
+      "color": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "fill": "stone",
+      "metadata": {
+        "hit_sound": [
+          "concrete-hit.mp3"
+        ],
+        "stiff": true,
+        "shard_config": {
+          "count": 12.0,
+          "size_scale": 0.45,
+          "mass": 3.6,
+          "velocity_scale": 0.3,
+          "impulse_threshold": 1000.0
+        }
+      }
+    },
+    {
+      "position": [
+        14.733129108839202,
+        1.05,
+        6.062982816224817
+      ],
+      "orientation": [
+        0.0,
+        0.3826834323650899,
+        0.0,
+        0.9238795325112867
+      ],
+      "size": [
+        0.3,
+        0.1,
+        0.3
+      ],
+      "mass": 1.0,
+      "color": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "fill": "stone",
+      "metadata": {
+        "hit_sound": [
+          "concrete-hit.mp3"
+        ],
+        "stiff": true,
+        "shard_config": {
+          "count": 12.0,
+          "size_scale": 0.45,
+          "mass": 3.6,
+          "velocity_scale": 0.3,
+          "impulse_threshold": 1000.0
+        }
+      }
+    },
+    {
+      "position": [
+        14.945261143195166,
+        1.05,
+        6.275114850580781
+      ],
+      "orientation": [
+        0.0,
+        0.3826834323650899,
+        0.0,
+        0.9238795325112867
+      ],
+      "size": [
+        0.3,
+        0.1,
+        0.3
+      ],
+      "mass": 1.0,
+      "color": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "fill": "stone",
+      "metadata": {
+        "hit_sound": [
+          "concrete-hit.mp3"
+        ],
+        "stiff": true,
+        "shard_config": {
+          "count": 12.0,
+          "size_scale": 0.45,
+          "mass": 3.6,
+          "velocity_scale": 0.3,
+          "impulse_threshold": 1000.0
+        }
+      }
+    },
+    {
+      "position": [
+        14.945261143195166,
+        1.1500000000000001,
+        6.275114850580781
+      ],
+      "orientation": [
+        0.0,
+        0.3826834323650899,
+        0.0,
+        0.9238795325112867
+      ],
+      "size": [
+        0.3,
+        0.1,
+        0.3
+      ],
+      "mass": 1.0,
+      "color": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "fill": "stone",
+      "metadata": {
+        "hit_sound": [
+          "concrete-hit.mp3"
+        ],
+        "stiff": true,
+        "shard_config": {
+          "count": 12.0,
+          "size_scale": 0.45,
+          "mass": 3.6,
+          "velocity_scale": 0.3,
+          "impulse_threshold": 1000.0
+        }
+      }
+    },
+    {
+      "position": [
+        14.945261143195166,
+        1.2500000000000002,
+        6.275114850580781
+      ],
+      "orientation": [
+        0.0,
+        0.3826834323650899,
+        0.0,
+        0.9238795325112867
+      ],
+      "size": [
+        0.3,
+        0.1,
+        0.3
+      ],
+      "mass": 1.0,
+      "color": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "fill": "stone",
+      "metadata": {
+        "hit_sound": [
+          "concrete-hit.mp3"
+        ],
+        "stiff": true,
+        "shard_config": {
+          "count": 12.0,
+          "size_scale": 0.45,
+          "mass": 3.6,
+          "velocity_scale": 0.3,
+          "impulse_threshold": 1000.0
+        }
+      }
+    },
+    {
+      "position": [
+        14.945261143195166,
+        0.050000000000000044,
+        5.8508507818688535
+      ],
+      "orientation": [
+        0.0,
+        0.3826834323650899,
+        0.0,
+        0.9238795325112867
+      ],
+      "size": [
+        0.3,
+        0.1,
+        0.3
+      ],
+      "mass": 1.0,
+      "color": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "fill": "stone",
+      "metadata": {
+        "hit_sound": [
+          "concrete-hit.mp3"
+        ],
+        "stiff": true,
+        "shard_config": {
+          "count": 12.0,
+          "size_scale": 0.45,
+          "mass": 3.6,
+          "velocity_scale": 0.3,
+          "impulse_threshold": 1000.0
+        }
+      }
+    },
+    {
+      "position": [
+        15.15739317755113,
+        0.050000000000000044,
+        6.062982816224817
+      ],
+      "orientation": [
+        0.0,
+        0.3826834323650899,
+        0.0,
+        0.9238795325112867
+      ],
+      "size": [
+        0.3,
+        0.1,
+        0.3
+      ],
+      "mass": 1.0,
+      "color": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "fill": "stone",
+      "metadata": {
+        "hit_sound": [
+          "concrete-hit.mp3"
+        ],
+        "stiff": true,
+        "shard_config": {
+          "count": 12.0,
+          "size_scale": 0.45,
+          "mass": 3.6,
+          "velocity_scale": 0.3,
+          "impulse_threshold": 1000.0
+        }
+      }
+    },
+    {
+      "position": [
+        14.945261143195166,
+        0.15000000000000002,
+        5.8508507818688535
+      ],
+      "orientation": [
+        0.0,
+        0.3826834323650899,
+        0.0,
+        0.9238795325112867
+      ],
+      "size": [
+        0.3,
+        0.1,
+        0.3
+      ],
+      "mass": 1.0,
+      "color": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "fill": "stone",
+      "metadata": {
+        "hit_sound": [
+          "concrete-hit.mp3"
+        ],
+        "stiff": true,
+        "shard_config": {
+          "count": 12.0,
+          "size_scale": 0.45,
+          "mass": 3.6,
+          "velocity_scale": 0.3,
+          "impulse_threshold": 1000.0
+        }
+      }
+    },
+    {
+      "position": [
+        15.15739317755113,
+        0.15000000000000002,
+        6.062982816224817
+      ],
+      "orientation": [
+        0.0,
+        0.3826834323650899,
+        0.0,
+        0.9238795325112867
+      ],
+      "size": [
+        0.3,
+        0.1,
+        0.3
+      ],
+      "mass": 1.0,
+      "color": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "fill": "stone",
+      "metadata": {
+        "hit_sound": [
+          "concrete-hit.mp3"
+        ],
+        "stiff": true,
+        "shard_config": {
+          "count": 12.0,
+          "size_scale": 0.45,
+          "mass": 3.6,
+          "velocity_scale": 0.3,
+          "impulse_threshold": 1000.0
+        }
+      }
+    },
+    {
+      "position": [
+        14.945261143195166,
+        0.25,
+        5.8508507818688535
+      ],
+      "orientation": [
+        0.0,
+        0.3826834323650899,
+        0.0,
+        0.9238795325112867
+      ],
+      "size": [
+        0.3,
+        0.1,
+        0.3
+      ],
+      "mass": 1.0,
+      "color": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "fill": "stone",
+      "metadata": {
+        "hit_sound": [
+          "concrete-hit.mp3"
+        ],
+        "stiff": true,
+        "shard_config": {
+          "count": 12.0,
+          "size_scale": 0.45,
+          "mass": 3.6,
+          "velocity_scale": 0.3,
+          "impulse_threshold": 1000.0
+        }
+      }
+    },
+    {
+      "position": [
+        15.15739317755113,
+        0.25,
+        6.062982816224817
+      ],
+      "orientation": [
+        0.0,
+        0.3826834323650899,
+        0.0,
+        0.9238795325112867
+      ],
+      "size": [
+        0.3,
+        0.1,
+        0.3
+      ],
+      "mass": 1.0,
+      "color": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "fill": "stone",
+      "metadata": {
+        "hit_sound": [
+          "concrete-hit.mp3"
+        ],
+        "stiff": true,
+        "shard_config": {
+          "count": 12.0,
+          "size_scale": 0.45,
+          "mass": 3.6,
+          "velocity_scale": 0.3,
+          "impulse_threshold": 1000.0
+        }
+      }
+    },
+    {
+      "position": [
+        14.945261143195166,
+        0.3500000000000001,
+        5.8508507818688535
+      ],
+      "orientation": [
+        0.0,
+        0.3826834323650899,
+        0.0,
+        0.9238795325112867
+      ],
+      "size": [
+        0.3,
+        0.1,
+        0.3
+      ],
+      "mass": 1.0,
+      "color": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "fill": "stone",
+      "metadata": {
+        "hit_sound": [
+          "concrete-hit.mp3"
+        ],
+        "stiff": true,
+        "shard_config": {
+          "count": 12.0,
+          "size_scale": 0.45,
+          "mass": 3.6,
+          "velocity_scale": 0.3,
+          "impulse_threshold": 1000.0
+        }
+      }
+    },
+    {
+      "position": [
+        15.15739317755113,
+        0.3500000000000001,
+        6.062982816224817
+      ],
+      "orientation": [
+        0.0,
+        0.3826834323650899,
+        0.0,
+        0.9238795325112867
+      ],
+      "size": [
+        0.3,
+        0.1,
+        0.3
+      ],
+      "mass": 1.0,
+      "color": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "fill": "stone",
+      "metadata": {
+        "hit_sound": [
+          "concrete-hit.mp3"
+        ],
+        "stiff": true,
+        "shard_config": {
+          "count": 12.0,
+          "size_scale": 0.45,
+          "mass": 3.6,
+          "velocity_scale": 0.3,
+          "impulse_threshold": 1000.0
+        }
+      }
+    },
+    {
+      "position": [
+        14.945261143195166,
+        0.45000000000000007,
+        5.8508507818688535
+      ],
+      "orientation": [
+        0.0,
+        0.3826834323650899,
+        0.0,
+        0.9238795325112867
+      ],
+      "size": [
+        0.3,
+        0.1,
+        0.3
+      ],
+      "mass": 1.0,
+      "color": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "fill": "stone",
+      "metadata": {
+        "hit_sound": [
+          "concrete-hit.mp3"
+        ],
+        "stiff": true,
+        "shard_config": {
+          "count": 12.0,
+          "size_scale": 0.45,
+          "mass": 3.6,
+          "velocity_scale": 0.3,
+          "impulse_threshold": 1000.0
+        }
+      }
+    },
+    {
+      "position": [
+        15.15739317755113,
+        0.45000000000000007,
+        6.062982816224817
+      ],
+      "orientation": [
+        0.0,
+        0.3826834323650899,
+        0.0,
+        0.9238795325112867
+      ],
+      "size": [
+        0.3,
+        0.1,
+        0.3
+      ],
+      "mass": 1.0,
+      "color": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "fill": "stone",
+      "metadata": {
+        "hit_sound": [
+          "concrete-hit.mp3"
+        ],
+        "stiff": true,
+        "shard_config": {
+          "count": 12.0,
+          "size_scale": 0.45,
+          "mass": 3.6,
+          "velocity_scale": 0.3,
+          "impulse_threshold": 1000.0
+        }
+      }
+    },
+    {
+      "position": [
+        14.945261143195166,
+        0.55,
+        5.8508507818688535
+      ],
+      "orientation": [
+        0.0,
+        0.3826834323650899,
+        0.0,
+        0.9238795325112867
+      ],
+      "size": [
+        0.3,
+        0.1,
+        0.3
+      ],
+      "mass": 1.0,
+      "color": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "fill": "stone",
+      "metadata": {
+        "hit_sound": [
+          "concrete-hit.mp3"
+        ],
+        "stiff": true,
+        "shard_config": {
+          "count": 12.0,
+          "size_scale": 0.45,
+          "mass": 3.6,
+          "velocity_scale": 0.3,
+          "impulse_threshold": 1000.0
+        }
+      }
+    },
+    {
+      "position": [
+        15.15739317755113,
+        0.55,
+        6.062982816224817
+      ],
+      "orientation": [
+        0.0,
+        0.3826834323650899,
+        0.0,
+        0.9238795325112867
+      ],
+      "size": [
+        0.3,
+        0.1,
+        0.3
+      ],
+      "mass": 1.0,
+      "color": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "fill": "stone",
+      "metadata": {
+        "hit_sound": [
+          "concrete-hit.mp3"
+        ],
+        "stiff": true,
+        "shard_config": {
+          "count": 12.0,
+          "size_scale": 0.45,
+          "mass": 3.6,
+          "velocity_scale": 0.3,
+          "impulse_threshold": 1000.0
+        }
+      }
+    },
+    {
+      "position": [
+        14.945261143195166,
+        0.6500000000000001,
+        5.8508507818688535
+      ],
+      "orientation": [
+        0.0,
+        0.3826834323650899,
+        0.0,
+        0.9238795325112867
+      ],
+      "size": [
+        0.3,
+        0.1,
+        0.3
+      ],
+      "mass": 1.0,
+      "color": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "fill": "stone",
+      "metadata": {
+        "hit_sound": [
+          "concrete-hit.mp3"
+        ],
+        "stiff": true,
+        "shard_config": {
+          "count": 12.0,
+          "size_scale": 0.45,
+          "mass": 3.6,
+          "velocity_scale": 0.3,
+          "impulse_threshold": 1000.0
+        }
+      }
+    },
+    {
+      "position": [
+        15.15739317755113,
+        0.6500000000000001,
+        6.062982816224817
+      ],
+      "orientation": [
+        0.0,
+        0.3826834323650899,
+        0.0,
+        0.9238795325112867
+      ],
+      "size": [
+        0.3,
+        0.1,
+        0.3
+      ],
+      "mass": 1.0,
+      "color": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "fill": "stone",
+      "metadata": {
+        "hit_sound": [
+          "concrete-hit.mp3"
+        ],
+        "stiff": true,
+        "shard_config": {
+          "count": 12.0,
+          "size_scale": 0.45,
+          "mass": 3.6,
+          "velocity_scale": 0.3,
+          "impulse_threshold": 1000.0
+        }
+      }
+    },
+    {
+      "position": [
+        14.945261143195166,
+        0.75,
+        5.8508507818688535
+      ],
+      "orientation": [
+        0.0,
+        0.3826834323650899,
+        0.0,
+        0.9238795325112867
+      ],
+      "size": [
+        0.3,
+        0.1,
+        0.3
+      ],
+      "mass": 1.0,
+      "color": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "fill": "stone",
+      "metadata": {
+        "hit_sound": [
+          "concrete-hit.mp3"
+        ],
+        "stiff": true,
+        "shard_config": {
+          "count": 12.0,
+          "size_scale": 0.45,
+          "mass": 3.6,
+          "velocity_scale": 0.3,
+          "impulse_threshold": 1000.0
+        }
+      }
+    },
+    {
+      "position": [
+        15.15739317755113,
+        0.75,
+        6.062982816224817
+      ],
+      "orientation": [
+        0.0,
+        0.3826834323650899,
+        0.0,
+        0.9238795325112867
+      ],
+      "size": [
+        0.3,
+        0.1,
+        0.3
+      ],
+      "mass": 1.0,
+      "color": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "fill": "stone",
+      "metadata": {
+        "hit_sound": [
+          "concrete-hit.mp3"
+        ],
+        "stiff": true,
+        "shard_config": {
+          "count": 12.0,
+          "size_scale": 0.45,
+          "mass": 3.6,
+          "velocity_scale": 0.3,
+          "impulse_threshold": 1000.0
+        }
+      }
+    },
+    {
+      "position": [
+        14.945261143195166,
+        0.8500000000000001,
+        5.8508507818688535
+      ],
+      "orientation": [
+        0.0,
+        0.3826834323650899,
+        0.0,
+        0.9238795325112867
+      ],
+      "size": [
+        0.3,
+        0.1,
+        0.3
+      ],
+      "mass": 1.0,
+      "color": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "fill": "stone",
+      "metadata": {
+        "hit_sound": [
+          "concrete-hit.mp3"
+        ],
+        "stiff": true,
+        "shard_config": {
+          "count": 12.0,
+          "size_scale": 0.45,
+          "mass": 3.6,
+          "velocity_scale": 0.3,
+          "impulse_threshold": 1000.0
+        }
+      }
+    },
+    {
+      "position": [
+        15.15739317755113,
+        0.8500000000000001,
+        6.062982816224817
+      ],
+      "orientation": [
+        0.0,
+        0.3826834323650899,
+        0.0,
+        0.9238795325112867
+      ],
+      "size": [
+        0.3,
+        0.1,
+        0.3
+      ],
+      "mass": 1.0,
+      "color": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "fill": "stone",
+      "metadata": {
+        "hit_sound": [
+          "concrete-hit.mp3"
+        ],
+        "stiff": true,
+        "shard_config": {
+          "count": 12.0,
+          "size_scale": 0.45,
+          "mass": 3.6,
+          "velocity_scale": 0.3,
+          "impulse_threshold": 1000.0
+        }
+      }
+    },
+    {
+      "position": [
+        15.15739317755113,
+        0.9500000000000001,
+        6.062982816224817
+      ],
+      "orientation": [
+        0.0,
+        0.3826834323650899,
+        0.0,
+        0.9238795325112867
+      ],
+      "size": [
+        0.3,
+        0.1,
+        0.3
+      ],
+      "mass": 1.0,
+      "color": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "fill": "stone",
+      "metadata": {
+        "hit_sound": [
+          "concrete-hit.mp3"
+        ],
+        "stiff": true,
+        "shard_config": {
+          "count": 12.0,
+          "size_scale": 0.45,
+          "mass": 3.6,
+          "velocity_scale": 0.3,
+          "impulse_threshold": 1000.0
+        }
+      }
+    },
+    {
+      "position": [
+        14.945261143195166,
+        1.05,
+        5.8508507818688535
+      ],
+      "orientation": [
+        0.0,
+        0.3826834323650899,
+        0.0,
+        0.9238795325112867
+      ],
+      "size": [
+        0.3,
+        0.1,
+        0.3
+      ],
+      "mass": 1.0,
+      "color": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "fill": "stone",
+      "metadata": {
+        "hit_sound": [
+          "concrete-hit.mp3"
+        ],
+        "stiff": true,
+        "shard_config": {
+          "count": 12.0,
+          "size_scale": 0.45,
+          "mass": 3.6,
+          "velocity_scale": 0.3,
+          "impulse_threshold": 1000.0
+        }
+      }
+    },
+    {
+      "position": [
+        15.15739317755113,
+        1.05,
+        6.062982816224817
+      ],
+      "orientation": [
+        0.0,
+        0.3826834323650899,
+        0.0,
+        0.9238795325112867
+      ],
+      "size": [
+        0.3,
+        0.1,
+        0.3
+      ],
+      "mass": 1.0,
+      "color": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "fill": "stone",
+      "metadata": {
+        "hit_sound": [
+          "concrete-hit.mp3"
+        ],
+        "stiff": true,
+        "shard_config": {
+          "count": 12.0,
+          "size_scale": 0.45,
+          "mass": 3.6,
+          "velocity_scale": 0.3,
+          "impulse_threshold": 1000.0
+        }
+      }
+    },
+    {
+      "position": [
+        14.945261143195166,
+        1.1500000000000001,
+        5.8508507818688535
+      ],
+      "orientation": [
+        0.0,
+        0.3826834323650899,
+        0.0,
+        0.9238795325112867
+      ],
+      "size": [
+        0.3,
+        0.1,
+        0.3
+      ],
+      "mass": 1.0,
+      "color": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "fill": "stone",
+      "metadata": {
+        "hit_sound": [
+          "concrete-hit.mp3"
+        ],
+        "stiff": true,
+        "shard_config": {
+          "count": 12.0,
+          "size_scale": 0.45,
+          "mass": 3.6,
+          "velocity_scale": 0.3,
+          "impulse_threshold": 1000.0
+        }
+      }
+    },
+    {
+      "position": [
+        15.15739317755113,
+        1.1500000000000001,
+        6.062982816224817
+      ],
+      "orientation": [
+        0.0,
+        0.3826834323650899,
+        0.0,
+        0.9238795325112867
+      ],
+      "size": [
+        0.3,
+        0.1,
+        0.3
+      ],
+      "mass": 1.0,
+      "color": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "fill": "stone",
+      "metadata": {
+        "hit_sound": [
+          "concrete-hit.mp3"
+        ],
+        "stiff": true,
+        "shard_config": {
+          "count": 12.0,
+          "size_scale": 0.45,
+          "mass": 3.6,
+          "velocity_scale": 0.3,
+          "impulse_threshold": 1000.0
+        }
+      }
+    },
+    {
+      "position": [
+        15.15739317755113,
+        0.050000000000000044,
+        5.638718747512889
+      ],
+      "orientation": [
+        0.0,
+        0.3826834323650899,
+        0.0,
+        0.9238795325112867
+      ],
+      "size": [
+        0.3,
+        0.1,
+        0.3
+      ],
+      "mass": 1.0,
+      "color": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "fill": "stone",
+      "metadata": {
+        "hit_sound": [
+          "concrete-hit.mp3"
+        ],
+        "stiff": true,
+        "shard_config": {
+          "count": 12.0,
+          "size_scale": 0.45,
+          "mass": 3.6,
+          "velocity_scale": 0.3,
+          "impulse_threshold": 1000.0
+        }
+      }
+    },
+    {
+      "position": [
+        15.369525211907096,
+        0.050000000000000044,
+        5.850850781868853
+      ],
+      "orientation": [
+        0.0,
+        0.3826834323650899,
+        0.0,
+        0.9238795325112867
+      ],
+      "size": [
+        0.3,
+        0.1,
+        0.3
+      ],
+      "mass": 1.0,
+      "color": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "fill": "stone",
+      "metadata": {
+        "hit_sound": [
+          "concrete-hit.mp3"
+        ],
+        "stiff": true,
+        "shard_config": {
+          "count": 12.0,
+          "size_scale": 0.45,
+          "mass": 3.6,
+          "velocity_scale": 0.3,
+          "impulse_threshold": 1000.0
+        }
+      }
+    },
+    {
+      "position": [
+        15.15739317755113,
+        0.15000000000000002,
+        5.638718747512889
+      ],
+      "orientation": [
+        0.0,
+        0.3826834323650899,
+        0.0,
+        0.9238795325112867
+      ],
+      "size": [
+        0.3,
+        0.1,
+        0.3
+      ],
+      "mass": 1.0,
+      "color": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "fill": "stone",
+      "metadata": {
+        "hit_sound": [
+          "concrete-hit.mp3"
+        ],
+        "stiff": true,
+        "shard_config": {
+          "count": 12.0,
+          "size_scale": 0.45,
+          "mass": 3.6,
+          "velocity_scale": 0.3,
+          "impulse_threshold": 1000.0
+        }
+      }
+    },
+    {
+      "position": [
+        15.369525211907096,
+        0.15000000000000002,
+        5.850850781868853
+      ],
+      "orientation": [
+        0.0,
+        0.3826834323650899,
+        0.0,
+        0.9238795325112867
+      ],
+      "size": [
+        0.3,
+        0.1,
+        0.3
+      ],
+      "mass": 1.0,
+      "color": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "fill": "stone",
+      "metadata": {
+        "hit_sound": [
+          "concrete-hit.mp3"
+        ],
+        "stiff": true,
+        "shard_config": {
+          "count": 12.0,
+          "size_scale": 0.45,
+          "mass": 3.6,
+          "velocity_scale": 0.3,
+          "impulse_threshold": 1000.0
+        }
+      }
+    },
+    {
+      "position": [
+        15.15739317755113,
+        0.25,
+        5.638718747512889
+      ],
+      "orientation": [
+        0.0,
+        0.3826834323650899,
+        0.0,
+        0.9238795325112867
+      ],
+      "size": [
+        0.3,
+        0.1,
+        0.3
+      ],
+      "mass": 1.0,
+      "color": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "fill": "stone",
+      "metadata": {
+        "hit_sound": [
+          "concrete-hit.mp3"
+        ],
+        "stiff": true,
+        "shard_config": {
+          "count": 12.0,
+          "size_scale": 0.45,
+          "mass": 3.6,
+          "velocity_scale": 0.3,
+          "impulse_threshold": 1000.0
+        }
+      }
+    },
+    {
+      "position": [
+        15.369525211907096,
+        0.25,
+        5.850850781868853
+      ],
+      "orientation": [
+        0.0,
+        0.3826834323650899,
+        0.0,
+        0.9238795325112867
+      ],
+      "size": [
+        0.3,
+        0.1,
+        0.3
+      ],
+      "mass": 1.0,
+      "color": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "fill": "stone",
+      "metadata": {
+        "hit_sound": [
+          "concrete-hit.mp3"
+        ],
+        "stiff": true,
+        "shard_config": {
+          "count": 12.0,
+          "size_scale": 0.45,
+          "mass": 3.6,
+          "velocity_scale": 0.3,
+          "impulse_threshold": 1000.0
+        }
+      }
+    },
+    {
+      "position": [
+        15.15739317755113,
+        0.3500000000000001,
+        5.638718747512889
+      ],
+      "orientation": [
+        0.0,
+        0.3826834323650899,
+        0.0,
+        0.9238795325112867
+      ],
+      "size": [
+        0.3,
+        0.1,
+        0.3
+      ],
+      "mass": 1.0,
+      "color": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "fill": "stone",
+      "metadata": {
+        "hit_sound": [
+          "concrete-hit.mp3"
+        ],
+        "stiff": true,
+        "shard_config": {
+          "count": 12.0,
+          "size_scale": 0.45,
+          "mass": 3.6,
+          "velocity_scale": 0.3,
+          "impulse_threshold": 1000.0
+        }
+      }
+    },
+    {
+      "position": [
+        15.369525211907096,
+        0.3500000000000001,
+        5.850850781868853
+      ],
+      "orientation": [
+        0.0,
+        0.3826834323650899,
+        0.0,
+        0.9238795325112867
+      ],
+      "size": [
+        0.3,
+        0.1,
+        0.3
+      ],
+      "mass": 1.0,
+      "color": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "fill": "stone",
+      "metadata": {
+        "hit_sound": [
+          "concrete-hit.mp3"
+        ],
+        "stiff": true,
+        "shard_config": {
+          "count": 12.0,
+          "size_scale": 0.45,
+          "mass": 3.6,
+          "velocity_scale": 0.3,
+          "impulse_threshold": 1000.0
+        }
+      }
+    },
+    {
+      "position": [
+        15.15739317755113,
+        0.45000000000000007,
+        5.638718747512889
+      ],
+      "orientation": [
+        0.0,
+        0.3826834323650899,
+        0.0,
+        0.9238795325112867
+      ],
+      "size": [
+        0.3,
+        0.1,
+        0.3
+      ],
+      "mass": 1.0,
+      "color": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "fill": "stone",
+      "metadata": {
+        "hit_sound": [
+          "concrete-hit.mp3"
+        ],
+        "stiff": true,
+        "shard_config": {
+          "count": 12.0,
+          "size_scale": 0.45,
+          "mass": 3.6,
+          "velocity_scale": 0.3,
+          "impulse_threshold": 1000.0
+        }
+      }
+    },
+    {
+      "position": [
+        15.369525211907096,
+        0.45000000000000007,
+        5.850850781868853
+      ],
+      "orientation": [
+        0.0,
+        0.3826834323650899,
+        0.0,
+        0.9238795325112867
+      ],
+      "size": [
+        0.3,
+        0.1,
+        0.3
+      ],
+      "mass": 1.0,
+      "color": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "fill": "stone",
+      "metadata": {
+        "hit_sound": [
+          "concrete-hit.mp3"
+        ],
+        "stiff": true,
+        "shard_config": {
+          "count": 12.0,
+          "size_scale": 0.45,
+          "mass": 3.6,
+          "velocity_scale": 0.3,
+          "impulse_threshold": 1000.0
+        }
+      }
+    },
+    {
+      "position": [
+        15.15739317755113,
+        0.55,
+        5.638718747512889
+      ],
+      "orientation": [
+        0.0,
+        0.3826834323650899,
+        0.0,
+        0.9238795325112867
+      ],
+      "size": [
+        0.3,
+        0.1,
+        0.3
+      ],
+      "mass": 1.0,
+      "color": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "fill": "stone",
+      "metadata": {
+        "hit_sound": [
+          "concrete-hit.mp3"
+        ],
+        "stiff": true,
+        "shard_config": {
+          "count": 12.0,
+          "size_scale": 0.45,
+          "mass": 3.6,
+          "velocity_scale": 0.3,
+          "impulse_threshold": 1000.0
+        }
+      }
+    },
+    {
+      "position": [
+        15.369525211907096,
+        0.55,
+        5.850850781868853
+      ],
+      "orientation": [
+        0.0,
+        0.3826834323650899,
+        0.0,
+        0.9238795325112867
+      ],
+      "size": [
+        0.3,
+        0.1,
+        0.3
+      ],
+      "mass": 1.0,
+      "color": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "fill": "stone",
+      "metadata": {
+        "hit_sound": [
+          "concrete-hit.mp3"
+        ],
+        "stiff": true,
+        "shard_config": {
+          "count": 12.0,
+          "size_scale": 0.45,
+          "mass": 3.6,
+          "velocity_scale": 0.3,
+          "impulse_threshold": 1000.0
+        }
+      }
+    },
+    {
+      "position": [
+        15.15739317755113,
+        0.6500000000000001,
+        5.638718747512889
+      ],
+      "orientation": [
+        0.0,
+        0.3826834323650899,
+        0.0,
+        0.9238795325112867
+      ],
+      "size": [
+        0.3,
+        0.1,
+        0.3
+      ],
+      "mass": 1.0,
+      "color": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "fill": "stone",
+      "metadata": {
+        "hit_sound": [
+          "concrete-hit.mp3"
+        ],
+        "stiff": true,
+        "shard_config": {
+          "count": 12.0,
+          "size_scale": 0.45,
+          "mass": 3.6,
+          "velocity_scale": 0.3,
+          "impulse_threshold": 1000.0
+        }
+      }
+    },
+    {
+      "position": [
+        15.369525211907096,
+        0.6500000000000001,
+        5.850850781868853
+      ],
+      "orientation": [
+        0.0,
+        0.3826834323650899,
+        0.0,
+        0.9238795325112867
+      ],
+      "size": [
+        0.3,
+        0.1,
+        0.3
+      ],
+      "mass": 1.0,
+      "color": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "fill": "stone",
+      "metadata": {
+        "hit_sound": [
+          "concrete-hit.mp3"
+        ],
+        "stiff": true,
+        "shard_config": {
+          "count": 12.0,
+          "size_scale": 0.45,
+          "mass": 3.6,
+          "velocity_scale": 0.3,
+          "impulse_threshold": 1000.0
+        }
+      }
+    },
+    {
+      "position": [
+        15.369525211907096,
+        0.050000000000000044,
+        5.426586713156924
+      ],
+      "orientation": [
+        0.0,
+        0.3826834323650899,
+        0.0,
+        0.9238795325112867
+      ],
+      "size": [
+        0.3,
+        0.1,
+        0.3
+      ],
+      "mass": 1.0,
+      "color": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "fill": "stone",
+      "metadata": {
+        "hit_sound": [
+          "concrete-hit.mp3"
+        ],
+        "stiff": true,
+        "shard_config": {
+          "count": 12.0,
+          "size_scale": 0.45,
+          "mass": 3.6,
+          "velocity_scale": 0.3,
+          "impulse_threshold": 1000.0
+        }
+      }
+    },
+    {
+      "position": [
+        15.58165724626306,
+        0.050000000000000044,
+        5.638718747512889
+      ],
+      "orientation": [
+        0.0,
+        0.3826834323650899,
+        0.0,
+        0.9238795325112867
+      ],
+      "size": [
+        0.3,
+        0.1,
+        0.3
+      ],
+      "mass": 1.0,
+      "color": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "fill": "stone",
+      "metadata": {
+        "hit_sound": [
+          "concrete-hit.mp3"
+        ],
+        "stiff": true,
+        "shard_config": {
+          "count": 12.0,
+          "size_scale": 0.45,
+          "mass": 3.6,
+          "velocity_scale": 0.3,
+          "impulse_threshold": 1000.0
+        }
+      }
+    },
+    {
+      "position": [
+        15.369525211907096,
+        0.15000000000000002,
+        5.426586713156924
+      ],
+      "orientation": [
+        0.0,
+        0.3826834323650899,
+        0.0,
+        0.9238795325112867
+      ],
+      "size": [
+        0.3,
+        0.1,
+        0.3
+      ],
+      "mass": 1.0,
+      "color": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "fill": "stone",
+      "metadata": {
+        "hit_sound": [
+          "concrete-hit.mp3"
+        ],
+        "stiff": true,
+        "shard_config": {
+          "count": 12.0,
+          "size_scale": 0.45,
+          "mass": 3.6,
+          "velocity_scale": 0.3,
+          "impulse_threshold": 1000.0
+        }
+      }
+    },
+    {
+      "position": [
+        15.58165724626306,
+        0.15000000000000002,
+        5.638718747512889
+      ],
+      "orientation": [
+        0.0,
+        0.3826834323650899,
+        0.0,
+        0.9238795325112867
+      ],
+      "size": [
+        0.3,
+        0.1,
+        0.3
+      ],
+      "mass": 1.0,
+      "color": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "fill": "stone",
+      "metadata": {
+        "hit_sound": [
+          "concrete-hit.mp3"
+        ],
+        "stiff": true,
+        "shard_config": {
+          "count": 12.0,
+          "size_scale": 0.45,
+          "mass": 3.6,
+          "velocity_scale": 0.3,
+          "impulse_threshold": 1000.0
+        }
+      }
+    },
+    {
+      "position": [
+        15.369525211907096,
+        0.25,
+        5.426586713156924
+      ],
+      "orientation": [
+        0.0,
+        0.3826834323650899,
+        0.0,
+        0.9238795325112867
+      ],
+      "size": [
+        0.3,
+        0.1,
+        0.3
+      ],
+      "mass": 1.0,
+      "color": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "fill": "stone",
+      "metadata": {
+        "hit_sound": [
+          "concrete-hit.mp3"
+        ],
+        "stiff": true,
+        "shard_config": {
+          "count": 12.0,
+          "size_scale": 0.45,
+          "mass": 3.6,
+          "velocity_scale": 0.3,
+          "impulse_threshold": 1000.0
+        }
+      }
+    },
+    {
+      "position": [
+        15.58165724626306,
+        0.25,
+        5.638718747512889
+      ],
+      "orientation": [
+        0.0,
+        0.3826834323650899,
+        0.0,
+        0.9238795325112867
+      ],
+      "size": [
+        0.3,
+        0.1,
+        0.3
+      ],
+      "mass": 1.0,
+      "color": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "fill": "stone",
+      "metadata": {
+        "hit_sound": [
+          "concrete-hit.mp3"
+        ],
+        "stiff": true,
+        "shard_config": {
+          "count": 12.0,
+          "size_scale": 0.45,
+          "mass": 3.6,
+          "velocity_scale": 0.3,
+          "impulse_threshold": 1000.0
+        }
+      }
+    },
+    {
+      "position": [
+        15.369525211907096,
+        0.3500000000000001,
+        5.426586713156924
+      ],
+      "orientation": [
+        0.0,
+        0.3826834323650899,
+        0.0,
+        0.9238795325112867
+      ],
+      "size": [
+        0.3,
+        0.1,
+        0.3
+      ],
+      "mass": 1.0,
+      "color": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "fill": "stone",
+      "metadata": {
+        "hit_sound": [
+          "concrete-hit.mp3"
+        ],
+        "stiff": true,
+        "shard_config": {
+          "count": 12.0,
+          "size_scale": 0.45,
+          "mass": 3.6,
+          "velocity_scale": 0.3,
+          "impulse_threshold": 1000.0
+        }
+      }
+    },
+    {
+      "position": [
+        15.58165724626306,
+        0.3500000000000001,
+        5.638718747512889
+      ],
+      "orientation": [
+        0.0,
+        0.3826834323650899,
+        0.0,
+        0.9238795325112867
+      ],
+      "size": [
+        0.3,
+        0.1,
+        0.3
+      ],
+      "mass": 1.0,
+      "color": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "fill": "stone",
+      "metadata": {
+        "hit_sound": [
+          "concrete-hit.mp3"
+        ],
+        "stiff": true,
+        "shard_config": {
+          "count": 12.0,
+          "size_scale": 0.45,
+          "mass": 3.6,
+          "velocity_scale": 0.3,
+          "impulse_threshold": 1000.0
+        }
+      }
+    },
+    {
+      "position": [
+        15.369525211907096,
+        0.45000000000000007,
+        5.426586713156924
+      ],
+      "orientation": [
+        0.0,
+        0.3826834323650899,
+        0.0,
+        0.9238795325112867
+      ],
+      "size": [
+        0.3,
+        0.1,
+        0.3
+      ],
+      "mass": 1.0,
+      "color": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "fill": "stone",
+      "metadata": {
+        "hit_sound": [
+          "concrete-hit.mp3"
+        ],
+        "stiff": true,
+        "shard_config": {
+          "count": 12.0,
+          "size_scale": 0.45,
+          "mass": 3.6,
+          "velocity_scale": 0.3,
+          "impulse_threshold": 1000.0
+        }
+      }
+    },
+    {
+      "position": [
+        15.58165724626306,
+        0.45000000000000007,
+        5.638718747512889
+      ],
+      "orientation": [
+        0.0,
+        0.3826834323650899,
+        0.0,
+        0.9238795325112867
+      ],
+      "size": [
+        0.3,
+        0.1,
+        0.3
+      ],
+      "mass": 1.0,
+      "color": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "fill": "stone",
+      "metadata": {
+        "hit_sound": [
+          "concrete-hit.mp3"
+        ],
+        "stiff": true,
+        "shard_config": {
+          "count": 12.0,
+          "size_scale": 0.45,
+          "mass": 3.6,
+          "velocity_scale": 0.3,
+          "impulse_threshold": 1000.0
+        }
+      }
+    },
+    {
+      "position": [
+        15.58165724626306,
+        0.8500000000000001,
+        5.638718747512889
+      ],
+      "orientation": [
+        0.0,
+        0.3826834323650899,
+        0.0,
+        0.9238795325112867
+      ],
+      "size": [
+        0.3,
+        0.1,
+        0.3
+      ],
+      "mass": 1.0,
+      "color": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "fill": "stone",
+      "metadata": {
+        "hit_sound": [
+          "concrete-hit.mp3"
+        ],
+        "stiff": true,
+        "shard_config": {
+          "count": 12.0,
+          "size_scale": 0.45,
+          "mass": 3.6,
+          "velocity_scale": 0.3,
+          "impulse_threshold": 1000.0
+        }
+      }
+    },
+    {
+      "position": [
+        15.58165724626306,
+        0.050000000000000044,
+        5.21445467880096
+      ],
+      "orientation": [
+        0.0,
+        0.3826834323650899,
+        0.0,
+        0.9238795325112867
+      ],
+      "size": [
+        0.3,
+        0.1,
+        0.3
+      ],
+      "mass": 1.0,
+      "color": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "fill": "stone",
+      "metadata": {
+        "hit_sound": [
+          "concrete-hit.mp3"
+        ],
+        "stiff": true,
+        "shard_config": {
+          "count": 12.0,
+          "size_scale": 0.45,
+          "mass": 3.6,
+          "velocity_scale": 0.3,
+          "impulse_threshold": 1000.0
+        }
+      }
+    },
+    {
+      "position": [
+        15.793789280619023,
+        0.050000000000000044,
+        5.426586713156925
+      ],
+      "orientation": [
+        0.0,
+        0.3826834323650899,
+        0.0,
+        0.9238795325112867
+      ],
+      "size": [
+        0.3,
+        0.1,
+        0.3
+      ],
+      "mass": 1.0,
+      "color": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "fill": "stone",
+      "metadata": {
+        "hit_sound": [
+          "concrete-hit.mp3"
+        ],
+        "stiff": true,
+        "shard_config": {
+          "count": 12.0,
+          "size_scale": 0.45,
+          "mass": 3.6,
+          "velocity_scale": 0.3,
+          "impulse_threshold": 1000.0
+        }
+      }
+    },
+    {
+      "position": [
+        15.58165724626306,
+        0.15000000000000002,
+        5.21445467880096
+      ],
+      "orientation": [
+        0.0,
+        0.3826834323650899,
+        0.0,
+        0.9238795325112867
+      ],
+      "size": [
+        0.3,
+        0.1,
+        0.3
+      ],
+      "mass": 1.0,
+      "color": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "fill": "stone",
+      "metadata": {
+        "hit_sound": [
+          "concrete-hit.mp3"
+        ],
+        "stiff": true,
+        "shard_config": {
+          "count": 12.0,
+          "size_scale": 0.45,
+          "mass": 3.6,
+          "velocity_scale": 0.3,
+          "impulse_threshold": 1000.0
+        }
+      }
+    },
+    {
+      "position": [
+        15.793789280619023,
+        0.15000000000000002,
+        5.426586713156925
+      ],
+      "orientation": [
+        0.0,
+        0.3826834323650899,
+        0.0,
+        0.9238795325112867
+      ],
+      "size": [
+        0.3,
+        0.1,
+        0.3
+      ],
+      "mass": 1.0,
+      "color": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "fill": "stone",
+      "metadata": {
+        "hit_sound": [
+          "concrete-hit.mp3"
+        ],
+        "stiff": true,
+        "shard_config": {
+          "count": 12.0,
+          "size_scale": 0.45,
+          "mass": 3.6,
+          "velocity_scale": 0.3,
+          "impulse_threshold": 1000.0
+        }
+      }
+    },
+    {
+      "position": [
+        15.58165724626306,
+        0.25,
+        5.21445467880096
+      ],
+      "orientation": [
+        0.0,
+        0.3826834323650899,
+        0.0,
+        0.9238795325112867
+      ],
+      "size": [
+        0.3,
+        0.1,
+        0.3
+      ],
+      "mass": 1.0,
+      "color": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "fill": "stone",
+      "metadata": {
+        "hit_sound": [
+          "concrete-hit.mp3"
+        ],
+        "stiff": true,
+        "shard_config": {
+          "count": 12.0,
+          "size_scale": 0.45,
+          "mass": 3.6,
+          "velocity_scale": 0.3,
+          "impulse_threshold": 1000.0
+        }
+      }
+    },
+    {
+      "position": [
+        15.793789280619023,
+        0.25,
+        5.426586713156925
+      ],
+      "orientation": [
+        0.0,
+        0.3826834323650899,
+        0.0,
+        0.9238795325112867
+      ],
+      "size": [
+        0.3,
+        0.1,
+        0.3
+      ],
+      "mass": 1.0,
+      "color": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "fill": "stone",
+      "metadata": {
+        "hit_sound": [
+          "concrete-hit.mp3"
+        ],
+        "stiff": true,
+        "shard_config": {
+          "count": 12.0,
+          "size_scale": 0.45,
+          "mass": 3.6,
+          "velocity_scale": 0.3,
+          "impulse_threshold": 1000.0
+        }
+      }
+    },
+    {
+      "position": [
+        15.58165724626306,
+        0.3500000000000001,
+        5.21445467880096
+      ],
+      "orientation": [
+        0.0,
+        0.3826834323650899,
+        0.0,
+        0.9238795325112867
+      ],
+      "size": [
+        0.3,
+        0.1,
+        0.3
+      ],
+      "mass": 1.0,
+      "color": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "fill": "stone",
+      "metadata": {
+        "hit_sound": [
+          "concrete-hit.mp3"
+        ],
+        "stiff": true,
+        "shard_config": {
+          "count": 12.0,
+          "size_scale": 0.45,
+          "mass": 3.6,
+          "velocity_scale": 0.3,
+          "impulse_threshold": 1000.0
+        }
+      }
+    },
+    {
+      "position": [
+        15.793789280619023,
+        0.3500000000000001,
+        5.426586713156925
+      ],
+      "orientation": [
+        0.0,
+        0.3826834323650899,
+        0.0,
+        0.9238795325112867
+      ],
+      "size": [
+        0.3,
+        0.1,
+        0.3
+      ],
+      "mass": 1.0,
+      "color": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "fill": "stone",
+      "metadata": {
+        "hit_sound": [
+          "concrete-hit.mp3"
+        ],
+        "stiff": true,
+        "shard_config": {
+          "count": 12.0,
+          "size_scale": 0.45,
+          "mass": 3.6,
+          "velocity_scale": 0.3,
+          "impulse_threshold": 1000.0
+        }
+      }
+    },
+    {
+      "position": [
+        15.58165724626306,
+        0.45000000000000007,
+        5.21445467880096
+      ],
+      "orientation": [
+        0.0,
+        0.3826834323650899,
+        0.0,
+        0.9238795325112867
+      ],
+      "size": [
+        0.3,
+        0.1,
+        0.3
+      ],
+      "mass": 1.0,
+      "color": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "fill": "stone",
+      "metadata": {
+        "hit_sound": [
+          "concrete-hit.mp3"
+        ],
+        "stiff": true,
+        "shard_config": {
+          "count": 12.0,
+          "size_scale": 0.45,
+          "mass": 3.6,
+          "velocity_scale": 0.3,
+          "impulse_threshold": 1000.0
+        }
+      }
+    },
+    {
+      "position": [
+        15.793789280619023,
+        0.050000000000000044,
+        5.002322644444996
+      ],
+      "orientation": [
+        0.0,
+        0.3826834323650899,
+        0.0,
+        0.9238795325112867
+      ],
+      "size": [
+        0.3,
+        0.1,
+        0.3
+      ],
+      "mass": 1.0,
+      "color": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "fill": "stone",
+      "metadata": {
+        "hit_sound": [
+          "concrete-hit.mp3"
+        ],
+        "stiff": true,
+        "shard_config": {
+          "count": 12.0,
+          "size_scale": 0.45,
+          "mass": 3.6,
+          "velocity_scale": 0.3,
+          "impulse_threshold": 1000.0
+        }
+      }
+    },
+    {
+      "position": [
+        16.005921314974987,
+        0.050000000000000044,
+        5.21445467880096
+      ],
+      "orientation": [
+        0.0,
+        0.3826834323650899,
+        0.0,
+        0.9238795325112867
+      ],
+      "size": [
+        0.3,
+        0.1,
+        0.3
+      ],
+      "mass": 1.0,
+      "color": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "fill": "stone",
+      "metadata": {
+        "hit_sound": [
+          "concrete-hit.mp3"
+        ],
+        "stiff": true,
+        "shard_config": {
+          "count": 12.0,
+          "size_scale": 0.45,
+          "mass": 3.6,
+          "velocity_scale": 0.3,
+          "impulse_threshold": 1000.0
+        }
+      }
+    },
+    {
+      "position": [
+        15.793789280619023,
+        0.15000000000000002,
+        5.002322644444996
+      ],
+      "orientation": [
+        0.0,
+        0.3826834323650899,
+        0.0,
+        0.9238795325112867
+      ],
+      "size": [
+        0.3,
+        0.1,
+        0.3
+      ],
+      "mass": 1.0,
+      "color": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "fill": "stone",
+      "metadata": {
+        "hit_sound": [
+          "concrete-hit.mp3"
+        ],
+        "stiff": true,
+        "shard_config": {
+          "count": 12.0,
+          "size_scale": 0.45,
+          "mass": 3.6,
+          "velocity_scale": 0.3,
+          "impulse_threshold": 1000.0
+        }
+      }
+    },
+    {
+      "position": [
+        16.005921314974987,
+        0.15000000000000002,
+        5.21445467880096
+      ],
+      "orientation": [
+        0.0,
+        0.3826834323650899,
+        0.0,
+        0.9238795325112867
+      ],
+      "size": [
+        0.3,
+        0.1,
+        0.3
+      ],
+      "mass": 1.0,
+      "color": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "fill": "stone",
+      "metadata": {
+        "hit_sound": [
+          "concrete-hit.mp3"
+        ],
+        "stiff": true,
+        "shard_config": {
+          "count": 12.0,
+          "size_scale": 0.45,
+          "mass": 3.6,
+          "velocity_scale": 0.3,
+          "impulse_threshold": 1000.0
+        }
+      }
+    },
+    {
+      "position": [
+        15.793789280619023,
+        0.25,
+        5.002322644444996
+      ],
+      "orientation": [
+        0.0,
+        0.3826834323650899,
+        0.0,
+        0.9238795325112867
+      ],
+      "size": [
+        0.3,
+        0.1,
+        0.3
+      ],
+      "mass": 1.0,
+      "color": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "fill": "stone",
+      "metadata": {
+        "hit_sound": [
+          "concrete-hit.mp3"
+        ],
+        "stiff": true,
+        "shard_config": {
+          "count": 12.0,
+          "size_scale": 0.45,
+          "mass": 3.6,
+          "velocity_scale": 0.3,
+          "impulse_threshold": 1000.0
+        }
+      }
+    },
+    {
+      "position": [
+        16.005921314974987,
+        0.25,
+        5.21445467880096
+      ],
+      "orientation": [
+        0.0,
+        0.3826834323650899,
+        0.0,
+        0.9238795325112867
+      ],
+      "size": [
+        0.3,
+        0.1,
+        0.3
+      ],
+      "mass": 1.0,
+      "color": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "fill": "stone",
+      "metadata": {
+        "hit_sound": [
+          "concrete-hit.mp3"
+        ],
+        "stiff": true,
+        "shard_config": {
+          "count": 12.0,
+          "size_scale": 0.45,
+          "mass": 3.6,
+          "velocity_scale": 0.3,
+          "impulse_threshold": 1000.0
+        }
+      }
+    },
+    {
+      "position": [
+        15.793789280619023,
+        0.3500000000000001,
+        5.002322644444996
+      ],
+      "orientation": [
+        0.0,
+        0.3826834323650899,
+        0.0,
+        0.9238795325112867
+      ],
+      "size": [
+        0.3,
+        0.1,
+        0.3
+      ],
+      "mass": 1.0,
+      "color": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "fill": "stone",
+      "metadata": {
+        "hit_sound": [
+          "concrete-hit.mp3"
+        ],
+        "stiff": true,
+        "shard_config": {
+          "count": 12.0,
+          "size_scale": 0.45,
+          "mass": 3.6,
+          "velocity_scale": 0.3,
+          "impulse_threshold": 1000.0
+        }
+      }
+    },
+    {
+      "position": [
+        16.005921314974987,
+        0.3500000000000001,
+        5.21445467880096
+      ],
+      "orientation": [
+        0.0,
+        0.3826834323650899,
+        0.0,
+        0.9238795325112867
+      ],
+      "size": [
+        0.3,
+        0.1,
+        0.3
+      ],
+      "mass": 1.0,
+      "color": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "fill": "stone",
+      "metadata": {
+        "hit_sound": [
+          "concrete-hit.mp3"
+        ],
+        "stiff": true,
+        "shard_config": {
+          "count": 12.0,
+          "size_scale": 0.45,
+          "mass": 3.6,
+          "velocity_scale": 0.3,
+          "impulse_threshold": 1000.0
+        }
+      }
+    },
+    {
+      "position": [
+        15.793789280619023,
+        0.45000000000000007,
+        5.002322644444996
+      ],
+      "orientation": [
+        0.0,
+        0.3826834323650899,
+        0.0,
+        0.9238795325112867
+      ],
+      "size": [
+        0.3,
+        0.1,
+        0.3
+      ],
+      "mass": 1.0,
+      "color": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "fill": "stone",
+      "metadata": {
+        "hit_sound": [
+          "concrete-hit.mp3"
+        ],
+        "stiff": true,
+        "shard_config": {
+          "count": 12.0,
+          "size_scale": 0.45,
+          "mass": 3.6,
+          "velocity_scale": 0.3,
+          "impulse_threshold": 1000.0
+        }
+      }
+    },
+    {
+      "position": [
+        16.005921314974987,
+        0.45000000000000007,
+        5.21445467880096
+      ],
+      "orientation": [
+        0.0,
+        0.3826834323650899,
+        0.0,
+        0.9238795325112867
+      ],
+      "size": [
+        0.3,
+        0.1,
+        0.3
+      ],
+      "mass": 1.0,
+      "color": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "fill": "stone",
+      "metadata": {
+        "hit_sound": [
+          "concrete-hit.mp3"
+        ],
+        "stiff": true,
+        "shard_config": {
+          "count": 12.0,
+          "size_scale": 0.45,
+          "mass": 3.6,
+          "velocity_scale": 0.3,
+          "impulse_threshold": 1000.0
+        }
+      }
+    },
+    {
+      "position": [
+        16.005921314974987,
+        0.55,
+        5.21445467880096
+      ],
+      "orientation": [
+        0.0,
+        0.3826834323650899,
+        0.0,
+        0.9238795325112867
+      ],
+      "size": [
+        0.3,
+        0.1,
+        0.3
+      ],
+      "mass": 1.0,
+      "color": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "fill": "stone",
+      "metadata": {
+        "hit_sound": [
+          "concrete-hit.mp3"
+        ],
+        "stiff": true,
+        "shard_config": {
+          "count": 12.0,
+          "size_scale": 0.45,
+          "mass": 3.6,
+          "velocity_scale": 0.3,
+          "impulse_threshold": 1000.0
+        }
+      }
+    },
+    {
+      "position": [
+        16.005921314974987,
+        0.6500000000000001,
+        5.21445467880096
+      ],
+      "orientation": [
+        0.0,
+        0.3826834323650899,
+        0.0,
+        0.9238795325112867
+      ],
+      "size": [
+        0.3,
+        0.1,
+        0.3
+      ],
+      "mass": 1.0,
+      "color": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "fill": "stone",
+      "metadata": {
+        "hit_sound": [
+          "concrete-hit.mp3"
+        ],
+        "stiff": true,
+        "shard_config": {
+          "count": 12.0,
+          "size_scale": 0.45,
+          "mass": 3.6,
+          "velocity_scale": 0.3,
+          "impulse_threshold": 1000.0
+        }
+      }
+    },
+    {
+      "position": [
+        16.005921314974987,
+        0.75,
+        5.21445467880096
+      ],
+      "orientation": [
+        0.0,
+        0.3826834323650899,
+        0.0,
+        0.9238795325112867
+      ],
+      "size": [
+        0.3,
+        0.1,
+        0.3
+      ],
+      "mass": 1.0,
+      "color": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "fill": "stone",
+      "metadata": {
+        "hit_sound": [
+          "concrete-hit.mp3"
+        ],
+        "stiff": true,
+        "shard_config": {
+          "count": 12.0,
+          "size_scale": 0.45,
+          "mass": 3.6,
+          "velocity_scale": 0.3,
+          "impulse_threshold": 1000.0
+        }
+      }
+    },
+    {
+      "position": [
+        16.005921314974987,
+        0.050000000000000044,
+        4.790190610089032
+      ],
+      "orientation": [
+        0.0,
+        0.3826834323650899,
+        0.0,
+        0.9238795325112867
+      ],
+      "size": [
+        0.3,
+        0.1,
+        0.3
+      ],
+      "mass": 1.0,
+      "color": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "fill": "stone",
+      "metadata": {
+        "hit_sound": [
+          "concrete-hit.mp3"
+        ],
+        "stiff": true,
+        "shard_config": {
+          "count": 12.0,
+          "size_scale": 0.45,
+          "mass": 3.6,
+          "velocity_scale": 0.3,
+          "impulse_threshold": 1000.0
+        }
+      }
+    },
+    {
+      "position": [
+        16.21805334933095,
+        0.050000000000000044,
+        5.002322644444996
+      ],
+      "orientation": [
+        0.0,
+        0.3826834323650899,
+        0.0,
+        0.9238795325112867
+      ],
+      "size": [
+        0.3,
+        0.1,
+        0.3
+      ],
+      "mass": 1.0,
+      "color": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "fill": "stone",
+      "metadata": {
+        "hit_sound": [
+          "concrete-hit.mp3"
+        ],
+        "stiff": true,
+        "shard_config": {
+          "count": 12.0,
+          "size_scale": 0.45,
+          "mass": 3.6,
+          "velocity_scale": 0.3,
+          "impulse_threshold": 1000.0
+        }
+      }
+    },
+    {
+      "position": [
+        16.005921314974987,
+        0.15000000000000002,
+        4.790190610089032
+      ],
+      "orientation": [
+        0.0,
+        0.3826834323650899,
+        0.0,
+        0.9238795325112867
+      ],
+      "size": [
+        0.3,
+        0.1,
+        0.3
+      ],
+      "mass": 1.0,
+      "color": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "fill": "stone",
+      "metadata": {
+        "hit_sound": [
+          "concrete-hit.mp3"
+        ],
+        "stiff": true,
+        "shard_config": {
+          "count": 12.0,
+          "size_scale": 0.45,
+          "mass": 3.6,
+          "velocity_scale": 0.3,
+          "impulse_threshold": 1000.0
+        }
+      }
+    },
+    {
+      "position": [
+        16.21805334933095,
+        0.15000000000000002,
+        5.002322644444996
+      ],
+      "orientation": [
+        0.0,
+        0.3826834323650899,
+        0.0,
+        0.9238795325112867
+      ],
+      "size": [
+        0.3,
+        0.1,
+        0.3
+      ],
+      "mass": 1.0,
+      "color": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "fill": "stone",
+      "metadata": {
+        "hit_sound": [
+          "concrete-hit.mp3"
+        ],
+        "stiff": true,
+        "shard_config": {
+          "count": 12.0,
+          "size_scale": 0.45,
+          "mass": 3.6,
+          "velocity_scale": 0.3,
+          "impulse_threshold": 1000.0
+        }
+      }
+    },
+    {
+      "position": [
+        16.005921314974987,
+        0.25,
+        4.790190610089032
+      ],
+      "orientation": [
+        0.0,
+        0.3826834323650899,
+        0.0,
+        0.9238795325112867
+      ],
+      "size": [
+        0.3,
+        0.1,
+        0.3
+      ],
+      "mass": 1.0,
+      "color": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "fill": "stone",
+      "metadata": {
+        "hit_sound": [
+          "concrete-hit.mp3"
+        ],
+        "stiff": true,
+        "shard_config": {
+          "count": 12.0,
+          "size_scale": 0.45,
+          "mass": 3.6,
+          "velocity_scale": 0.3,
+          "impulse_threshold": 1000.0
+        }
+      }
+    },
+    {
+      "position": [
+        16.21805334933095,
+        0.25,
+        5.002322644444996
+      ],
+      "orientation": [
+        0.0,
+        0.3826834323650899,
+        0.0,
+        0.9238795325112867
+      ],
+      "size": [
+        0.3,
+        0.1,
+        0.3
+      ],
+      "mass": 1.0,
+      "color": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "fill": "stone",
+      "metadata": {
+        "hit_sound": [
+          "concrete-hit.mp3"
+        ],
+        "stiff": true,
+        "shard_config": {
+          "count": 12.0,
+          "size_scale": 0.45,
+          "mass": 3.6,
+          "velocity_scale": 0.3,
+          "impulse_threshold": 1000.0
+        }
+      }
+    },
+    {
+      "position": [
+        16.005921314974987,
+        0.3500000000000001,
+        4.790190610089032
+      ],
+      "orientation": [
+        0.0,
+        0.3826834323650899,
+        0.0,
+        0.9238795325112867
+      ],
+      "size": [
+        0.3,
+        0.1,
+        0.3
+      ],
+      "mass": 1.0,
+      "color": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "fill": "stone",
+      "metadata": {
+        "hit_sound": [
+          "concrete-hit.mp3"
+        ],
+        "stiff": true,
+        "shard_config": {
+          "count": 12.0,
+          "size_scale": 0.45,
+          "mass": 3.6,
+          "velocity_scale": 0.3,
+          "impulse_threshold": 1000.0
+        }
+      }
+    },
+    {
+      "position": [
+        16.21805334933095,
+        0.3500000000000001,
+        5.002322644444996
+      ],
+      "orientation": [
+        0.0,
+        0.3826834323650899,
+        0.0,
+        0.9238795325112867
+      ],
+      "size": [
+        0.3,
+        0.1,
+        0.3
+      ],
+      "mass": 1.0,
+      "color": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "fill": "stone",
+      "metadata": {
+        "hit_sound": [
+          "concrete-hit.mp3"
+        ],
+        "stiff": true,
+        "shard_config": {
+          "count": 12.0,
+          "size_scale": 0.45,
+          "mass": 3.6,
+          "velocity_scale": 0.3,
+          "impulse_threshold": 1000.0
+        }
+      }
+    },
+    {
+      "position": [
+        16.005921314974987,
+        0.45000000000000007,
+        4.790190610089032
+      ],
+      "orientation": [
+        0.0,
+        0.3826834323650899,
+        0.0,
+        0.9238795325112867
+      ],
+      "size": [
+        0.3,
+        0.1,
+        0.3
+      ],
+      "mass": 1.0,
+      "color": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "fill": "stone",
+      "metadata": {
+        "hit_sound": [
+          "concrete-hit.mp3"
+        ],
+        "stiff": true,
+        "shard_config": {
+          "count": 12.0,
+          "size_scale": 0.45,
+          "mass": 3.6,
+          "velocity_scale": 0.3,
+          "impulse_threshold": 1000.0
+        }
+      }
+    },
+    {
+      "position": [
+        16.21805334933095,
+        0.45000000000000007,
+        5.002322644444996
+      ],
+      "orientation": [
+        0.0,
+        0.3826834323650899,
+        0.0,
+        0.9238795325112867
+      ],
+      "size": [
+        0.3,
+        0.1,
+        0.3
+      ],
+      "mass": 1.0,
+      "color": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "fill": "stone",
+      "metadata": {
+        "hit_sound": [
+          "concrete-hit.mp3"
+        ],
+        "stiff": true,
+        "shard_config": {
+          "count": 12.0,
+          "size_scale": 0.45,
+          "mass": 3.6,
+          "velocity_scale": 0.3,
+          "impulse_threshold": 1000.0
+        }
+      }
+    },
+    {
+      "position": [
+        16.005921314974987,
+        0.55,
+        4.790190610089032
+      ],
+      "orientation": [
+        0.0,
+        0.3826834323650899,
+        0.0,
+        0.9238795325112867
+      ],
+      "size": [
+        0.3,
+        0.1,
+        0.3
+      ],
+      "mass": 1.0,
+      "color": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "fill": "stone",
+      "metadata": {
+        "hit_sound": [
+          "concrete-hit.mp3"
+        ],
+        "stiff": true,
+        "shard_config": {
+          "count": 12.0,
+          "size_scale": 0.45,
+          "mass": 3.6,
+          "velocity_scale": 0.3,
+          "impulse_threshold": 1000.0
+        }
+      }
+    },
+    {
+      "position": [
+        16.21805334933095,
+        0.55,
+        5.002322644444996
+      ],
+      "orientation": [
+        0.0,
+        0.3826834323650899,
+        0.0,
+        0.9238795325112867
+      ],
+      "size": [
+        0.3,
+        0.1,
+        0.3
+      ],
+      "mass": 1.0,
+      "color": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "fill": "stone",
+      "metadata": {
+        "hit_sound": [
+          "concrete-hit.mp3"
+        ],
+        "stiff": true,
+        "shard_config": {
+          "count": 12.0,
+          "size_scale": 0.45,
+          "mass": 3.6,
+          "velocity_scale": 0.3,
+          "impulse_threshold": 1000.0
+        }
+      }
+    },
+    {
+      "position": [
+        18.257414411587472,
+        2.0,
+        4.39101863375163
+      ],
+      "orientation": [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ],
+      "size": [
+        4.0,
+        4.0,
+        0.3
+      ],
+      "mass": 1.0,
+      "color": [
+        0.7,
+        0.7,
+        0.7,
+        1.0
+      ],
+      "fill": "concrete",
+      "metadata": {
+        "hit_sound": [
+          "concrete-hit.mp3"
+        ],
+        "stiff": true
+      }
+    },
+    {
+      "position": [
+        18.929764636385606,
+        2.100000000000002,
+        6.004428830039988
+      ],
+      "orientation": [
+        0.0,
+        0.3826834323650899,
+        0.0,
+        0.9238795325112867
+      ],
+      "size": [
+        4.0,
+        4.0,
+        0.3
+      ],
+      "mass": 1.0,
+      "color": [
+        0.7,
+        0.7,
+        0.7,
+        1.0
+      ],
+      "fill": "concrete",
+      "metadata": {
+        "hit_sound": [
+          "concrete-hit.mp3"
+        ],
+        "stiff": true
+      }
+    },
+    {
+      "position": [
+        -0.9538268601026587,
+        12.0,
+        22.939112218908157
+      ],
+      "orientation": [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ],
+      "size": [
+        6.0,
+        24.0,
+        6.0
+      ],
+      "mass": 1.0,
+      "color": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "fill": "solid",
+      "metadata": {
+        "model_path": "models\\model_objs\\big_building\\building 5.obj",
+        "hit_sound": [
+          "concrete-hit.mp3"
+        ],
+        "stiff": true
+      }
+    },
+    {
+      "position": [
+        7.259499770192855,
+        8.0,
+        21.885112073204688
+      ],
+      "orientation": [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ],
+      "size": [
+        2.7,
+        16.0,
+        2.7
+      ],
+      "mass": 1.0,
+      "color": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "fill": "solid",
+      "metadata": {
+        "model_path": "models\\model_objs\\office_building\\Building 5.obj",
+        "hit_sound": [
+          "concrete-hit.mp3"
+        ],
+        "stiff": true
+      }
+    },
+    {
+      "position": [
+        12.70138105396189,
+        7.0,
+        26.838247504664885
+      ],
+      "orientation": [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ],
+      "size": [
+        2.5,
+        14.0,
+        2.5
+      ],
+      "mass": 1.0,
+      "color": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "fill": "solid",
+      "metadata": {
+        "model_path": "models\\model_objs\\modular_tower\\building 5.obj",
+        "hit_sound": [
+          "concrete-hit.mp3"
+        ],
+        "stiff": true
+      }
+    },
+    {
+      "position": [
+        17.366260662253662,
+        4.000000000000002,
+        25.345179136890724
+      ],
+      "orientation": [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ],
+      "size": [
+        2.9,
+        8.0,
+        2.9
+      ],
+      "mass": 1.0,
+      "color": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "fill": "solid",
+      "metadata": {
+        "model_path": "models\\model_objs\\building\\building 5.obj",
+        "hit_sound": [
+          "concrete-hit.mp3"
+        ],
+        "stiff": true
+      }
+    },
+    {
+      "position": [
+        -6.089539088629888,
+        4.0,
+        26.738565804076227
+      ],
+      "orientation": [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ],
+      "size": [
+        2.9,
+        8.0,
+        2.9
+      ],
+      "mass": 1.0,
+      "color": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "fill": "solid",
+      "metadata": {
+        "model_path": "models\\model_objs\\building\\building 5.obj",
+        "hit_sound": [
+          "concrete-hit.mp3"
+        ],
+        "stiff": true
+      }
+    },
+    {
+      "position": [
+        34.21613432011094,
+        8.000000000000002,
+        37.243164913111016
+      ],
+      "orientation": [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ],
+      "size": [
+        9.0,
+        16.0,
+        9.0
+      ],
+      "mass": 1.0,
+      "color": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "fill": "solid",
+      "metadata": {
+        "model_path": "models\\model_objs\\office_building\\Building 5.obj",
+        "hit_sound": [
+          "concrete-hit.mp3"
+        ],
+        "stiff": true
+      }
+    },
+    {
+      "position": [
+        -2.7899282573279063,
+        0.25,
+        4.711884789978395
+      ],
+      "orientation": [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ],
+      "size": [
+        0.5,
+        0.5,
+        0.3
+      ],
+      "mass": 1.0,
+      "color": [
+        0.7,
+        0.7,
+        0.7,
+        1.0
+      ],
+      "fill": "concrete",
+      "metadata": {
+        "hit_sound": [
+          "concrete-hit.mp3"
+        ],
+        "stiff": true
+      }
+    },
+    {
+      "position": [
+        -0.30376915602591215,
+        0.25,
+        4.768479346878582
+      ],
+      "orientation": [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ],
+      "size": [
+        0.5,
+        0.5,
+        0.3
+      ],
+      "mass": 1.0,
+      "color": [
+        0.7,
+        0.7,
+        0.7,
+        1.0
+      ],
+      "fill": "concrete",
+      "metadata": {
+        "hit_sound": [
+          "concrete-hit.mp3"
+        ],
+        "stiff": true
+      }
+    },
+    {
+      "position": [
+        -0.37920310378309807,
+        1.0999999999999992,
+        4.8186395156511335
+      ],
+      "orientation": [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ],
+      "size": [
+        1.5,
+        1.0,
+        0.1
+      ],
+      "mass": 1.0,
+      "color": [
+        0.13,
+        0.13,
+        0.54,
+        0.34
+      ],
+      "fill": "tough_glass",
+      "metadata": {
+        "stiff": true,
+        "shard_config": {
+          "count": 16.0,
+          "size_scale": 0.35,
+          "mass": 3.6,
+          "velocity_scale": 0.3,
+          "impulse_threshold": 500.0
+        }
+      }
+    },
+    {
+      "position": [
+        -2.9432379963395974,
+        0.9991866768137668,
+        4.56142785357917
+      ],
+      "orientation": [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ],
+      "size": [
+        1.5,
+        1.0,
+        0.1
+      ],
+      "mass": 1.0,
+      "color": [
+        0.13,
+        0.13,
+        0.54,
+        0.34
+      ],
+      "fill": "glass",
+      "metadata": {
+        "stiff": false,
+        "shard_config": {
+          "count": 18.0,
+          "size_scale": 0.3,
+          "mass": 3.6,
+          "velocity_scale": 0.3,
+          "impulse_threshold": 50.0
+        }
+      }
+    }
+  ]
+}

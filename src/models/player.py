@@ -22,16 +22,14 @@ class Player:
         self.is_jumping = False
         self.ground_level = 0.0  # Ground level (y-coordinate)
         self.player_height = 1.0  # Height of the player's collision box
-        self.jump_cooldown = 0.0  # Cooldown timer for jumping
+        self.jump_cooldown = 0  # Cooldown to prevent multiple jumps in one press
+
     def move_forward(self, distance):
         rad = math.radians(self.rotation_y)
         new_x = self.x - math.sin(rad) * distance
         new_z = self.z - math.cos(rad) * distance
-        
-        # Check collision at new position
-        collision = self.check_collision(new_x, self.y, new_z)
-        
-        if not collision:
+        # Check for collision with structures
+        if not self.check_collision(new_x, self.y, new_z):
             self.x = new_x
             self.z = new_z
 
@@ -39,11 +37,8 @@ class Player:
         rad = math.radians(self.rotation_y + 90)
         new_x = self.x - math.sin(rad) * distance
         new_z = self.z - math.cos(rad) * distance
-        
-        # Check collision at new position
-        collision = self.check_collision(new_x, self.y, new_z)
-        
-        if not collision:
+        # Check for collision with structures
+        if not self.check_collision(new_x, self.y, new_z):
             self.x = new_x
             self.z = new_z
 
@@ -51,13 +46,12 @@ class Player:
         self.move_right(-distance)
         
     def jump(self):
-        # Only allow jumping if not already jumping and cooldown is 0
-        if not self.is_jumping and self.jump_cooldown <= 0:
+        if not self.is_jumping and not self.jump_cooldown:
             # Calculate initial velocity needed to reach desired height under gravity
             # Using v = sqrt(2gh) from physics
             self.velocity_y = math.sqrt(-2 * self.gravity * self.jump_height)
             self.is_jumping = True
-            self.jump_cooldown = 0.4  # Small cooldown to prevent multiple jumps on one press
+            self.jump_cooldown = 0.8  # Small cooldown to prevent multiple jumps on one press
         
     def update_position(self, delta_time):
         # Update jump cooldown
@@ -70,35 +64,47 @@ class Player:
             self.check_collision(self.x, self.y - 0.01, self.z)
         )
 
-        # Only disable gravity if standing
-        if on_ground_or_object and self.velocity_y <= 0:
+        # Only disable gravity if standing and not jumping
+        if on_ground_or_object and not self.is_jumping:
             self.velocity_y = 0
             self.is_jumping = False
-            new_y = max(self.y, self.ground_level + self.player_height)
+            self.jump_cooldown = 0
+            new_y = self.y
         else:
             # Apply gravity or jump movement
             self.velocity_y += self.gravity * delta_time
             new_y = self.y + self.velocity_y * delta_time
+
         # Ground collision check
         if new_y <= self.ground_level + self.player_height:
             self.y = self.ground_level + self.player_height
             self.velocity_y = 0
             self.is_jumping = False
-        # Structure collision check from below
+            self.jump_cooldown = 0
+        # Structure collision check
         elif self.check_collision(self.x, new_y, self.z):
             # Find the highest non-colliding position
-            step = 0.1
-            test_y = self.y
-            while test_y < new_y and not self.check_collision(self.x, test_y, self.z):
+            test_y = new_y
+            step = 0.1  # Step size for collision testing
+            while self.check_collision(self.x, test_y, self.z):
                 test_y += step
             self.y = test_y
             self.velocity_y = 0
             self.is_jumping = False
+            self.jump_cooldown = 0
         else:
             self.y = new_y
             
-            # Additional ground check after movement
+            # Check for ground collision as a fallback
             if self.y <= self.ground_level + self.player_height:
                 self.y = self.ground_level + self.player_height
                 self.velocity_y = 0
                 self.is_jumping = False
+                self.jump_cooldown = 0
+            
+            # Check for ground collision as a fallback
+            if self.y <= self.ground_level + self.player_height:
+                self.y = self.ground_level + self.player_height
+                self.velocity_y = 0
+                self.is_jumping = False
+                self.jump_cooldown = 0
