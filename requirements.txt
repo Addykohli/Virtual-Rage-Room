@@ -6,3 +6,4 @@ numpy>=1.24.0
 openexr>=3.4.0
 PyBullet>=3.2.0
 pyglm>=2.8.2
+google-generativeai>=0.1.0

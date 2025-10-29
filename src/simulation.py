@@ -5037,30 +5037,38 @@ class Simulation:
             elif event.key == pygame.K_END:
                 self.ai_input_cursor_pos = len(self.ai_input_text)
             elif event.unicode.isprintable() and not event.key in [pygame.K_RETURN, pygame.K_TAB]:
+                # Get the current line start position
+                line_start = self.ai_input_text.rfind('\n', 0, self.ai_input_cursor_pos) + 1
+                current_line = self.ai_input_text[line_start:self.ai_input_cursor_pos]
+                
+                # Get the font and calculate the width of the current line
+                font = pygame.font.Font(None, 18)
+                line_width = font.size(current_line + event.unicode)[0]
+                
+                # If adding this character would exceed the width, insert a newline
+                if line_width > 480:  # 500 - 10*2 (padding)
+                    # Insert newline before the current word
+                    last_space = current_line.rfind(' ')
+                    if last_space > 0:
+                        # Insert newline at the last space
+                        insert_pos = line_start + last_space
+                        self.ai_input_text = (self.ai_input_text[:insert_pos] + 
+                                           '\n' + 
+                                           self.ai_input_text[insert_pos+1:])
+                        # Update cursor position to be after the newline
+                        self.ai_input_cursor_pos = insert_pos + 1
+                    else:
+                        # If no space found, insert newline at the cursor
+                        self.ai_input_text = (self.ai_input_text[:self.ai_input_cursor_pos] + 
+                                           '\n' + 
+                                           self.ai_input_text[self.ai_input_cursor_pos:])
+                        self.ai_input_cursor_pos += 1
+                
                 # Insert the character at the cursor position
                 self.ai_input_text = (self.ai_input_text[:self.ai_input_cursor_pos] + 
                                    event.unicode + 
                                    self.ai_input_text[self.ai_input_cursor_pos:])
                 self.ai_input_cursor_pos += len(event.unicode)
-                
-                # Check if we need to wrap text
-                font = pygame.font.Font(None, 18)
-                text_before_cursor = self.ai_input_text[:self.ai_input_cursor_pos]
-                
-                # Get the width of the text before cursor
-                text_width = font.size(text_before_cursor)[0]
-                
-                # If text exceeds input field width (500px with 10px padding on each side)
-                if text_width > 480:  # 500 - 10*2 (padding)
-                    # Find the last space before the cursor to wrap at word boundary
-                    last_space = text_before_cursor.rfind(' ')
-                    if last_space > 0 and last_space > len(text_before_cursor) - 20:  # Only if space is near the end
-                        # Replace space with newline
-                        self.ai_input_text = (self.ai_input_text[:last_space] + 
-                                           '\n' + 
-                                           self.ai_input_text[last_space+1:])
-                        # Update cursor position to be after the newline
-                        self.ai_input_cursor_pos = last_space + 1
             return True  # Event handled
             
         return False  # Event not handled
@@ -5281,45 +5289,85 @@ class Simulation:
         glVertex2f(input_x, input_y + input_height)
         glEnd()
         
-        # Draw input text with word wrap
-        if self.ai_input_text:
-            # Split text into lines that fit within the input area
-            if not hasattr(self, '_ai_panel_font'):
-                self._ai_panel_font = pygame.font.Font(None, 18)
-            words = self.ai_input_text.split(' ')
-            lines = []
-            current_line = []
+        # Initialize font if not exists
+        if not hasattr(self, '_ai_panel_font'):
+            self._ai_panel_font = pygame.font.Font(None, 18)
+            
+        font = self._ai_panel_font
+        
+        # Calculate line breaks and cursor position
+        cursor_pos = self.ai_input_cursor_pos
+        text_before_cursor = self.ai_input_text[:cursor_pos]
+        text_after_cursor = self.ai_input_text[cursor_pos:]
+        
+        # Split text into lines that fit within the input area
+        lines = []
+        current_line = ""
+        
+        # First, split by explicit newlines
+        paragraphs = self.ai_input_text.split('\n')
+        
+        for para in paragraphs:
+            current_line = ""
+            words = para.split(' ')
             
             for word in words:
-                test_line = ' '.join(current_line + [word])
-                if self._ai_panel_font.size(test_line)[0] < input_width - 10:  # 10px padding
-                    current_line.append(word)
+                test_line = current_line + (' ' if current_line else '') + word
+                if font.size(test_line)[0] < (input_width - 20):  # 20px padding (10px each side)
+                    current_line = test_line
                 else:
-                    lines.append(' '.join(current_line))
-                    current_line = [word]
-            if current_line:
-                lines.append(' '.join(current_line))
+                    if current_line:  # Only add if not empty
+                        lines.append(current_line)
+                    current_line = word
             
-            # Draw each line of text
-            line_height = self._ai_panel_font.get_linesize()
-            for i, line in enumerate(lines):
-                if (i + 1) * line_height > input_height - 10:  # Don't draw beyond input area
-                    break
+            if current_line:  # Add the last line of the paragraph
+                lines.append(current_line)
+            
+            # Add a newline marker (empty string) to indicate paragraph break
+            if para != paragraphs[-1]:  # Don't add after last paragraph
+                lines.append("")
+        
+        # Draw each line of text and track cursor position
+        line_height = font.get_linesize()
+        cursor_line = 0
+        cursor_x = 0
+        cursor_found = False
+        
+        for i, line in enumerate(lines):
+            if i * line_height > input_height - 10:  # Don't draw beyond input area
+                break
+                
+            # Draw the line (skip empty lines that are just paragraph breaks)
+            if line or i == 0:  # Always draw first line even if empty
                 self.draw_text(line, input_x + 5, input_y + 5 + i * line_height, 18, (0.9, 0.9, 0.9))
+            
+            # Check if cursor is in this line
+            if not cursor_found and cursor_pos > 0:
+                # Calculate how many characters are in previous lines
+                chars_in_prev_lines = sum(len(l) + 1 for l in lines[:i])  # +1 for the newline
+                line_start = chars_in_prev_lines
+                line_end = line_start + len(line)
+                
+                if line_start <= cursor_pos <= line_end:
+                    cursor_line = i
+                    # Calculate x position of cursor within this line
+                    cursor_x = font.size(line[:cursor_pos - line_start])[0]
+                    cursor_found = True
+        
+        # Store cursor position for drawing
+        if hasattr(self, 'ai_input_active') and self.ai_input_active:
+            self.cursor_draw_x = input_x + 5 + cursor_x
+            self.cursor_draw_y = input_y + 5 + cursor_line * line_height
         
         # Draw cursor if input is active
-        if self.ai_input_active and time.time() % 1 > 0.5:
-            # Create font if not already created
-            if not hasattr(self, '_ai_panel_font'):
-                self._ai_panel_font = pygame.font.Font(None, 18)
-            cursor_x = input_x + 5 + self._ai_panel_font.size(self.ai_input_text[:self.ai_input_cursor_pos])[0]
-            cursor_y = input_y + 5
-            glLineWidth(1.5)
-            glColor3f(1.0, 1.0, 1.0)
-            glBegin(GL_LINES)
-            glVertex2f(cursor_x, cursor_y)
-            glVertex2f(cursor_x, cursor_y + 15)
-            glEnd()
+        if hasattr(self, 'ai_input_active') and self.ai_input_active and time.time() % 1 > 0.5:
+            if hasattr(self, 'cursor_draw_x') and hasattr(self, 'cursor_draw_y'):
+                glLineWidth(1.5)
+                glColor3f(1.0, 1.0, 1.0)
+                glBegin(GL_LINES)
+                glVertex2f(self.cursor_draw_x, self.cursor_draw_y)
+                glVertex2f(self.cursor_draw_x, self.cursor_draw_y + 15)
+                glEnd()
         
         # Button dimensions and positions
         button_width = 150
