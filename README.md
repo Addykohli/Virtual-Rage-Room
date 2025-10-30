@@ -20,9 +20,7 @@ An immersive 3D physics-based simulation environment that combines stress relief
 
 ### User Experience
 - Intuitive first-person controls
-- Interactive UI with tooltips and feedback
 - Customizable environment and settings
-- Cross-platform compatibility
 
 ## 🛠 Tech Stack
 
@@ -44,9 +42,8 @@ An immersive 3D physics-based simulation environment that combines stress relief
 | **Left Click** | Shoot/Interact |
 | **Right Click/Tab** | Toggle mouse grab |
 | **Q** | Jump |
-| **E** | Interact with objects |
-| **1-5** | Quick select weapons |
-| **ESC** | Open menu/Quit |
+| **R** | Rotate object before placing |
+| **ESC** | Quit |
 | **CTRL + Mouse Wheel** | Zoom |
 
 ## 🏆 Project Highlights for Resumes
@@ -58,21 +55,8 @@ An immersive 3D physics-based simulation environment that combines stress relief
 - Created an efficient asset management system for 3D models and textures
 - Implemented a custom OBJ model loader with material and texture support
 
-### Skills Demonstrated
-- **3D Graphics Programming**: OpenGL, Shaders, Texturing, Lighting
-- **Game Development**: Game loops, Physics, Collision detection, AI
-- **AI/ML Integration**: Natural language processing, AI content generation
-- **Performance Optimization**: Efficient rendering, Memory management
-- **Software Architecture**: Modular design, Clean code practices
-- **Cross-Platform Development**: Windows/Linux compatibility
 
 ## 🚀 Getting Started
-
-### Prerequisites
-- Python 3.11+
-- pip (Python package manager)
-- Git (for cloning the repository)
-
 ### Installation
 
 1. Clone the repository:
@@ -102,23 +86,6 @@ An immersive 3D physics-based simulation environment that combines stress relief
    python src/simulation.py
    ```
 
-## 📚 Documentation
-
-For detailed documentation on the codebase, architecture, and API, please refer to the [docs](docs/) directory.
-
-## 🤝 Contributing
-
-Contributions are welcome! Please feel free to submit a Pull Request.
-
-1. Fork the repository
-2. Create your feature branch (`git checkout -b feature/AmazingFeature`)
-3. Commit your changes (`git commit -m 'Add some AmazingFeature'`)
-4. Push to the branch (`git push origin feature/AmazingFeature`)
-5. Open a Pull Request
-
-## 📄 License
-
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
 ## 🙏 Acknowledgments
 

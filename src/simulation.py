@@ -4942,11 +4942,25 @@ class Simulation:
                         self.ai_status_timer = 180
                 return True
             
+            # Check delete button clicks
+            if hasattr(self, 'ai_delete_rects'):
+                for i, rect in enumerate(self.ai_delete_rects):
+                    if rect.collidepoint(event.pos):
+                        slot_num = i + 1
+                        if self.delete_ai_slot(slot_num):
+                            return True
+            
             # Check generate button click
             if hasattr(self, 'ai_generate_rect') and self.ai_generate_rect.collidepoint(event.pos):
                 # Check if a slot is selected
                 if not hasattr(self, 'ai_slot_number'):
                     self.ai_status_text = "Please select a slot first"
+                    self.ai_status_timer = 180
+                    return True
+                    
+                # Check if slot is already used
+                if hasattr(self, 'ai_slot_number') and self.is_slot_used(self.ai_slot_number):
+                    self.ai_status_text = f"Slot {self.ai_slot_number} is not empty. Please choose an empty slot."
                     self.ai_status_timer = 180
                     return True
                     
@@ -5127,8 +5141,7 @@ class Simulation:
             self.ai_input_text = ""
             self.ai_input_cursor_pos = 0
             
-            # Print the generated structure for debugging
-            print("Generated structure:", json.dumps(structure, indent=2))
+          
             
             # Return the generated structure
             return structure
@@ -5148,6 +5161,40 @@ class Simulation:
             # Always reset the loading state when done
             self.is_fetching_genai = False
     
+    def is_slot_used(self, slot_num):
+        """Check if a slot has saved content"""
+        if not hasattr(self, 'ai_handler'):
+            return False
+        filename = f'ai_save_{slot_num:02d}.json'
+        return self.ai_handler.save_exists(filename)
+
+    def delete_ai_slot(self, slot_num):
+        """Completely clear the contents of a slot file"""
+        if not hasattr(self, 'ai_handler'):
+            return False
+            
+        # Get the directory where AI structures are saved
+        ai_structures_dir = os.path.join(os.path.dirname(__file__), 'ai_structures')
+        os.makedirs(ai_structures_dir, exist_ok=True)
+        
+        filename = f'ai_save_{slot_num:02d}.json'
+        try:
+            filepath = os.path.join(ai_structures_dir, filename)
+            if os.path.exists(filepath):
+                # Completely truncate the file
+                with open(filepath, 'w') as f:
+                    f.write('')
+                
+                self.ai_status_text = f"Cleared slot {slot_num}"
+                self.ai_status_timer = 180  # 3 seconds at 60 FPS
+                print(f"[AI PANEL] Successfully truncated {filepath}")
+                return True
+            else:
+                print(f"[AI PANEL] File not found: {filepath}")
+        except Exception as e:
+            print(f"[AI PANEL] Error clearing slot {slot_num}: {e}")
+        return False
+
     def draw_ai_panel(self):
         if not self.show_ai_panel:
             return
@@ -5173,18 +5220,29 @@ class Simulation:
         # Initialize slot rects if not already done
         if not hasattr(self, 'ai_slot_rects'):
             self.ai_slot_rects = []
-            slot_size = 50  # Size of each slot button
+            slot_width = 60  # Increased width for better visibility
+            slot_height = 35  # Increased height for better visibility
             slot_margin = 10
-            start_x = panel_x + 50
-            start_y = panel_y + 400  # Start lower to avoid overlapping with generate button
+            delete_height = 20  # Height of delete button
+            vertical_spacing = 5  # Space between slot and delete button
+            
+            start_x = panel_x + 30  # Slightly more left margin
+            start_y = panel_y + 380  # Start a bit higher to make room for larger buttons
             
             # Create 20 slot buttons in a 5x4 grid
             for i in range(20):
                 row = i // 5
                 col = i % 5
-                x = start_x + col * (slot_size + slot_margin)
-                y = start_y + row * (30 + slot_margin)
-                self.ai_slot_rects.append(pygame.Rect(x, y, slot_size, 30))
+                x = start_x + col * (slot_width + slot_margin)
+                y = start_y + row * (slot_height + delete_height + vertical_spacing + slot_margin)
+                
+                # Main slot button
+                self.ai_slot_rects.append(pygame.Rect(x, y, slot_width, slot_height))
+                
+                # Store delete button rects (one for each slot)
+                if not hasattr(self, 'ai_delete_rects'):
+                    self.ai_delete_rects = []
+                self.ai_delete_rects.append(pygame.Rect(x, y + slot_height + vertical_spacing, slot_width, delete_height))
         
         # Draw panel background (semi-transparent dark)
         glEnable(GL_BLEND)
@@ -5504,6 +5562,38 @@ class Simulation:
                     # Slot number (1-20)
                     self.draw_text(str(i+1), rect.x + rect.width//2, rect.y + rect.height//2 - 2, 
                                  16, (1.0, 1.0, 1.0), center=True)
+                    
+                    # Draw delete button for this slot
+                    delete_rect = self.ai_delete_rects[i]
+                    
+                    # Button background - red when hovered, darker red when not
+                    if delete_rect.collidepoint(pygame.mouse.get_pos()):
+                        glColor3f(0.9, 0.3, 0.3)  # Bright red when hovered
+                        if pygame.mouse.get_pressed()[0]:  # If left mouse button is pressed
+                            glColor3f(0.7, 0.2, 0.2)  # Darker red when clicked
+                    else:
+                        glColor3f(0.7, 0.2, 0.2)  # Darker red normally
+                    
+                    glBegin(GL_QUADS)
+                    glVertex2f(delete_rect.x, delete_rect.y)
+                    glVertex2f(delete_rect.x + delete_rect.width, delete_rect.y)
+                    glVertex2f(delete_rect.x + delete_rect.width, delete_rect.y + delete_rect.height)
+                    glVertex2f(delete_rect.x, delete_rect.y + delete_rect.height)
+                    glEnd()
+                    
+                    # Button border
+                    glColor3f(1.0, 1.0, 1.0)  # White border
+                    glBegin(GL_LINE_LOOP)
+                    glVertex2f(delete_rect.x, delete_rect.y)
+                    glVertex2f(delete_rect.x + delete_rect.width, delete_rect.y)
+                    glVertex2f(delete_rect.x + delete_rect.width, delete_rect.y + delete_rect.height)
+                    glVertex2f(delete_rect.x, delete_rect.y + delete_rect.height)
+                    glEnd()
+                    
+                    # Delete text
+                    self.draw_text("Delete", delete_rect.x + delete_rect.width//2, 
+                                 delete_rect.y + delete_rect.height//2 - 8, 
+                                 14, (1.0, 1.0, 1.0), center=True)
                 else:
                     # Draw empty slot as grayed out
                     glColor3f(0.15, 0.15, 0.2)
@@ -5526,6 +5616,32 @@ class Simulation:
                     # Slot number (1-20) in gray
                     self.draw_text(str(i+1), rect.x + rect.width//2, rect.y + rect.height//2 - 2, 
                                  16, (0.5, 0.5, 0.5), center=True)
+                    
+                    # Draw disabled delete button for empty slots
+                    delete_rect = self.ai_delete_rects[i]
+                    
+                    # Grayed out delete button
+                    glColor3f(0.15, 0.15, 0.2)  # Match panel background
+                    glBegin(GL_QUADS)
+                    glVertex2f(delete_rect.x, delete_rect.y)
+                    glVertex2f(delete_rect.x + delete_rect.width, delete_rect.y)
+                    glVertex2f(delete_rect.x + delete_rect.width, delete_rect.y + delete_rect.height)
+                    glVertex2f(delete_rect.x, delete_rect.y + delete_rect.height)
+                    glEnd()
+                    
+                    # Gray border for disabled delete button
+                    glColor3f(0.3, 0.3, 0.3)
+                    glBegin(GL_LINE_LOOP)
+                    glVertex2f(delete_rect.x, delete_rect.y)
+                    glVertex2f(delete_rect.x + delete_rect.width, delete_rect.y)
+                    glVertex2f(delete_rect.x + delete_rect.width, delete_rect.y + delete_rect.height)
+                    glVertex2f(delete_rect.x, delete_rect.y + delete_rect.height)
+                    glEnd()
+                    
+                    # Grayed out delete text
+                    self.draw_text("Delete", delete_rect.x + delete_rect.width//2, 
+                                 delete_rect.y + delete_rect.height//2 - 8, 
+                                 14, (0.4, 0.4, 0.4), center=True)
         
         # Status message
         if self.ai_status_text and self.ai_status_timer > 0:
