@@ -80,8 +80,9 @@ An immersive 3D physics-based simulation environment that combines stress relief
    ```bash
    pip install -r requirements.txt
    ```
-
-4. Run the simulation:
+4. Add your Gemini API key to the .env file:
+   
+5. Run the simulation:
    ```bash
    python src/simulation.py
    ```
