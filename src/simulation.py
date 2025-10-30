@@ -104,8 +104,19 @@ class Simulation:
         self.font = pygame.font.SysFont('Arial', 24)
         self.small_font = pygame.font.SysFont('Arial', 16)
         
-        # Set the Gemini API key first
-        self.gemini_api_key = "AIzaSyA0MVNgdYADmTORp9A5lrcORRDbC7DA4LE"
+        # Load environment variables from .env file
+        from dotenv import load_dotenv
+        
+        # Load .env file from the project root (one level up from src)
+        env_path = os.path.join(os.path.dirname(os.path.dirname(__file__)), '.env')
+        load_dotenv(env_path)
+        
+        # Get Gemini API key from environment variables
+        self.gemini_api_key = os.getenv('GEMINI_API_KEY')
+        if not self.gemini_api_key:
+            raise ValueError("GEMINI_API_KEY not found in .env file")
+        
+        print(f"[Simulation] Loaded Gemini API key (length: {len(self.gemini_api_key)})")
         
         # Initialize AI Description Handler with the API key
         self.ai_handler = AIDescriptionHandler(self.saves_dir, self.gemini_api_key)
