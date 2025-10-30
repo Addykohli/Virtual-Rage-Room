@@ -98,7 +98,3 @@ An immersive 3D physics-based simulation environment that combines stress relief
 - **Textures**:
   - [Poly Haven](https://polyhaven.com/)
   - [Pixabay](https://pixabay.com/)
-
-## 📧 Contact
-
-For any questions or feedback, please reach out to [your-email@example.com](mailto:your-email@example.com)
