@@ -121,8 +121,8 @@ class ModelLibrary:
                     'thumbnail': os.path.join(self.thumbnails_dir, 'stone_wall.png'),
                     'generator': 'cluster',
                     'cluster': {
-                        'size': [0.3, 0.1, 0.6],
-                        'grid_count': (20, 25, 1),
+                        'size': [0.4, 0.15, 0.6],
+                        'grid_count': (12, 14, 1),
                         'mass': 30.0,
                         'base_color': (1.0, 1.0, 1.0, 1.0),
                         'tint_strength': 0.7,
